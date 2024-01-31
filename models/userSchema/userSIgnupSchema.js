@@ -16,6 +16,10 @@ const signupSchema = mongoose.Schema({
   password: {
     type: String
     
+  },
+  role:{
+    default:false,
+    type:Boolean
   }
 });
 
