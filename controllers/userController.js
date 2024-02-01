@@ -30,8 +30,6 @@ module.exports = {
         req.body;
 
       const accExist = await signupModel.findOne({ email });
-      // console.log(accExist)
-      // const phoneExist = await signupModel.findOne({phoneNumber});
       const passValidation = checkPass.test(password);
 
       if (accExist) {
@@ -80,7 +78,7 @@ module.exports = {
   },
   otpPost: async (req, res) => {
     const { otp, phone, email } = req.body;
-    console.log(req.body)
+    // console.log(req.body)
 
     const verification_check = await client.verify.v2
       .services(serviceSID)
