@@ -1,8 +1,11 @@
 const { Module } = require("module");
 require("dotenv").config();
-const adminModel = require("../models/adminSchema/adminSChema");
-const nodemailer = require("nodemailer");
 
+const productModel = require("../models/adminSchema/productSchema");
+const adminModel = require("../models/adminSchema/adminSChema");
+
+
+const nodemailer = require("nodemailer");
 const { constants } = require("buffer");
 const { render } = require("ejs");
 const session = require("express-session");
@@ -13,6 +16,7 @@ const bcrypt = require("bcrypt");
 const otp = require("../public/js/optgenerator");
 
 module.exports = {
+//  ..............admin signup............................
   adminSignUpGet: async (req, res) => {
     res.render("admin/adminSign", { error: req.flash("error") });
   },
@@ -41,12 +45,15 @@ module.exports = {
       res.redirect("/admin/login");
     }
   },
+
+  // ..................................admin login............................
+
   adminLoginGet: (req, res) => {
     res.render("admin/adminLogin", { error: req.flash("error") });
   },
   adminLoginPost: async (req, res) => {
     const { email, password } = req.body;
-    
+
     const accExist = await adminModel.findOne({ email });
     const passmatch = await bcrypt.compare(password, accExist.password);
 
@@ -56,8 +63,53 @@ module.exports = {
     } else if (!passmatch && accExist) {
       req.flash("error", "password incorrec");
       return res.redirect("/admin/login");
-    } else if (accExist&& passmatch) {
+    } else if (accExist && passmatch) {
       res.send("login successfully");
     }
   },
+
+  // ........................product maneaement.....................
+
+  addproductGet: (req, res) => {
+    res.render("admin/addproducts");
+  },
+  addproductPost:async (req, res) => {  
+ 
+    if(!req.files || req.files.length > 5){
+      return res.status(230).json({ERR:"Please provide a image",success:false})
+    }
+
+    const productImage=req.files.filename;
+    const {
+      productName,
+      price,
+      discount,
+      stock,
+      category,
+      subCategory,
+      deliveryDate,
+      colour,
+      size,
+      description,
+    } = req.body;
+
+   const newdata = new  productModel({
+    productName,
+    price,
+    discount,
+    stock,
+    category,
+    subCategory,
+    deliveryDate,
+    colour,
+    size,
+    description,
+    productImage
+   });
+   await newdata.save();
+   res.status(230).json({success:true})
+
+
+  
+ },
 };

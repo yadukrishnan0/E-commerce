@@ -13,7 +13,7 @@ const {
   forgototpPOst,
   ResetPassGet,
   resetpassPost,
-  loginPost
+  loginPost,
 } = require("../controllers/userController");
 
 router.get("/signup", signupGet);
