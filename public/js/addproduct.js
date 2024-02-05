@@ -76,7 +76,7 @@ else{
         errMsg.innerHTML = 'product successfuly added'
         errMsg.classList.add('success')
         setTimeout(() => {
-            window.location.href = '/login'
+            window.location.href = '/admin/home'
         }, 500);
 
       }

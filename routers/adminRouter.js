@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const multer = require('multer')
-const storage=require('../middleware/multer')
+const multer = require("multer");
+const storage = require("../middleware/multer");
 
 const {
   adminSignUpGet,
@@ -9,17 +9,29 @@ const {
   adminLoginGet,
   adminLoginPost,
   addproductGet,
-  addproductPost
+  addproductPost,
+  AdminHomeGet,
+  UsersListGet,
+  deleteUser,
+  productsGet,
+  productDelete,
+  addCatagory,
+  addCatagoryPost
 } = require("../controllers/adminController");
 
-const upload = multer({ storage })  
+const upload = multer({ storage });
 
 router.get("/signup", adminSignUpGet);
 router.post("/signup", adminsignupPost);
 router.get("/login", adminLoginGet);
 router.post("/login", adminLoginPost);
 router.get("/addproducts", addproductGet);
-router.post('/addproducts',upload.array('productImage',20),addproductPost);
-
-
+router.post("/addproducts", upload.array("productImage", 20), addproductPost);
+router.get("/home", AdminHomeGet);
+router.get('/userslist',UsersListGet)
+router.get("/delete/:id",deleteUser)
+router.get('/productslist',productsGet)
+router.get('/deleteproduct/:id',productDelete)
+router.get('/addcatagory',addCatagory)
+router.post('/addcatagory',upload.single('categoryImage'),addCatagoryPost)
 module.exports = router;

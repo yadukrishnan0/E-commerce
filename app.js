@@ -24,6 +24,7 @@ app.use(flash());
 const userRouter=require("./routers/userRouter")
 
 app.use(express.urlencoded({ extended: true }));
+
 app.set("view engine", "ejs");
 app.set("views", "views");
 

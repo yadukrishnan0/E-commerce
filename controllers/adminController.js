@@ -3,8 +3,7 @@ require("dotenv").config();
 
 const productModel = require("../models/adminSchema/productSchema");
 const adminModel = require("../models/adminSchema/adminSChema");
-
-
+const signupModel = require("../models/userSchema/userSIgnupSchema");
 const nodemailer = require("nodemailer");
 const { constants } = require("buffer");
 const { render } = require("ejs");
@@ -16,33 +15,37 @@ const bcrypt = require("bcrypt");
 const otp = require("../public/js/optgenerator");
 
 module.exports = {
-//  ..............admin signup............................
+  //  ..............admin signup............................
   adminSignUpGet: async (req, res) => {
     res.render("admin/adminSign", { error: req.flash("error") });
   },
   adminsignupPost: async (req, res) => {
-    const { fullName, email, confirmPassword, password, code } = req.body;
-    const secretCode = process.env.code;
-    const secretTrue = secretCode == code;
-    const passValidation = checkPass.test(password);
-    const accExist = await adminModel.findOne({ email });
-    if (accExist) {
-      req.flash("error", "account is already exist");
-      return res.redirect("/admin/signup");
-    } else if (!passValidation) {
-      req.flash("error", "password format incorrect");
-      return res.redirect("/admin/signup");
-    } else if (!accExist && passValidation && secretTrue) {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
+    try {
+      const { fullName, email, confirmPassword, password, code } = req.body;
+      const secretCode = process.env.code;
+      const secretTrue = secretCode == code;
+      const passValidation = checkPass.test(password);
+      const accExist = await adminModel.findOne({ email });
+      if (accExist) {
+        req.flash("error", "account is already exist");
+        return res.redirect("/admin/signup");
+      } else if (!passValidation) {
+        req.flash("error", "password format incorrect");
+        return res.redirect("/admin/signup");
+      } else if (!accExist && passValidation && secretTrue) {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-      const newUser = new adminModel({
-        fullName,
-        email,
-        password: hashedPassword,
-      });
-      await newUser.save();
-      res.redirect("/admin/login");
+        const newUser = new adminModel({
+          fullName,
+          email,
+          password: hashedPassword,
+        });
+        await newUser.save();
+        res.redirect("/admin/login");
+      }
+    } catch (err) {
+      console.log("Adminsignup post error", err.message);
     }
   },
 
@@ -55,31 +58,41 @@ module.exports = {
     const { email, password } = req.body;
 
     const accExist = await adminModel.findOne({ email });
+
     const passmatch = await bcrypt.compare(password, accExist.password);
 
     if (!accExist) {
       req.flash("error", "please create account");
       return res.redirect("/admin/login");
     } else if (!passmatch && accExist) {
-      req.flash("error", "password incorrec");
+      req.flash("error", "password incorrect");
       return res.redirect("/admin/login");
     } else if (accExist && passmatch) {
-      res.send("login successfully");
+      res.redirect("/admin/home");
     }
   },
-
+  AdminHomeGet: async (req, res) => {
+    const users = await signupModel.find({});
+    res.render("admin/adminHome");
+  },
   // ........................product maneaement.....................
 
   addproductGet: (req, res) => {
-    res.render("admin/addproducts");
+    try {
+      res.render("admin/addproducts");
+    } catch (err) {
+      console.log(err);
+      res.status(404).json({ success: false });
+    }
   },
-  addproductPost:async (req, res) => {  
- 
-    if(!req.files || req.files.length > 5){
-      return res.status(230).json({ERR:"Please provide a image",success:false})
+  addproductPost: async (req, res) => {
+    if (!req.files || req.files.length > 5) {
+      return res
+        .status(230)
+        .json({ ERR: "Please provide a image", success: false });
     }
 
-    const productImage=req.files.filename;
+    const productImage = req.files.map((file) => file.filename);
     const {
       productName,
       price,
@@ -93,23 +106,74 @@ module.exports = {
       description,
     } = req.body;
 
-   const newdata = new  productModel({
-    productName,
-    price,
-    discount,
-    stock,
-    category,
-    subCategory,
-    deliveryDate,
-    colour,
-    size,
-    description,
-    productImage
-   });
-   await newdata.save();
-   res.status(230).json({success:true})
+    const newdata = new productModel({
+      productName,
+      price,
+      discount,
+      stock,
+      category,
+      subCategory,
+      deliveryDate,
+      colour,
+      size,
+      description,
+      productImage,
+    });
+    // console.log(newdata);
+    await newdata.save();
+    res.status(230).json({ success: true });
+  },
+  UsersListGet: async (req, res) => {
+    const users = await signupModel.find({});
+    res.render("admin/usersList", { users });
+  },
+  deleteUser: async (req, res) => {
+    try {
+      const _id = req.params.id;
+      await signupModel.deleteOne({ _id });
+      res.status(200).redirect("/admin/userslist");
+    } catch (err) {
+      res.status(400).json({ success: false });
+      console.log("delete user error", err.message);
+    }
+  },
+  productsGet: async (req, res) => {
+    try {
+      const products = await productModel.find({});
 
+      res.render("admin/productsList", { products });
+    } catch (err) {
+      console.log(err);
+      res.status(404).json({ success: false });
+    }
+  },
+  productDelete: async (req, res) => {
+    try {
+      const _id = req.params.id;
+      await productModel.deleteOne({ _id });
+      res.status(200).redirect("/admin/productslist");
+    } catch (err) {
+      res.status(400).json({ success: false });
+      console.log("delete user error", err.message);
+    }
+  },
+  addCatagory: (req, res) => {
+    try {
+      res.status(200).render("admin/addcatagory");
+     
+    } catch (err) {
+      console.log("catagory get", err);
 
-  
- },
+      res.status(404).send("page not found");
+    }
+  },
+  addCatagoryPost:(req,res)=>{
+  try{
+    console.log(req.body)
+    res.redirect('/admin/addcatagory')
+  }
+  catch(err){
+    console.log('add catagory error',err)
+  }
+  }
 };

@@ -14,7 +14,7 @@ const bcrypt = require("bcrypt");
 const otp = require("../public/js/optgenerator");
 const serviceSID = "VAb9f141d85c5a8e6a938b7bf45631fe57";
 const accountSID = "ACe141552ba745d052a4ef1be63e2d7b9a";
-const authToken = "0d764961d3f8e3f6e5b0a15cf820b8e5";
+const authToken = "28d06c6a1f066f5fc873566dc29206bd";
 
 const client = require("twilio")(accountSID, authToken);
 
@@ -68,7 +68,7 @@ module.exports = {
 
       req.flash("data", data);
 
-      return res.redirect("/otp");
+      return res.status(20).redirect("/otp");
     } catch (err) {
       console.error(err.message, "signup post error");
       res.status(500).send("Internal Server Error");
@@ -208,11 +208,14 @@ module.exports = {
             },
           }
         );
-
-        delete session.email;
-
-        res.redirect("/login");
-        console.log("password updated");
+        req.session.destroy((err) => {
+          if (err) {
+            console.error("Error destroying session:", err);
+          } else {
+            console.log("Session deleted successfully");
+          }
+          res.redirect("/login");
+        });
       } else {
         res.status(400).redirect("/resetPassword");
       }
