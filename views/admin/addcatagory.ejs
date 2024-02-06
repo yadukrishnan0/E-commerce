@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.7.1.slim.js"></script>
     <script src="https://kit.fontawesome.com/d4181b2b31.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -32,26 +33,26 @@
 
 
     <section id="interface">
-        
+            
 
         
         
          
 
 
-        <form action="/admin/addcatagory" method="post" enctype="multipart/form-data">
+        <form  id="categoryForm">
             <label for="categoryName">Category Name:</label>
             <input type="text" id="categoryName" name="categoryName" required>
     
             <label for="subcategoryName">Subcategory Name:</label>
-            <input type="text" id="subcategoryName" name="subcategoryName" required>
-            <button type="button" onclick='add()'>Add</button>
+            <input type="text" id="subCategoryName" name="subcategoryName" required>
+            <button type="button" id="subcategoryBtn">Add</button>
     
             <label for="categoryImage">Category Image:</label>
-            <input type="file" id="categoryImage" name="categoryImage" accept="image/*" >
+            <input type="file" id="imageInput" name="categoryImage" accept="image/*" >
     
-            <button type="submit">submit</button>
-            <p class="errMsg"></p>
+            <button type="submit" id="addBtn">submit</button>
+            <p class="errorMg"></p>
         </form>
             
 

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const catagorySchema = new mongoose.Schema({
-  category: {
+  categoryName: {
     type: String,
   },
   subCategory: {
@@ -12,6 +12,6 @@ const catagorySchema = new mongoose.Schema({
 }
 });
 
-const catagory = mongoose.model("Products",catagorySchema);
+const catagory = mongoose.model("catgory",catagorySchema);
 
 module.exports =catagory;

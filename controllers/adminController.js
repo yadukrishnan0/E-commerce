@@ -4,6 +4,8 @@ require("dotenv").config();
 const productModel = require("../models/adminSchema/productSchema");
 const adminModel = require("../models/adminSchema/adminSChema");
 const signupModel = require("../models/userSchema/userSIgnupSchema");
+const catagoryModel = require("../models/adminSchema/catagorySChma");
+
 const nodemailer = require("nodemailer");
 const { constants } = require("buffer");
 const { render } = require("ejs");
@@ -52,29 +54,38 @@ module.exports = {
   // ..................................admin login............................
 
   adminLoginGet: (req, res) => {
-    res.render("admin/adminLogin", { error: req.flash("error") });
+    try {
+      res.status(200).render("admin/adminLogin", { error: req.flash("error") });
+    } catch (err) {
+      console.log("admin login get error", err);
+    }
   },
   adminLoginPost: async (req, res) => {
-    const { email, password } = req.body;
+    try {
+      const { email, password } = req.body;
 
-    const accExist = await adminModel.findOne({ email });
+      const accExist = await adminModel.findOne({ email });
 
-    const passmatch = await bcrypt.compare(password, accExist.password);
+      const passmatch = await bcrypt.compare(password, accExist.password);
 
-    if (!accExist) {
-      req.flash("error", "please create account");
-      return res.redirect("/admin/login");
-    } else if (!passmatch && accExist) {
-      req.flash("error", "password incorrect");
-      return res.redirect("/admin/login");
-    } else if (accExist && passmatch) {
-      res.redirect("/admin/home");
+      if (!accExist) {
+        req.flash("error", "please create account");
+        return res.redirect("/admin/login");
+      } else if (!passmatch && accExist) {
+        req.flash("error", "password incorrect");
+        return res.redirect("/admin/login");
+      } else if (accExist && passmatch) {
+        res.redirect("/admin/home");
+      }
+    } catch (err) {
+      console.log("admin login error", err);
     }
   },
   AdminHomeGet: async (req, res) => {
     const users = await signupModel.find({});
     res.render("admin/adminHome");
   },
+
   // ........................product maneaement.....................
 
   addproductGet: (req, res) => {
@@ -86,42 +97,46 @@ module.exports = {
     }
   },
   addproductPost: async (req, res) => {
-    if (!req.files || req.files.length > 5) {
-      return res
-        .status(230)
-        .json({ ERR: "Please provide a image", success: false });
+    try {
+      if (!req.files || req.files.length > 5) {
+        return res
+          .status(230)
+          .json({ ERR: "Please provide a image", success: false });
+      }
+
+      const productImage = req.files.map((file) => file.filename);
+      const {
+        productName,
+        price,
+        discount,
+        stock,
+        category,
+        subCategory,
+        deliveryDate,
+        colour,
+        size,
+        description,
+      } = req.body;
+
+      const newdata = new productModel({
+        productName,
+        price,
+        discount,
+        stock,
+        category,
+        subCategory,
+        deliveryDate,
+        colour,
+        size,
+        description,
+        productImage,
+      });
+      // console.log(newdata);
+      await newdata.save();
+      res.status(230).json({ success: true });
+    } catch (err) {
+      console.log("add product error", err);
     }
-
-    const productImage = req.files.map((file) => file.filename);
-    const {
-      productName,
-      price,
-      discount,
-      stock,
-      category,
-      subCategory,
-      deliveryDate,
-      colour,
-      size,
-      description,
-    } = req.body;
-
-    const newdata = new productModel({
-      productName,
-      price,
-      discount,
-      stock,
-      category,
-      subCategory,
-      deliveryDate,
-      colour,
-      size,
-      description,
-      productImage,
-    });
-    // console.log(newdata);
-    await newdata.save();
-    res.status(230).json({ success: true });
   },
   UsersListGet: async (req, res) => {
     const users = await signupModel.find({});
@@ -160,20 +175,30 @@ module.exports = {
   addCatagory: (req, res) => {
     try {
       res.status(200).render("admin/addcatagory");
-     
     } catch (err) {
       console.log("catagory get", err);
 
       res.status(404).send("page not found");
     }
   },
-  addCatagoryPost:(req,res)=>{
-  try{
-    console.log(req.body)
-    res.redirect('/admin/addcatagory')
-  }
-  catch(err){
-    console.log('add catagory error',err)
-  }
-  }
+  addCatagoryPost: async (req, res) => {
+    try {
+      
+      const { subCategory, categoryName } = req.body;
+      
+      const catagoryImage = req.file.filename;
+
+      const newdata = new catagoryModel({
+        subCategory,
+        categoryName,
+        catagoryImage,
+      });
+      await newdata.save();
+      res.status(230).json({ success: true });
+      // console.log(newdata)
+    } catch (err) {
+      console.log("add catagory error", err);
+      res.status(500).json({ success: false });
+    }
+  },
 };

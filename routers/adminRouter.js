@@ -19,7 +19,12 @@ const {
   addCatagoryPost
 } = require("../controllers/adminController");
 
+
+
+ 
+
 const upload = multer({ storage });
+
 
 router.get("/signup", adminSignUpGet);
 router.post("/signup", adminsignupPost);

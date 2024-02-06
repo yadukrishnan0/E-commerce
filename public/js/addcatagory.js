@@ -1,69 +1,66 @@
-let subcategoryName = document.getElementById('subcategoryName').value
-const categoryName=document.getElementById('categoryName').value
-const categoryImage=document.getElementById('categoryImage').value
-const errMsg=document.querySelector('.errMsg')
-const subcatagorys= [];
- function add () {
-    if(subcategoryName == '' || categoryName== ''){
-       errMsg.innerHTML='please fill the form'
-       setTimeout(() => {
-        errMsg.innerHTML=''
-       },1000);
+const addCategory = document.getElementById('categoryForm');
+const submitBtn = document.getElementById('addBtn');
+
+let subCategories = [];
+const categoryName = document.getElementById('categoryName').value;
+
+const addBtn = document.getElementById('subcategoryBtn');
+addBtn.addEventListener('click', () => {
+    let subCategoryInput = document.getElementById('subCategoryName');
+    let subCategory = subCategoryInput.value;
+
+    if (subCategory) {
+        subCategories.push(subCategory);
+        subCategoryInput.value = ''; 
     }
-   else{
-    subcatagorys.push(subcategoryName);  
-    subcategoryName.value=""
-   } 
-}
+});
 
 
-submitBtn.addEventListener('click',async(e)=>{
-   try{
-   
-         e.preventDefault()
-   
-                         
-   
-   
-   const addProductform = document.getElementById('form')
-   const form = new FormData(addProductform)
-   
-   
-   if(!subcategoryName || !categoryName ||!categoryImage){
-       errMsg.innerHTML ="please fill the form";
-       setTimeout(()=>{
-           errMsg.innerHTML = ''
-   
-       },1000);
-   }
-   else{
-       const response = await fetch('/admin/addcatagory',{
-           method:'POST',
-           body:form
-       })
-   
-   
-    const result = await response.json()
+submitBtn.addEventListener('click', async (event) => {
+    event.preventDefault();
+    
+    const errorMsg = document.querySelector('.errorMg');
+    let subCategoryInput = document.getElementById('subCategoryName').value
+    if(subCategoryInput){
+        subCategories.push(subCategoryInput);
+    }
+    const categoryName = document.getElementById('categoryName').value
+    const categoryimage = document.getElementById('imageInput').files[0];
+    console.log(categoryName);
+    if (!categoryName || !categoryimage) {
+        errorMsg.style.visibility = 'visible';
        
-       if(!response.ok){
-        throw new Error ('Error in add product fetch ,product already exist')
-       }
-       else{
-   
-         if(result.success){
-           errMsg.innerHTML = 'catagory successfuly added'
-           errMsg.classList.add('success')
-           setTimeout(() => {
-               window.location.href = '/admin/home'
-           }, 500);
-   
-         }
-         else{
-           errMsg.innerHTML = result.ERR
-       }
-       }
-   }
-      }catch(error){
-           console.log('error in add product',error);
-         }
-       })
+        errorMsg.innerHTML = 'Please Fill all Fields';
+        setTimeout(() => {
+            errorMsg.innerHTML = '';
+        }, 3000);
+    } else {
+        try {
+            console.log(subCategories);
+            const formData = new FormData()
+            formData.append('subCategory',JSON.stringify(subCategories));
+            formData.append('categoryName',JSON.stringify(categoryName));
+            formData.append('categoryImage',categoryimage)
+            const response = await axios.post('/admin/addcatagory', formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'  
+                }
+              });
+        
+            if (response.status === 200) {  
+              errorMsg.style.visibility = 'visible';
+              errorMsg.classList.add('success');
+              errorMsg.innerHTML = 'Category added';
+        
+              setTimeout(() => {
+                window.location.href = '/admin/home';
+              }, 1000);
+            } else {
+              console.log('Error adding category');
+              
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        }
+    });

@@ -1,5 +1,5 @@
 const multer = require('multer')
-// const moment= require('moment')
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './public/Productimag')
@@ -9,6 +9,6 @@ const storage = multer.diskStorage({
       cb(null,uniqueSuffix)
     }
   })
-  
+     
 
  module.exports = storage
