@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href='/admincss/addcatagory.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js"></script>
+    <script src="https://kit.fontawesome.com/d4181b2b31.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+    <section id="menu">
+        <div class="logo">
+            <!-- <img src="/images/logo.png" alt=""> -->
+            <h2>Dynamic</h2>
+        </div>
+        <div class="items">
+            <li><i class="fa-solid fa-chart-pie"></i> <a href="#">Dashboard</a></li>
+            <li><i class="fa-solid fa-table-cells-large"></i> <a href="#">Products</li>
+            <li> <i class="fa-regular fa-pen-to-square"></i> <a href="#">Users</a></li>
+            <li><i class="fa-solid fa-credit-card"></i> <a href="#">Catagory</a></li>
+            <li><i class="fa-solid fa-burger"></i> <a href='/admin/couponslist'>coupons</a></li>
+            <li><i class="fa-solid fa-chart-line"></i> <a href="#">Blank</a></li>
+
+        </div>
+
+    </section>
+
+
+    <section id="interface">
+            
+
+        
+        
+         
+
+
+        <form  id="categoryForm" action="/admin/addcoupon" method="post">
+            <label for="categoryName">Coupon Code:</label>
+            <input type="text" id="categoryName" name="couponCode" required>
+    
+            <label >Up to</label>
+            <input type="number" name="upTo" required>
+    
+            <label >Valid from:</label>
+            <input type="date" name="validFrom"  >
+
+            <label >Valid To:</label>
+            <input type="date" name="validTo"  >
+    
+            <button type="submit" id="addBtn">submit</button>
+            <p class="errorMg"></p>
+        </form>
+            
+
+            
+            
+        
+
+
+        
+        
+    </section>
+
+</body>
+
+</html>

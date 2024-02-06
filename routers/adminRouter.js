@@ -16,7 +16,10 @@ const {
   productsGet,
   productDelete,
   addCatagory,
-  addCatagoryPost
+  addCatagoryPost,
+  couponGet,
+  couponPost,
+  couponlistGet
 } = require("../controllers/adminController");
 
 
@@ -30,13 +33,16 @@ router.get("/signup", adminSignUpGet);
 router.post("/signup", adminsignupPost);
 router.get("/login", adminLoginGet);
 router.post("/login", adminLoginPost);
+router.get("/home", AdminHomeGet);
 router.get("/addproducts", addproductGet);
 router.post("/addproducts", upload.array("productImage", 20), addproductPost);
-router.get("/home", AdminHomeGet);
 router.get('/userslist',UsersListGet)
 router.get("/delete/:id",deleteUser)
 router.get('/productslist',productsGet)
 router.get('/deleteproduct/:id',productDelete)
 router.get('/addcatagory',addCatagory)
 router.post('/addcatagory',upload.single('categoryImage'),addCatagoryPost)
+router.get('/couponslist',couponlistGet)
+router.get('/addcoupon',couponGet);
+router.post('/addcoupon',couponPost);
 module.exports = router;

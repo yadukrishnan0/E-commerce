@@ -1,10 +1,15 @@
 const { Module } = require("module");
 require("dotenv").config();
 
+
 const productModel = require("../models/adminSchema/productSchema");
 const adminModel = require("../models/adminSchema/adminSChema");
 const signupModel = require("../models/userSchema/userSIgnupSchema");
 const catagoryModel = require("../models/adminSchema/catagorySChma");
+const couponModel =require("../models/adminSchema/couponSchema")
+
+
+
 
 const nodemailer = require("nodemailer");
 const { constants } = require("buffer");
@@ -88,9 +93,10 @@ module.exports = {
 
   // ........................product maneaement.....................
 
-  addproductGet: (req, res) => {
+  addproductGet:async (req, res) => {
     try {
-      res.render("admin/addproducts");
+      const data= await catagoryModel.find({})
+      res.render("admin/addproducts",{data});
     } catch (err) {
       console.log(err);
       res.status(404).json({ success: false });
@@ -194,11 +200,50 @@ module.exports = {
         catagoryImage,
       });
       await newdata.save();
-      res.status(230).json({ success: true });
-      // console.log(newdata)
+      res.status(230).redirect('/admin/home');
+  
     } catch (err) {
       console.log("add catagory error", err);
       res.status(500).json({ success: false });
     }
   },
+couponGet:(req,res)=>{
+  try{
+res.status(200).render('admin/addcoupon')
+  }
+  catch(err){
+    console.log('coupon get err',err)
+  }
+},
+
+couponPost:async(req,res)=>{
+  try{
+  const{couponCode,upTo,validFrom,validTo}=req.body;
+  console.log(req.body);
+  const newdata = new couponModel({
+    couponCode ,
+    upTo,
+    validFrom,
+    validTo
+  });
+  await newdata.save();
+  res.status(230).redirect('/admin/couponslist');
+  }
+  catch(err){
+    console.log('coupon post err',err)
+    res.status(500).send('internal server error')
+  }
+},
+
+
+couponlistGet:async(req,res)=>{
+  try{
+    const data=await couponModel.find({})
+    res.render('admin/couponList',{data})
+  }
+  catch(err){
+    res.status(500).send('internal sever eroor')
+  }
+ 
+}
 };
