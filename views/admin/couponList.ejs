@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>productslist</title>
+    <title>Coupons</title>
     <link rel="stylesheet" href='/admincss/usersList.css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.7.1.slim.js"></script>
@@ -21,9 +21,9 @@
         <div class="items">
             <li><i class="fa-solid fa-chart-pie"></i> <a href="/admin/home">Dashboard</a></li>
             <li><i class="fa-solid fa-table-cells-large"></i> <a href="/admin/productslist">Products</li>
-            <li> <i class="fa-regular fa-pen-to-square"></i> <a href="/admin/userslist">Users</a></li>
+            <li> <i class="fa-regular fa-pen-to-square"></i> <a href="#">Users</a></li>
             <li><i class="fa-solid fa-credit-card"></i> <a href="#">Catagorys</a></li>
-            <li><i class="fa-solid fa-burger"></i> <a href="#">coupons</a></li>
+            <li><i class="fa-solid fa-burger"></i> <a href='/admin/couponslist'>coupons</a></li>
             <li><i class="fa-solid fa-circle-plus"></i> <a href="/admin/addproducts">Add products</a></li>
 
         </div>
@@ -50,9 +50,9 @@
         </div>
 
         <h3 class="i-name">Coupons</h3>
-        <a href='/admin/addcoupon'>
-        <h4 class="f-name">Add coupon <i class="fa-solid fa-circle-plus"></i></h4>
-         </a>
+      <a href="/admin/addcoupon"><h4 class="f-name">Add coupons<i class="fa-solid fa-circle-plus"></i></h4></a>
+
+
 
             
 
@@ -69,38 +69,38 @@
             <table width="100%"> 
                 <thead>
                     <tr>
-                        <td>coupon code</td>
-                        <td>UpTO</td>
-                        <td>Valid from</td>
-                        <td>Valid to</td>
-                        
+                        <td>Coupon Code</td>
+                        <td>UpTo</td>
+                        <td>validFrom</td>
+                        <td>validTo</td>
+                        <!-- <td>hi</td> -->
                     </tr>
                 </thead>
                 <tbody>
-                
+                    <% data.forEach(data=>{%>
                     <tr>
                         <td class="people"> 
-                            
+                
                             <div class="people-de">
-                                <h5>name</h5>
+                                <h5><%=data.couponCode%></h5>
                                 <!-- <p>hello</p> -->
                             </div>
                         </td>
 
                         <td class="people-des">
-                          <h5>cat</h5>
-                          <p>sub</p>
+                          <h5><%=data.upTo%></h5>
+                          <!-- <p>web dev</p> -->
                         </td>
 
-                        <td class="active"><p>price</p></td>
+                        <td class="active"><p><%=data.validFrom.toDateString()%></p></td>
 
-                        <td class="role"> <p><i class="fa-solid fa-pen"></i></p></td>
+                        <td class="role"> <p><%=data.validTo.toDateString()%></p></td>
 
-                        <td class="edit"> <a href="/admin/deleteproduct>"><i class="fa-solid fa-trash"></i></a></td>
+                        <td class="edit"> <a href="/admin/deleteCoupon/<%=data._id%>"><i class="fa-solid fa-trash"></i></a></td>
                     </tr>
 
-                
-                   
+                <%})%>
+                    
 
 
 

@@ -19,7 +19,8 @@ const {
   addCatagoryPost,
   couponGet,
   couponPost,
-  couponlistGet
+  couponlistGet,
+  DeleteCoupon
 } = require("../controllers/adminController");
 
 
@@ -45,4 +46,5 @@ router.post('/addcatagory',upload.single('categoryImage'),addCatagoryPost)
 router.get('/couponslist',couponlistGet)
 router.get('/addcoupon',couponGet);
 router.post('/addcoupon',couponPost);
+router.get('/deleteCoupon/:id',DeleteCoupon)
 module.exports = router;

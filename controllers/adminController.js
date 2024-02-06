@@ -10,6 +10,7 @@ const couponModel =require("../models/adminSchema/couponSchema")
 
 
 
+const moment = require('moment');
 
 const nodemailer = require("nodemailer");
 const { constants } = require("buffer");
@@ -219,12 +220,14 @@ res.status(200).render('admin/addcoupon')
 couponPost:async(req,res)=>{
   try{
   const{couponCode,upTo,validFrom,validTo}=req.body;
-  console.log(req.body);
+
+  const validFromFormatted = moment(validFrom).format('YYYY-MM-DD');
+  const validToFormatted = moment(validTo).format('YYYY-MM-DD');
   const newdata = new couponModel({
     couponCode ,
     upTo,
-    validFrom,
-    validTo
+    validFrom:validFromFormatted,
+    validTo:validToFormatted
   });
   await newdata.save();
   res.status(230).redirect('/admin/couponslist');
@@ -243,6 +246,17 @@ couponlistGet:async(req,res)=>{
   }
   catch(err){
     res.status(500).send('internal sever eroor')
+  }
+ 
+},
+DeleteCoupon:async(req,res)=>{
+  try{
+    const _id=req.params.id
+    await couponModel.deleteOne({})
+    res.redirect('/admin/couponslist')
+  }
+  catch(err){
+    res.status(500).send('')
   }
  
 }
