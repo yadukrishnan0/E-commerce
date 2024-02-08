@@ -20,7 +20,10 @@ const {
   couponGet,
   couponPost,
   couponlistGet,
-  DeleteCoupon
+  DeleteCoupon,
+  editCouponGet,
+  categoryList,
+  updateCoupon
 } = require("../controllers/adminController");
 
 
@@ -47,4 +50,9 @@ router.get('/couponslist',couponlistGet)
 router.get('/addcoupon',couponGet);
 router.post('/addcoupon',couponPost);
 router.get('/deleteCoupon/:id',DeleteCoupon)
+      .get('/editcoupon/:id',editCouponGet)
+      .get('/categorylist',categoryList)
+      .post('/updatecoupon/:id',updateCoupon)
+       
+
 module.exports = router;

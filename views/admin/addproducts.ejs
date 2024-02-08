@@ -41,7 +41,7 @@
                                 <option value="electronics">Electronics</option>
                                 <option value="mens">Mens</option> -->
                                 <% data.forEach(data=>{%>
-                              <option value="womens"><%=data.categoryName%></option>
+                              <option value="<%=data.categoryName%>"><%=data.categoryName%></option>
                               <%})%>
                             </select>
                         </div>
@@ -49,21 +49,14 @@
                         <div class="form-group">
                             <label for="subCategory">Sub Category</label>
                             <select name="subCategory" id="subCategory">
-                                <option value="" selected disabled>Select sub category</option>
-                                <option value="Shirts">Shirts</option>
-                                <option value="Pants">Pants</option>
-                                <option value="Shoes">Shoes</option>
-                                <option value="Tops">Tops</option>
-                                <option value="Bottoms">Bottoms</option>
-                                <option value="Shawls">Shawls</option>
-                                <option value="Party Wears">Party Wears</option>
-                                <option value="Mobiles">Mobiles</option>
-                                <option value="Laptops">Laptops</option>
-                                <option value="Watches">Watches</option>
-                                <option value="Watches">Watches</option>                     
-                                <option value="Kitchen Items">Kitchen Items</option>
-                                <option value="Bedsheets">Bedsheets</option>
-                                <option value="Electronic Accessories">Electronic Accessories</option>
+                                <option value="" selected disabled>Select category</option>
+                                <% data.forEach(category => { %>
+            
+                                      <% category.subCategory.forEach(sub => { %>
+                                        <option value="<%= sub %>"><%= sub %></option>
+                                      <% }); %>
+                                    </optgroup>
+                                  <% }); %>
                             </select>
                         </div>
         

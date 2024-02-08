@@ -1,16 +1,13 @@
 const { Module } = require("module");
 require("dotenv").config();
 
-
 const productModel = require("../models/adminSchema/productSchema");
 const adminModel = require("../models/adminSchema/adminSChema");
 const signupModel = require("../models/userSchema/userSIgnupSchema");
 const catagoryModel = require("../models/adminSchema/catagorySChma");
-const couponModel =require("../models/adminSchema/couponSchema")
+const couponModel = require("../models/adminSchema/couponSchema");
 
-
-
-const moment = require('moment');
+const moment = require("moment");
 
 const nodemailer = require("nodemailer");
 const { constants } = require("buffer");
@@ -21,6 +18,7 @@ require("dotenv").config();
 const checkPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
 const bcrypt = require("bcrypt");
 const otp = require("../public/js/optgenerator");
+const { json } = require("stream/consumers");
 
 module.exports = {
   //  ..............admin signup............................
@@ -94,10 +92,11 @@ module.exports = {
 
   // ........................product maneaement.....................
 
-  addproductGet:async (req, res) => {
+  addproductGet: async (req, res) => {
     try {
-      const data= await catagoryModel.find({})
-      res.render("admin/addproducts",{data});
+      const data = await catagoryModel.find({});
+      res.render("admin/addproducts", { data });
+      console.log(data);
     } catch (err) {
       console.log(err);
       res.status(404).json({ success: false });
@@ -190,74 +189,106 @@ module.exports = {
   },
   addCatagoryPost: async (req, res) => {
     try {
-      
       const { subCategory, categoryName } = req.body;
-      
+      const newsubCata = JSON.parse(subCategory);
+      const newcatagory = JSON.parse(categoryName);
       const catagoryImage = req.file.filename;
 
       const newdata = new catagoryModel({
-        subCategory,
-        categoryName,
+        subCategory: newsubCata,
+        categoryName: newcatagory,
         catagoryImage,
       });
       await newdata.save();
-      res.status(230).redirect('/admin/home');
-  
+      res.status(230).redirect("/admin/categoryList");
     } catch (err) {
       console.log("add catagory error", err);
       res.status(500).json({ success: false });
     }
   },
-couponGet:(req,res)=>{
-  try{
-res.status(200).render('admin/addcoupon')
-  }
-  catch(err){
-    console.log('coupon get err',err)
-  }
-},
+  couponGet: (req, res) => {
+    try {
+      res.status(200).render("admin/addcoupon");
+    } catch (err) {
+      console.log("coupon get err", err);
+    }
+  },
 
-couponPost:async(req,res)=>{
-  try{
-  const{couponCode,upTo,validFrom,validTo}=req.body;
+  couponPost: async (req, res) => {
+    try {
+      const { couponCode, upTo, validFrom, validTo } = req.body;
+    
+      const validFromFormatted = moment(validFrom).format("MM-DD-YYYY");
+      const validToFormatted = moment(validTo).format("MM-DD-YYYY");
+      
+      const newdata = new couponModel({
+        couponCode:couponCode.toUpperCase(),
+        upTo,
+        validFrom: validFromFormatted,
+        validTo: validToFormatted,
+      });
+      await newdata.save();
+      res.status(230).redirect("/admin/couponslist");
+    } catch (err) {
+      console.log("coupon post err", err);
+      res.status(500).send("internal server error");
+    }
+  },
 
-  const validFromFormatted = moment(validFrom).format('YYYY-MM-DD');
-  const validToFormatted = moment(validTo).format('YYYY-MM-DD');
-  const newdata = new couponModel({
-    couponCode ,
-    upTo,
-    validFrom:validFromFormatted,
-    validTo:validToFormatted
-  });
-  await newdata.save();
-  res.status(230).redirect('/admin/couponslist');
-  }
-  catch(err){
-    console.log('coupon post err',err)
-    res.status(500).send('internal server error')
-  }
-},
-
-
-couponlistGet:async(req,res)=>{
-  try{
-    const data=await couponModel.find({})
-    res.render('admin/couponList',{data})
-  }
-  catch(err){
-    res.status(500).send('internal sever eroor')
-  }
- 
-},
-DeleteCoupon:async(req,res)=>{
-  try{
-    const _id=req.params.id
-    await couponModel.deleteOne({})
-    res.redirect('/admin/couponslist')
-  }
-  catch(err){
-    res.status(500).send('')
-  }
- 
-}
+  couponlistGet: async (req, res) => {
+    try {
+      const data = await couponModel.find({});
+      res.render("admin/couponList", { data });
+    } catch (err) {
+      res.status(500).send("internal sever eroor");
+    }
+  },
+  updateCoupon: async (req, res) => {
+    try {
+      const { couponCode, upTo, validFrom, validTo } = req.body;
+      const code=couponCode.toUpperCase();
+      const _id=req.params.id
+      abc= await couponModel.updateOne(
+        { _id },
+        {
+          $set: {
+            couponCode:code,
+            upTo:upTo,
+            validFrom:validFrom,
+            validTo: validTo,
+          },
+        }
+      );
+      
+      res.status(200).redirect('/admin/couponslist')
+    } catch (err) {
+      console.log("coupon update err", err);
+    }
+  },
+  DeleteCoupon: async (req, res) => {
+    try {
+      const _id = req.params.id;
+      await couponModel.deleteOne({});
+      res.redirect("/admin/couponslist");
+    } catch (err) {
+      res.status(500).send("");
+    }
+  },
+  editCouponGet: async (req, res) => {
+    try {
+      const _id = req.params.id;
+      const data = await couponModel.findOne({ _id });
+      res.status(200).render("admin/editCoupon", { data });
+    } catch (err) {
+      console.log("edit coupon error", err);
+    }
+  },
+  categoryList: async (req, res) => {
+    try {
+      const categorys = await catagoryModel.find({});
+      res.render("admin/categoryList", { categorys });
+    } catch (err) {
+      console.log("caegory list error", err);
+    }
+  },
 };

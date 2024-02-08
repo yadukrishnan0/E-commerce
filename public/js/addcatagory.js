@@ -2,6 +2,7 @@ const addCategory = document.getElementById('categoryForm');
 const submitBtn = document.getElementById('addBtn');
 
 let subCategories = [];
+
 const categoryName = document.getElementById('categoryName').value;
 
 const addBtn = document.getElementById('subcategoryBtn');
@@ -13,6 +14,7 @@ addBtn.addEventListener('click', () => {
         subCategories.push(subCategory);
         subCategoryInput.value = ''; 
     }
+
 });
 
 
@@ -53,7 +55,7 @@ submitBtn.addEventListener('click', async (event) => {
               errorMsg.innerHTML = 'Category added';
         
               setTimeout(() => {
-                window.location.href = '/admin/home';
+                window.location.href = '/admin/categoryList';
               }, 1000);
             } else {
               console.log('Error adding category');
@@ -64,3 +66,4 @@ submitBtn.addEventListener('click', async (event) => {
           }
         }
     });
+    

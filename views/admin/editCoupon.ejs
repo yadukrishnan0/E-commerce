@@ -25,7 +25,7 @@
             <li> <i class="fa-regular fa-pen-to-square"></i> <a href="/admin/userslist">Users</a></li>
             <li><i class="fa-solid fa-credit-card"></i> <a href="/admin/categoryList">Catagory</a></li>
             <li><i class="fa-solid fa-burger"></i> <a href='/admin/couponslist'>coupons</a></li>
-            <li><i class="fa-solid fa-chart-line"></i> <a href="#">Blank</a></li>
+            <li><i class="fa-solid fa-chart-line"></i> <a href="/admin/addproducts">Add product</a></li>
 
         </div>
 
@@ -40,20 +40,21 @@
          
 
 
-        <form  id="categoryForm" action="/admin/addcoupon" method="post">
+        <form  id="categoryForm" action='/admin/updatecoupon/<%=data._id%>' method="post">
             <label for="categoryName">Coupon Code:</label>
-            <input type="text" id="categoryName" name="couponCode" required>
+            <input type="text" id="categoryName" name="couponCode" required value="<%=data.couponCode%>">
     
             <label >Up to</label>
-            <input type="number" name="upTo" required>
+            <input type="number" name="upTo" required value="<%=data.upTo%>">
     
             <label >Valid from:</label>
-            <input type="date" name="validFrom"  >
+            <input type="date" name="validFrom" value="<%=data.validFrom.toISOString().substring(0, 10)%>">
 
             <label >Valid To:</label>
-            <input type="date" name="validTo"  >
+            <input type="date" name="validTo" value="<%=data.validTo.toISOString().substring(0, 10)%>">
+
     
-            <button type="submit" id="addBtn">submit</button>
+            <button type="submit" id="addBtn">Update</button>
             <p class="errorMg"></p>
         </form>
             
@@ -68,5 +69,28 @@
     </section>
 
 </body>
+<script>
+    const documentIdToDelete = <%=data._id%>;  // Replace with the actual document id
 
+fetch(`/api/collection/${documentIdToDelete}`, {
+  method: 'DELETE',
+  headers: {
+    'Content-Type': 'application/json',
+    // You may need to include additional headers, such as authentication tokens if required
+  },
+})
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Document deleted successfully:', data);
+  })
+  .catch(error => {
+    console.error('Error deleting document:', error);
+  });
+
+</script>
 </html>

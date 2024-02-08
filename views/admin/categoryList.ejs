@@ -15,7 +15,7 @@
 
     <section id="menu">
         <div class="logo">
-            <img src="/images/logo.png" alt="">
+            <!-- <img src="/Productimag/1707032014080-pic3.webp" alt=""> -->
             <h2>Dynamic</h2>
         </div>
         <div class="items">
@@ -49,8 +49,8 @@
             </div>
         </div>
 
-        <h3 class="i-name">Coupons</h3>
-      <a href="/admin/addcoupon"><h4 class="f-name">Add coupons<i class="fa-solid fa-circle-plus"></i></h4></a>
+        <h3 class="i-name">Category</h3>
+      <a href="/admin/addcatagory"><h4 class="f-name">Add Category<i class="fa-solid fa-circle-plus"></i></h4></a>
 
 
 
@@ -69,38 +69,43 @@
             <table width="100%"> 
                 <thead>
                     <tr>
-                        <td>Coupon Code</td>
-                        <td>UpTo</td>
-                        <td>validFrom</td>
-                        <td>validTo</td>
+                        <td>Category</td>
+                        <td>subcategory</td>
+                        <td>Edite</td>
+                        <td>delete</td>
                         <!-- <td>hi</td> -->
                     </tr>
                 </thead>
                 <tbody>
-                    <% data.forEach(data=>{%>
+                    <%categorys.forEach(data=>{%>
                     <tr>
                         <td class="people"> 
                 
                             <div class="people-de">
-                                <h5><%=data.couponCode%></h5>
+                                <h5><%=data.categoryName%></h5>
 
     
                             </div>
                         </td>
 
                         <td class="people-des">
-                          <h5><%=data.upTo%></h5>
-                          <!-- <p>web dev</p> -->
+                          
+                          
+            
+                            <% data.subCategory.forEach(sub => { %>
+                              
+                              <h5><%= sub %></h5>
+                            <% }); %>
+                          </optgroup>
+                        
                         </td>
 
-                        <td class="active"><p><%=data.validFrom.toDateString()%></p></td>
-
-                        <td class="role"> <p><%=data.validTo.toDateString()%></p></td>
-                        <td class="role"> <a href="/admin/editcoupon/<%=data._id%>"><p><i class="fa-solid fa-pen"></i></p></td></a>
-                        <td class="edit"> <a href="/admin/deleteCoupon/<%=data._id%>"><i class="fa-solid fa-trash"></i></a></td>
+                
+                        <td class="role"> <a href="/admin/editcoupon/"><p><i class="fa-solid fa-pen"></i></p></td></a>
+                        <td class="edit"> <a href="/admin/deleteCoupon/"><i class="fa-solid fa-trash"></i></a></td>
                     </tr>
-
-                <%})%>
+                 <%})%>
+                
                     
 
 
