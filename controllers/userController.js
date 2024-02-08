@@ -12,9 +12,9 @@ const checkPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
 const bcrypt = require("bcrypt");
 
 const otp = require("../public/js/optgenerator");
-const serviceSID = "VAb9f141d85c5a8e6a938b7bf45631fe57";
-const accountSID = "ACe141552ba745d052a4ef1be63e2d7b9a";
-const authToken = "28d06c6a1f066f5fc873566dc29206bd";
+const serviceSID = process.env.serviceSID;
+const accountSID = process.env.accountSID;
+const authToken = process.env.authToken;
 
 const client = require("twilio")(accountSID, authToken);
 

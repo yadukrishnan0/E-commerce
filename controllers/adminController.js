@@ -291,4 +291,15 @@ module.exports = {
       console.log("caegory list error", err);
     }
   },
+  deletecategory:async(req,res)=>{
+    try{
+      const _id=req.params.id;
+      await catagoryModel.deleteOne({_id});
+    }
+   catch(err){
+    console.log('deletecategory err',err)
+   }
+  
+
+  }
 };

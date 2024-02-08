@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coupons</title>
+    <title>Categorys</title>
     <link rel="stylesheet" href='/admincss/usersList.css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.7.1.slim.js"></script>
@@ -15,7 +15,6 @@
 
     <section id="menu">
         <div class="logo">
-            <!-- <img src="/Productimag/1707032014080-pic3.webp" alt=""> -->
             <h2>Dynamic</h2>
         </div>
         <div class="items">
@@ -101,8 +100,8 @@
                         </td>
 
                 
-                        <td class="role"> <a href="/admin/editcoupon/"><p><i class="fa-solid fa-pen"></i></p></td></a>
-                        <td class="edit"> <a href="/admin/deleteCoupon/"><i class="fa-solid fa-trash"></i></a></td>
+                        <td class="role"> <a href="/admin/updatecategory/<%=data._id%>"><p><i class="fa-solid fa-pen"></i></p></td></a>
+                        <td class="edit delete"> <a href="" data-id="<%=data._id%>" id="deletebtn"><button><i class="fa-solid fa-trash"></i></button></a></td>
                     </tr>
                  <%})%>
                 
@@ -124,11 +123,47 @@
         </div>
     </section>
 
-    <script>
-        $('#menu-btn').click(function() {
-           $('#menu').toggleClass('active')
-        })
-    </script>
+   
 </body>
+<script>
+    $('#menu-btn').click(function() {
+       $('#menu').toggleClass('active')
+    })
+ const btn=document.querySelector('.edit')
 
+ const deleteCata =()=>{  
+const deletebtn=document.getElementById('deletebtn')
+ const id=deletebtn.getAttribute('data-id');
+ console.log('hello')
+ console.log(id)
+  fetch(`/admin/deletecategory/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      
+    },
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+        
+      console.log('Document deleted successfully:', data);
+      window.location.href = '/admin/categorylist';
+    })
+    .catch(error => {
+      console.error('Error deleting document:', error);
+    });
+ }
+
+ document.querySelectorAll('.edit').forEach(element => {
+    element.addEventListener('click', () => {
+        deleteCata();
+    });
+});
+
+</script>
 </html>

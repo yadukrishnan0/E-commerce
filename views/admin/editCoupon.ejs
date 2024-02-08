@@ -69,28 +69,5 @@
     </section>
 
 </body>
-<script>
-    const documentIdToDelete = <%=data._id%>;  // Replace with the actual document id
-
-fetch(`/api/collection/${documentIdToDelete}`, {
-  method: 'DELETE',
-  headers: {
-    'Content-Type': 'application/json',
-    // You may need to include additional headers, such as authentication tokens if required
-  },
-})
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Document deleted successfully:', data);
-  })
-  .catch(error => {
-    console.error('Error deleting document:', error);
-  });
-
-</script>
+<script></script>
 </html>

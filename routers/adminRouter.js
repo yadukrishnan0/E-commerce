@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const storage = require("../middleware/multer");
+const storage = require("../utilities/multer");
 
 const {
   adminSignUpGet,
@@ -23,7 +23,8 @@ const {
   DeleteCoupon,
   editCouponGet,
   categoryList,
-  updateCoupon
+  updateCoupon,
+  deletecategory
 } = require("../controllers/adminController");
 
 
@@ -53,6 +54,7 @@ router.get('/deleteCoupon/:id',DeleteCoupon)
       .get('/editcoupon/:id',editCouponGet)
       .get('/categorylist',categoryList)
       .post('/updatecoupon/:id',updateCoupon)
+      .delete('/deletecategory/:id',deletecategory)
        
 
 module.exports = router;
