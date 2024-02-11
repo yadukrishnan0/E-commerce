@@ -16,6 +16,8 @@ const {
   loginPost,
 } = require("../controllers/userController");
 
+
+
 router.get("/signup", signupGet);
 router.post("/signup", signupPost);
 router.get("/otp", otpGet);

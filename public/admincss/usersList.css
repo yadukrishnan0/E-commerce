@@ -283,7 +283,9 @@ tbody tr td {
     justify-content: flex-start;
     align-items: center;
 }
-
+a{
+    text-decoration: none;
+}
 #menu-btn {
     display: none;
     color: #2b2b2b;

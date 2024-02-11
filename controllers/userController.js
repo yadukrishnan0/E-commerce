@@ -11,7 +11,7 @@ require("dotenv").config();
 const checkPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
 const bcrypt = require("bcrypt");
 
-const otp = require("../public/js/optgenerator");
+const emailverification = require('../utilities/nodemailer')
 const serviceSID = process.env.serviceSID;
 const accountSID = process.env.accountSID;
 const authToken = process.env.authToken;
@@ -136,34 +136,8 @@ module.exports = {
 
       if (account) {
         req.session.email = email;
-        const transporter = nodemailer.createTransport({
-          service: "gmail",
-          auth: {
-            user: process.env.USER,
-            pass: process.env.APP_PASSWORD,
-          },
-        });
-
-        const mailOption = {
-          from: {
-            name: "Verification",
-            address: "textacc3690@gmail.com",
-          },
-          to: email,
-          subject: "OTP",
-          text: `Your OTP is ${otp}`,
-        };
-
-        const sendMail = async (transporter, mailOption) => {
-          try {
-            await transporter.sendMail(mailOption);
-            console.log("Mail has been sent successfully");
-          } catch (error) {
-            console.log(Error`occurred while sending email: ${error}`);
-          }
-        };
-        sendMail(transporter, mailOption);
-        // req.flash("error", email);
+      const otp = Math.floor(Math.random() * 900000) + 100000;
+         emailverification(email,otp)
         res.redirect("/forgotOtp");
       }
     } catch (err) {
