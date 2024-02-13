@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categorys</title>
+    <title>Banner</title>
     <link rel="stylesheet" href='/admincss/usersList.css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css"> -->
     <script src="https://code.jquery.com/jquery-3.7.1.slim.js"></script>
     <script src="https://kit.fontawesome.com/d4181b2b31.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  </head>
+</head>
 
 <body>
 
     <section id="menu">
         <div class="logo">
+            <img src="/images/logo.png" alt="">
             <h2>Dynamic</h2>
         </div>
         <div class="items">
@@ -51,71 +50,66 @@
             </div>
         </div>
 
-        <h3 class="i-name">Category</h3>
-      <a href="/admin/addcatagory"><h4 class="f-name">Add Category<i class="fa-solid fa-circle-plus"></i></h4></a>
-    </div>
- <dir class="board">
+        <h3 class="i-name">Banner</h3>
+      <a href="/admin/addbanner"><h4 class="f-name">Add Banner<i class="fa-solid fa-circle-plus"></i></h4></a>
+
+
+
+            
+
+
+
+
+
+            
+            
+        </div>
+
+
+        <dir class="board">
             <table width="100%"> 
                 <thead>
                     <tr>
-                        <td>Category</td>
-                        <td>subcategory</td>
-                        <td>Edite</td>
-                        <td>delete</td>
-
+                        <td>Title</td>
+                        <td>Subtitle</td>
                         <!-- <td>hi</td> -->
                     </tr>
                 </thead>
                 <tbody>
-                    <%categorys.forEach(data=>{%>
-                    <tr class="delete_tr<%=data._id%>">
+                    
+                    <tr>
                         <td class="people"> 
                 
                             <div class="people-de">
-                                <h5><%=data.categoryName%></h5>
+                                <h5>jj</h5>
 
     
                             </div>
                         </td>
 
                         <td class="people-des">
-                           <% data.subCategory.forEach(sub => { %>
-                               <h5><%= sub %></h5>
-                            <% }); %>
-                          </optgroup>
+                          <h5>kerl</h5>
+            
                         </td>
-                        <td class="role"> <a href="/admin/updatecategory/<%=data._id%>"><p><i class="fa-solid fa-pen"></i></p></td></a>
-                        <td class="edit emoveCata"> <a href="" data-id="<%=data._id%>" id="deletebtn"><i class="fa-solid fa-trash" onclick="deleteCat(event,'<%=data._id%>')"></i></a></td>
+                        <td class="role"> <a href="/admin/editcoupon/"><p><i class="fa-solid fa-pen"></i></p></td></a>
+                        <td class="edit"> <a href="/admin/deleteCoupon/" ><i class="fa-solid fa-trash"></i></a></td>
                     </tr>
-                 <%})%>
-               </tbody>
+                </tbody>
             </table>
         </div>
     </section>
-</body>
-<script>
-    $('#menu-btn').click(function() {
-       $('#menu').toggleClass('active')
-    })
+
+    <script>
+        $('#menu-btn').click(function() {
+           $('#menu').toggleClass('active')
+        })
 
 
-
-async function deleteCat(event,catId){
-
-  event.preventDefault()
-
-  try {
-    const response=await axios.delete(`/admin/deletecategory?id=${catId}`)
-    const result = response.data
-    if(result.success){
-      document.querySelector(`.delete_tr${catId}`).remove()
-    }
+   
   
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-
 </script>
+
+    
+</body>
+
 </html>

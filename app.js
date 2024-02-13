@@ -1,14 +1,14 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const dotenv=require('dotenv').config();
-const port=process.env.PORT
+const dotenv = require("dotenv").config();
+const port = process.env.PORT;
 
+const Dbconnection = require("./config/db");
 const flash = require("connect-flash");
 const session = require("express-session");
 const cache = require("nocache");
-const adminRouter=require('./routers/adminRouter');
-
+const adminRouter = require("./routers/adminRouter");
 
 app.use(
   session({
@@ -21,7 +21,7 @@ app.use(
 app.use(cache());
 app.use(flash());
 
-const userRouter=require("./routers/userRouter")
+const userRouter = require("./routers/userRouter");
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -31,20 +31,15 @@ app.set("views", "views");
 app.use(express.static("public"));
 app.use(express.json());
 
+app.use("/", userRouter);
+app.use("/admin", adminRouter);
 
-app.use('/',userRouter);
-app.use('/admin',adminRouter)
-
-mongoose
-  .connect("mongodb://localhost:27017/Ecommerce")
-  .then(() => console.log("data base connected"))
-  .catch((err) => console.log("error data base connection error"));
-
-app.listen(port, () => {
-    console.log(port, "server successfully");
+Dbconnection()
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`server running ${port}`);
+    });
+  })
+  .catch(() => {
+    console.log("error data base connection");
   });
-  
-
-
-
-  

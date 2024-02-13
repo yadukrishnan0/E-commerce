@@ -11,7 +11,6 @@ const {
   AdminHomeGet,
   UsersListGet,
   deleteUser,
-  
 } = require("../controllers/adminController");
 
 const {
@@ -21,6 +20,7 @@ const {
   productDelete,
 } = require("../controllers/productController");
 
+// coupon
 const {
   couponGet,
   couponPost,
@@ -30,14 +30,17 @@ const {
   updateCoupon,
 } = require("../controllers/couponController");
 
-
-
-const{
+// category
+const {
   addCatagory,
   addCatagoryPost,
   categoryList,
- deletecategory,
-}=require('../controllers/categoryController')
+  deletecategory,
+} = require("../controllers/categoryController");
+
+// banner
+
+const { bannerGet, AddbannerGet,AddbannerPost} = require("../controllers/bannerController");
 
 const upload = multer({ storage });
 
@@ -60,8 +63,11 @@ router.post("/addcoupon", couponPost);
 router
   .get("/deleteCoupon/:id", DeleteCoupon)
   .get("/editcoupon/:id", editCouponGet)
-  .get("/categorylist", categoryList)
+  .get("/categorylist", categoryList) 
   .post("/updatecoupon/:id", updateCoupon)
-  .delete("/deletecategory/:id", deletecategory);
+  .delete("/deletecategory", deletecategory);
 
+router.get("/bannerlist", bannerGet)
+router.get("/addbanner", AddbannerGet);
+router.post('/addbanner',upload.single('BannerImage'),AddbannerPost)
 module.exports = router;

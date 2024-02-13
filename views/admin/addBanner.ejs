@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href='/admincss/addcatagory.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js"></script>
+    <script src="https://kit.fontawesome.com/d4181b2b31.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+    <section id="menu">
+        <div class="logo">
+            <!-- <img src="/images/logo.png" alt=""> -->
+            <h2>Dynamic</h2>
+        </div>
+        <div class="items">
+            <li><i class="fa-solid fa-chart-pie"></i> <a href="/admin/home">Dashboard</a></li>
+            <li><i class="fa-solid fa-table-cells-large"></i> <a href="/admin/productslist">Products</li>
+            <li> <i class="fa-regular fa-pen-to-square"></i> <a href="/admin/userslist">Users</a></li>
+            <li><i class="fa-solid fa-credit-card"></i> <a href="/admin/categorylist">Category</a></li>
+            <li><i class="fa-solid fa-burger"></i> <a href="/admin/couponslist">coupon</a></li>
+            <li><i class="fa-solid fa-burger"></i> <a href='/admin/bannerlist'>Banner</a></li>
+            <li><i class="fa-solid fa-chart-line"></i> <a href="/admin/addproducts">Add products</a></li>
+
+        </div>
+
+    </section>
+
+
+    <section id="interface">
+            
+
+        
+        
+         
+
+
+        <form  id="bannerForm" >
+            <label for="categoryName">Title:</label>
+            <input type="text"  name="Title" required>
+    
+            <label for="subcategoryName">Discription:</label>
+            <input type="text"  name='Discription' required>
+              
+            <label for="subcategoryName">Expiry</label>
+            <input type="date" style="width: 257px;border-radius:5px;height:35px;" name="Expiry" required>
+    
+            <label for="categoryImage">Banner Image:</label>
+            <input type="file" id="imageInput" name="BannerImage" accept="image/*"  >
+    
+            <button type="submit" id="addBtn">submit</button>
+            <p class="errorMg"></p>
+        </form>
+            </section>
+
+        </body>
+<script>
+    const btn=document.getElementById('addBtn');
+    const errorMg=document.querySelector('.errorMg')
+
+    btn.addEventListener('click',async function(e){
+              e.preventDefault();
+
+              const BannerImage=document.getElementsByName('BannerImage')[0].value.trim();
+              const Expiry=document.getElementsByName('Expiry')[0].value.trim();
+              const Discription=document.getElementsByName('Discription')[0].value.trim()
+              const Title=document.getElementsByName('Title')[0].value.trim()
+
+              const bannerForm=document.getElementById('bannerForm')
+
+              if(BannerImage == '' || Expiry == '' || Discription == '' || Title ==''){
+              errorMg.innerHTML='fill the form'
+              setTimeout(() => {
+                errorMg.innerHTML=''
+              }, 2000);
+              }
+           else{
+
+           
+              const formData = new FormData(bannerForm)
+             const response= await axios.post('/admin/addbanner',formData,{
+                headers: {
+                  'Content-Type': 'multipart/form-data'  
+                }
+             })
+            }
+            
+             if(response.status==200){
+                window.location.href='/admin/bannerList'
+             }
+             else{
+                errorMg.innerHTML='banner add failed'
+                setTimeout(() => {
+                    errorMg.innerHTML=''
+                }, 2000);
+             }
+    })
+</script>
+</html>

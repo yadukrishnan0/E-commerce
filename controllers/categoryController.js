@@ -49,10 +49,12 @@ module.exports = {
       console.log("caegory list error", err);
     }
   },
+
+
   deletecategory: async (req, res) => {
     try {
-      const _id = req.params.id;
-      await catagoryModel.deleteOne({ _id });
+      const id = req.query.id;
+      await catagoryModel.deleteOne({ _id:id});
       res.status(200).json({ success: true, message: "successfully deleted" });
     } catch (err) {
       console.log("deletecategory err", err);

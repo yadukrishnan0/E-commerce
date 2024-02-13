@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
       const uniqueSuffix = Date.now() + '-' + file.originalname
       cb(null,uniqueSuffix)
     }
-  })
+  }) 
      
 
  module.exports = storage
