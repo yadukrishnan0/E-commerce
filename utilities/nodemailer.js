@@ -1,6 +1,5 @@
 
 
-
 const nodemailer = require("nodemailer");
 
 const emailverification=(email,otp)=>{

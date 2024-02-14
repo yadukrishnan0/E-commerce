@@ -18,6 +18,8 @@ const {
   addproductGet,
   productsGet,
   productDelete,
+  updateProductGet,
+  updateProductPost
 } = require("../controllers/productController");
 
 // coupon
@@ -60,8 +62,12 @@ router.get("/addproducts", addproductGet);
 router.post("/addproducts", upload.array("productImage", 20), addproductPost);
 router.get("/userslist", UsersListGet);
 router.get("/delete/:id", deleteUser);
+
 router.get("/productslist", productsGet);
-router.get("/deleteproduct/:id", productDelete);
+router.get("/deleteproduct/:id", productDelete)
+      .get('/updateProduct',updateProductGet)
+      .post('/updateProduct',upload.array("productImage", 20),updateProductPost)
+
 router.get("/addcatagory", addCatagory);
 router.post("/addcatagory", upload.single("categoryImage"), addCatagoryPost);
 router.get("/couponslist", couponlistGet);

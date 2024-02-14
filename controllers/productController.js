@@ -2,7 +2,7 @@ const { Module } = require("module");
 require("dotenv").config();
 
 const productModel = require("../models/adminSchema/productSchema");
-const catagoryModel = require("../models/adminSchema/catagorySChma");
+const  catagoryModel= require("../models/adminSchema/catagorySChma");
 
 const moment = require("moment");
 
@@ -17,7 +17,6 @@ module.exports = {
     try {
       const data = await catagoryModel.find({});
       res.render("admin/addproducts", { data });
-      console.log(data);
     } catch (err) {
       console.log(err);
       res.status(404).json({ success: false });
@@ -39,7 +38,6 @@ module.exports = {
         stock,
         category,
         subCategory,
-        deliveryDate,
         colour,
         size,
         description,
@@ -52,7 +50,6 @@ module.exports = {
         stock,
         category,
         subCategory,
-        deliveryDate,
         colour,
         size,
         description,
@@ -86,4 +83,48 @@ module.exports = {
       console.log("delete user error", err.message);
     }
   },
+  updateProductGet:async(req,res)=>{
+    try{
+      const _id=req.query.id
+      const productdata=await productModel.findOne({_id})
+      const data = await catagoryModel.find({});
+      res.render('admin/updateProduct',{data,productdata});
+    }
+    catch(err){
+      console.log('update product get error',err)
+    }
+  },
+  updateProductPost:async (req,res)=>{
+    try{
+      const productImage = req.files.map((file) => file.filename);
+      const _id=req.query.id
+      const {
+        productName,
+        price,
+        discount,
+        stock,
+        category,
+        subCategory,
+        colour,
+        size,
+        description,
+      } = req.body;
+      await productModel.updateOne({_id},{$set:{
+        productName:productName,
+        price:price,
+        discount:discount,
+        stock:stock,
+        category:category,
+        subCategory:subCategory,
+        colour:colour,
+        size:size,
+        description:description,
+        productImage:productImage
+      }})
+      res.status(230).json({ success: true ,message:'product update successfully'});
+    }
+    catch(err){
+      console.log('update product',err)
+    }
+  }
 };

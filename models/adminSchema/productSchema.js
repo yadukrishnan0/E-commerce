@@ -25,10 +25,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    deliveryDate: {
-        type: Date,
-        required: true
-    },
+
     colour: {
         type: String,
 
