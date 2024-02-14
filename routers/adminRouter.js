@@ -40,7 +40,14 @@ const {
 
 // banner
 
-const { bannerGet, AddbannerGet,AddbannerPost} = require("../controllers/bannerController");
+const {
+  bannerGet,
+  AddbannerGet,
+  AddbannerPost,
+  DeleteBanner,
+  updateBannerGET,
+  updateBannerPost
+} = require("../controllers/bannerController");
 
 const upload = multer({ storage });
 
@@ -63,11 +70,15 @@ router.post("/addcoupon", couponPost);
 router
   .get("/deleteCoupon/:id", DeleteCoupon)
   .get("/editcoupon/:id", editCouponGet)
-  .get("/categorylist", categoryList) 
+  .get("/categorylist", categoryList)
   .post("/updatecoupon/:id", updateCoupon)
-  .delete("/deletecategory", deletecategory);
+  .delete("/deletecategory", deletecategory)
+  
 
 router.get("/bannerlist", bannerGet)
-router.get("/addbanner", AddbannerGet);
-router.post('/addbanner',upload.single('BannerImage'),AddbannerPost)
+      .get("/addbanner", AddbannerGet)
+      .post("/addbanner", upload.single("BannerImage"), AddbannerPost)
+       .delete("/deletebanner", DeleteBanner)
+       .get('/updateBanner',updateBannerGET)
+       .post('/updateBanner',upload.single("BannerImage"),updateBannerPost)
 module.exports = router;

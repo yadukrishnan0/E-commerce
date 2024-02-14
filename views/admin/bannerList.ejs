@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banner</title>
+    <title>Banners</title>
     <link rel="stylesheet" href='/admincss/usersList.css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.7.1.slim.js"></script>
     <script src="https://kit.fontawesome.com/d4181b2b31.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -50,66 +51,81 @@
             </div>
         </div>
 
-        <h3 class="i-name">Banner</h3>
-      <a href="/admin/addbanner"><h4 class="f-name">Add Banner<i class="fa-solid fa-circle-plus"></i></h4></a>
-
-
-
-            
-
-
-
-
-
-            
-            
-        </div>
-
-
-        <dir class="board">
+        <h3 class="i-name">BANNERS</h3>
+        <a href="/admin/addbanner"><h4 class="f-name">Add Banners<i class="fa-solid fa-circle-plus"></i></h4></a>
+         </div>
+     <dir class="board">
             <table width="100%"> 
                 <thead>
                     <tr>
                         <td>Title</td>
-                        <td>Subtitle</td>
-                        <!-- <td>hi</td> -->
+                        <td>Discription</td>
+                        <td>Expiry</td>
+                        <td>Actions</td>
+                        <td></td>
                     </tr>
                 </thead>
                 <tbody>
-                    
-                    <tr>
+                    <% data.forEach(data=>{%>
+                    <tr class="delete_tr<%= data._id%>">
                         <td class="people"> 
-                
+                            <img src="/Productimag/<%=data.BannerImage%>" alt="">
                             <div class="people-de">
-                                <h5>jj</h5>
-
-    
+                                <h5><%=data.Title%></h5>
+                                <!-- <p>hello</p> -->
                             </div>
                         </td>
 
                         <td class="people-des">
-                          <h5>kerl</h5>
-            
+                          <h5><%=data.Discription%></h5>
+                          <!-- <p>web dev</p> -->
                         </td>
-                        <td class="role"> <a href="/admin/editcoupon/"><p><i class="fa-solid fa-pen"></i></p></td></a>
-                        <td class="edit"> <a href="/admin/deleteCoupon/" ><i class="fa-solid fa-trash"></i></a></td>
+
+                        <td class="active"><p><%=data.Expiry.toDateString()%></p></td>
+
+                        <td class="role"><a href="/admin/updateBanner?id=<%=data._id%>"><i class="fa-solid fa-pen"></i></a></td>
+
+                        <td class="edit"> <a href="/admin/delete/"><i class="fa-solid fa-trash"  onclick="deleteCat(event,'<%=data._id%>')"></i></a></td>
                     </tr>
+
+                    <%})%>
+                    
+
+
+
+                 
+
+
+
+
+
+
+                
+                    
                 </tbody>
             </table>
         </div>
     </section>
 
     <script>
-        $('#menu-btn').click(function() {
-           $('#menu').toggleClass('active')
-        })
+        $("#menu-btn").click(function () {
+  $("#menu").toggleClass("active");
+});
 
+async function deleteCat(event,catId) {
+  event.preventDefault();
 
-   
-  
-</script>
-
-    
+  try {
+    const response = await axios.delete(`/admin/deletebanner?id=${catId}`);
+    const result = response.data;
+    if (result.success) {
+      document.querySelector(`.delete_tr${catId}`).remove();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+    </script>
 </body>
 
 </html>

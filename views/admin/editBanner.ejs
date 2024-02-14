@@ -43,18 +43,18 @@
 
         <form  id="bannerForm" >
             <label for="categoryName">Title:</label>
-            <input type="text"  name="Title" required>
+            <input type="text"  name="Title" required value="<%=data.Title%>">
     
             <label for="subcategoryName">Discription:</label>
-            <input type="text"  name='Discription' required>
+            <input type="text"  name='Discription' required  value="<%=data.Discription%>">
               
             <label for="subcategoryName">Expiry</label>
-            <input type="date" style="width: 257px;border-radius:5px;height:35px;" name="Expiry" required>
+            <input type="date" style="width: 257px;border-radius:5px;height:35px;" name="Expiry" required  value="<%=data.Expiry.toISOString().substring(0, 10)%>" >
     
             <label for="categoryImage">Banner Image:</label>
-            <input type="file" id="imageInput" name="BannerImage" accept="image/*"  >
+            <input type="file" id="imageInput" name="BannerImage" accept="image/*" value="<%=data.BannerImage%>" >
     
-            <button type="submit" id="addBtn">submit</button>
+            <button type="submit" id="addBtn" onclick="updateBanner(event,'<%=data._id%>')">update banner</button>
             <p class="errorMg"></p>
         </form>
             </section>
@@ -64,16 +64,14 @@
     const btn=document.getElementById('addBtn');
     const errorMg=document.querySelector('.errorMg')
 
-    btn.addEventListener('click',async function(e){
+    async function updateBanner(e,id){
               e.preventDefault();
-
               const BannerImage=document.getElementsByName('BannerImage')[0].value.trim();
               const Expiry=document.getElementsByName('Expiry')[0].value.trim();
               const Discription=document.getElementsByName('Discription')[0].value.trim()
               const Title=document.getElementsByName('Title')[0].value.trim()
 
-              const bannerForm=document.getElementById('bannerForm')
-
+              const bannerForm=document.getElementById('bannerForm');
               if(BannerImage == '' || Expiry == '' || Discription == '' || Title ==''){
               errorMg.innerHTML='fill the form'
               setTimeout(() => {
@@ -84,7 +82,7 @@
 
            
               const formData = new FormData(bannerForm)
-             const response= await axios.post('/admin/addbanner',formData,{
+             const response= await axios.post(`/admin/updateBanner?id=${id}`,formData,{
                 headers: {
                   'Content-Type': 'multipart/form-data'  
                 }
@@ -106,6 +104,6 @@
                 }, 2000);
              }
             }
-    })
+    }
 </script>
 </html>
