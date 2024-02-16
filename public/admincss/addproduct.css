@@ -357,6 +357,9 @@ textarea {
 .errorMsg{
     color:red;
 }
+.success{
+    color:green;
+}
 
 @media screen and (max-width:1000px) {
     .image_space{

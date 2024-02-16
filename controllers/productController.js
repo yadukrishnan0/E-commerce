@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const productModel = require("../models/adminSchema/productSchema");
 const  catagoryModel= require("../models/adminSchema/catagorySChma");
-
+const fs=require('fs')
 const moment = require("moment");
 
 const { constants } = require("buffer");
@@ -76,11 +76,25 @@ module.exports = {
   productDelete: async (req, res) => {
     try {
       const _id = req.params.id;
+      const product = await productModel.findOne({ _id});
+
+      product.productImage.forEach(element => {
+        
+        const imagePath  ='./public/' + 'Productimag/' + element  
+  
+  
+        if(fs.existsSync(imagePath)){
+  
+            fs.unlinkSync(imagePath)
+        }
+      });
+
       await productModel.deleteOne({ _id });
       res.status(200).redirect("/admin/productslist");
+
     } catch (err) {
       res.status(400).json({ success: false });
-      console.log("delete user error", err.message);
+      console.log("delete product error", err.message);
     }
   },
   updateProductGet:async(req,res)=>{
@@ -125,6 +139,16 @@ module.exports = {
     }
     catch(err){
       console.log('update product',err)
+    }
+  },
+  viewsingleProductGet:async (req,res)=>{
+    try{
+      const _id=req.query.id;
+       const product=await productModel.findOne({_id})
+      res.render('admin/viewSingleProduct',{product});
+    }
+    catch(err){
+      console.log('viewsingleproduct admin error',err)
     }
   }
 };

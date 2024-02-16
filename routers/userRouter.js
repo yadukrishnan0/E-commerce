@@ -14,6 +14,7 @@ const {
   ResetPassGet,
   resetpassPost,
   loginPost,
+  userHomeGet
 } = require("../controllers/userController");
 
 
@@ -30,6 +31,10 @@ router.post('/userLoginOtpVerify',forgototpPOst);
 router.get('/resetPassword',ResetPassGet);
 router.post("/userLoginResetPass",resetpassPost);
 router.post('/userLogin',loginPost)
+
+
+router.get('/home',userHomeGet)
+
 
 
 module.exports = router;

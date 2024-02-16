@@ -2,7 +2,7 @@ const { Module } = require("module");
 require("dotenv").config();
 
 const catagoryModel = require("../models/adminSchema/catagorySChma");
-
+const fs=require('fs');
 const moment = require("moment");
 
 const { constants } = require("buffer");
@@ -54,6 +54,14 @@ module.exports = {
   deletecategory: async (req, res) => {
     try {
       const id = req.query.id;
+      const category = await catagoryModel.findOne({ _id:id});
+      const imagePath  ='./public/' + 'Productimag/' + category.catagoryImage   
+      if(fs.existsSync(imagePath)){
+
+          fs.unlinkSync(imagePath)
+      }
+
+
       await catagoryModel.deleteOne({ _id:id});
       res.status(200).json({ success: true, message: "successfully deleted" });
     } catch (err) {

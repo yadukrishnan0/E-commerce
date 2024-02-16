@@ -19,7 +19,8 @@ const {
   productsGet,
   productDelete,
   updateProductGet,
-  updateProductPost
+  updateProductPost,
+  viewsingleProductGet
 } = require("../controllers/productController");
 
 // coupon
@@ -67,6 +68,7 @@ router.get("/productslist", productsGet);
 router.get("/deleteproduct/:id", productDelete)
       .get('/updateProduct',updateProductGet)
       .post('/updateProduct',upload.array("productImage", 20),updateProductPost)
+      .get('/viewsingleProduct',viewsingleProductGet)
 
 router.get("/addcatagory", addCatagory);
 router.post("/addcatagory", upload.single("categoryImage"), addCatagoryPost);
@@ -87,4 +89,5 @@ router.get("/bannerlist", bannerGet)
        .delete("/deletebanner", DeleteBanner)
        .get('/updateBanner',updateBannerGET)
        .post('/updateBanner',upload.single("BannerImage"),updateBannerPost)
+
 module.exports = router;

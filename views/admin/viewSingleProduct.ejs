@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecart</title>
+    <!-- Bootstrap css cdn link -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <!-- end of Bootstrap css cdn link -->
+    <!-- Style css -->
+    <link rel="stylesheet" href="/admincss/viewSingleProduct.css"/>
+    <!-- end of Style css -->
+  </head>
+  <body>
+    
+
+    <!-- main -->
+    <main>
+      
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 padding">
+            <div class="imgMain">
+              <div
+                class="d-flex justify-content-center align-items-center position-relative demo-area mainImg"
+              >
+                <!-- <div class="demo-area position-relative">
+                  
+                </div> -->
+                <img
+                class="demo-trigger mainFistImg"
+                src="/Productimag/<%=product.productImage[0]%>"
+                data-zoom="/Productimag/<%=product.productImage[0]%>"
+                alt=""
+                />
+                <div class="detail"></div>
+               
+              </div>
+
+              <div class="d-flex align-items-center">
+                <%product.productImage.forEach(data=>{%>
+                <div onclick="changeImg('/Productimag/<%=data%>')" class="smImg">
+                  <img src="/Productimag/<%=data%>" alt="" />
+                </div>
+                <%})%>  
+                
+                
+                
+                
+              </div>
+            </div>
+            <div class="productContent">
+              <!-- <h2 class="pName">Fort S48</h2>
+              <p class="sTittle">48 Watts Soundbar</p> -->
+              <h2 class="hDescription">
+                <%=product.productName%>
+              </h2>
+              <!-- <p class="pDescription">
+                The first-of-their-kind 48-Watt soundbar with an external
+                Subwoofer with each are here to change audio experience for you.
+                Experience pure audio in 48 watts like never before.
+              </p> -->
+              <p class="colorPallet">COLOR:<%=product.colour%></p>
+              <div class="rating d-flex">
+                <p class="ratedStar">★</p>
+                <p class="ratedStar">★</p>
+                <p class="ratedStar">★</p>
+                <p class="ratedStar">★</p>
+                <p class="unRatedStar">★</p>
+              </div>
+              <div class="price">
+                <%const result = (product.price * product.discount) / 100;
+                            const discountedPrice = Math.ceil(product.price - result);%>
+                          
+                <p class="lPrice">₹<%=discountedPrice%></p>
+                <p class="fPrice">₹<%=product.price%></p>
+                <p class="stock text-success"><%=product.discount%>%</p>
+              </div>
+              <p class="stock text-success">Stock <%=product.stock%></p>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="rateReview">
+              <div
+                class="review d-flex align-items-center justify-content-between"
+              >
+                <h2>Discription</h2>
+
+                
+              </div>
+              <div class="content">
+                
+                <div class="userReview">
+                  
+                  <p class="reviewDetails"><%=product.description%></p>
+                </div>
+
+
+                
+
+
+               
+
+                 
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- end of main -->
+
+    
+    
+    
+
+    <!-- custom js -->
+    <script src="https://cdn.jsdelivr.net/npm/drift-zoom@1.5.0/dist/Drift.min.js"></script>
+    <script>
+        const hamburgerBtn = document.querySelector(".hamburger");
+const mobilenavigationList = document.querySelector(".mobilenavigationList");
+const mobilenavigation = document.querySelector(".mobilenavigation");
+const logo = document.querySelector(".logo");
+
+hamburgerBtn.addEventListener("click", () => {
+  hamburgerBtn.classList.toggle("active");
+  mobilenavigationList.classList.toggle("active");
+  mobilenavigation.classList.toggle("active");
+  logo.classList.toggle("active");
+});
+
+const demoTrigger = document.querySelector(".demo-trigger");
+const paneContainer = document.querySelector(".detail");
+
+new Drift(demoTrigger, {
+  paneContainer: paneContainer,
+  inlinePane: false,
+});
+
+function changeImg(url) {
+  document.querySelector(".mainFistImg").setAttribute("src", `${url}`);
+  document.querySelector(".mainFistImg").setAttribute("data-zoom", `${url}`);
+}
+
+const filterBtn = document.querySelector(".fliterIcon");
+const fliterMoblie = document.querySelector(".fliter-moblie");
+
+filterBtn.addEventListener("click", () => {
+  fliterMoblie.classList.toggle("active");
+});
+
+document.querySelector('.mainImg').addEventListener('mouseover', () => {
+    document.querySelector('.detail').style.display = 'block';
+});
+
+document.querySelector('.mainImg').addEventListener('mouseout', () => {
+    document.querySelector('.detail').style.display = 'none';
+});
+    </script>
+    <!-- end of custom js -->
+    <!-- fontawesome -->
+    <script
+      src="https://kit.fontawesome.com/23d1247997.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- end of fontawesome -->
+    <!-- Bootstrap script file -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <!--end of Bootstrap script file -->
+  </body>
+</html>

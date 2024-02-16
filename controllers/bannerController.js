@@ -1,5 +1,6 @@
 const { ConversationPage } = require('twilio/lib/rest/conversations/v1/conversation');
 const bannerModel =require('../models/adminSchema/bannerSchema');
+const fs=require('fs')
 module.exports={
     bannerGet:async (req,res)=>{
         try{
@@ -39,6 +40,13 @@ module.exports={
     DeleteBanner:async (req,res)=>{
         try{
             const id = req.query.id;
+            const banner = await bannerModel.findOne({ _id:id});
+            const imagePath  ='./public/' + 'Productimag/' + banner.BannerImage    
+            if(fs.existsSync(imagePath)){
+
+                fs.unlinkSync(imagePath)
+            }
+ 
             await bannerModel.deleteOne({ _id:id});
             res.status(200).json({ success: true, message: "successfully deleted" });
         }

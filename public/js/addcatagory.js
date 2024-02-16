@@ -28,7 +28,7 @@ submitBtn.addEventListener('click', async (event) => {
     }
     const categoryName = document.getElementById('categoryName').value
     const categoryimage = document.getElementById('imageInput').files[0];
-    console.log(categoryName);
+   
     if (!categoryName || !categoryimage) {
         errorMsg.style.visibility = 'visible';
        
@@ -43,6 +43,7 @@ submitBtn.addEventListener('click', async (event) => {
             formData.append('subCategory',JSON.stringify(subCategories));
             formData.append('categoryName',JSON.stringify(categoryName));
             formData.append('categoryImage',categoryimage)
+            
             const response = await axios.post('/admin/addcatagory', formData, {
                 headers: {
                   'Content-Type': 'multipart/form-data'  

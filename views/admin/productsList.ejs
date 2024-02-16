@@ -80,9 +80,10 @@
                 </thead>
                 <tbody>
                 <% products.forEach(data=>{%>
+                    
                     <tr>
                         <td class="people"> 
-                            <img src="/Productimag/<%= data.productImage[0]%>" alt="">
+                            <a href="/admin/viewsingleProduct?id=<%=data._id%>"><img src="/Productimag/<%= data.productImage[0]%>" alt=""> </a>
                             <div class="people-de">
                                 <h5><%=data.productName%></h5>
                                 <!-- <p>hello</p> -->
@@ -101,7 +102,7 @@
                         <td class="edit"> <a href="/admin/deleteproduct/<%=data._id%>"><i class="fa-solid fa-trash"></i></a></td>
                     </tr>
 
-                
+               
                     <%})%>
 
 

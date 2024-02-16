@@ -12,6 +12,8 @@ const checkPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
 const bcrypt = require("bcrypt");
 
 const emailverification = require('../utilities/nodemailer')
+const productModel = require("../models/adminSchema/productSchema");
+
 const serviceSID = process.env.serviceSID;
 const accountSID = process.env.accountSID;
 const authToken = process.env.authToken;
@@ -198,4 +200,15 @@ module.exports = {
       res.status(500).send("Internal Server Error");
     }
   },
+
+  userHomeGet:async(req,res)=>{
+    try{
+       const products = await productModel.find({})
+      res.render('user/userHome',{products})
+    }
+    catch(err){
+      console.log('userhome get error',err)
+    }
+  }
+  
 };

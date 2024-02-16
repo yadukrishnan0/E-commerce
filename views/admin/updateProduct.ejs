@@ -36,10 +36,8 @@
                         <div class="form-group">
                             <label for="category">Category</label>
                             <select id="category" name="category">
-                                <option value="" selected disabled>Select category</option>
-                                <!-- <option value="home">Home</option>
-                                <option value="electronics">Electronics</option>
-                                <option value="mens">Mens</option> -->
+                                <option value="<%=productdata.category%>" selected ><%=productdata.category%></option>
+                                
                                 <% data.forEach(data=>{%>
                               <option value="<%=data.categoryName%>"><%=data.categoryName%></option>
                               <%})%>
@@ -49,7 +47,7 @@
                         <div class="form-group">
                             <label for="subCategory">Sub Category</label>
                             <select name="subCategory" id="subCategory">
-                                <option value="" selected disabled>Select category</option>
+                                <option value="<%=productdata.subCategory%>" selected ><%=productdata.subCategory%></option>
                                 <% data.forEach(category => { %>
             
                                       <% category.subCategory.forEach(sub => { %>

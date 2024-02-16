@@ -86,8 +86,14 @@ module.exports = {
     }
   },
   AdminHomeGet: async (req, res) => {
-    const users = await signupModel.find({});
-    res.render("admin/adminHome");
+    try{
+      const users =  await signupModel.find({});
+      res.render("admin/adminHome",{users});
+    }
+    catch(err){
+      console.log('adminhome get error',err)
+    }
+   
   },
 
   // ........................product maneaement.....................
