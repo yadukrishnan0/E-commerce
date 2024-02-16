@@ -17,7 +17,9 @@ const {
   userHomeGet
 } = require("../controllers/userController");
 
-
+ const{
+  userSingleproduct
+ }=require('../controllers/productController')
 
 router.get("/signup", signupGet);
 router.post("/signup", signupPost);
@@ -34,7 +36,7 @@ router.post('/userLogin',loginPost)
 
 
 router.get('/home',userHomeGet)
-
+      .get('/user/viewsingleproduct',userSingleproduct)
 
 
 module.exports = router;

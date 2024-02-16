@@ -2,8 +2,8 @@ const { Module } = require("module");
 require("dotenv").config();
 
 const productModel = require("../models/adminSchema/productSchema");
-const  catagoryModel= require("../models/adminSchema/catagorySChma");
-const fs=require('fs')
+const catagoryModel = require("../models/adminSchema/catagorySChma");
+const fs = require("fs");
 const moment = require("moment");
 
 const { constants } = require("buffer");
@@ -76,42 +76,37 @@ module.exports = {
   productDelete: async (req, res) => {
     try {
       const _id = req.params.id;
-      const product = await productModel.findOne({ _id});
+      const product = await productModel.findOne({ _id });
 
-      product.productImage.forEach(element => {
-        
-        const imagePath  ='./public/' + 'Productimag/' + element  
-  
-  
-        if(fs.existsSync(imagePath)){
-  
-            fs.unlinkSync(imagePath)
+      product.productImage.forEach((element) => {
+        const imagePath = "./public/" + "Productimag/" + element;
+
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
         }
       });
 
       await productModel.deleteOne({ _id });
       res.status(200).redirect("/admin/productslist");
-
     } catch (err) {
       res.status(400).json({ success: false });
       console.log("delete product error", err.message);
     }
   },
-  updateProductGet:async(req,res)=>{
-    try{
-      const _id=req.query.id
-      const productdata=await productModel.findOne({_id})
+  updateProductGet: async (req, res) => {
+    try {
+      const _id = req.query.id;
+      const productdata = await productModel.findOne({ _id });
       const data = await catagoryModel.find({});
-      res.render('admin/updateProduct',{data,productdata});
-    }
-    catch(err){
-      console.log('update product get error',err)
+      res.render("admin/updateProduct", { data, productdata });
+    } catch (err) {
+      console.log("update product get error", err);
     }
   },
-  updateProductPost:async (req,res)=>{
-    try{
+  updateProductPost: async (req, res) => {
+    try {
       const productImage = req.files.map((file) => file.filename);
-      const _id=req.query.id
+      const _id = req.query.id;
       const {
         productName,
         price,
@@ -123,32 +118,46 @@ module.exports = {
         size,
         description,
       } = req.body;
-      await productModel.updateOne({_id},{$set:{
-        productName:productName,
-        price:price,
-        discount:discount,
-        stock:stock,
-        category:category,
-        subCategory:subCategory,
-        colour:colour,
-        size:size,
-        description:description,
-        productImage:productImage
-      }})
-      res.status(230).json({ success: true ,message:'product update successfully'});
-    }
-    catch(err){
-      console.log('update product',err)
+      await productModel.updateOne(
+        { _id },
+        {
+          $set: {
+            productName: productName,
+            price: price,
+            discount: discount,
+            stock: stock,
+            category: category,
+            subCategory: subCategory,
+            colour: colour,
+            size: size,
+            description: description,
+            productImage: productImage,
+          },
+        }
+      );
+      res
+        .status(230)
+        .json({ success: true, message: "product update successfully" });
+    } catch (err) {
+      console.log("update product", err);
     }
   },
-  viewsingleProductGet:async (req,res)=>{
-    try{
-      const _id=req.query.id;
-       const product=await productModel.findOne({_id})
-      res.render('admin/viewSingleProduct',{product});
+  viewsingleProductGet: async (req, res) => {
+    try {
+      const _id = req.query.id;
+      const product = await productModel.findOne({ _id });
+      res.render("admin/viewSingleProduct", { product });
+    } catch (err) {
+      console.log("viewsingleproduct admin error", err);
     }
-    catch(err){
-      console.log('viewsingleproduct admin error',err)
+  },
+  userSingleproduct: async (req, res) => {
+    try {
+      const _id = req.query.id;
+      const product = await productModel.findOne({ _id });
+      res.render("user/usersingleproduct",{product});
+    } catch (err) {
+      console.log("user single product", err);
     }
-  }
+  },
 };

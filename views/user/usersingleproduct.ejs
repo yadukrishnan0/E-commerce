@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ecart Home</title>
+    <title>Ecart</title>
     <!-- Bootstrap css cdn link -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -13,7 +13,7 @@
     />
     <!-- end of Bootstrap css cdn link -->
     <!-- Style css -->
-    <link rel="stylesheet" href='/userCss/userHome.css' />
+    <link rel="stylesheet" href='/userCss/usersingleproduct.css' />
     <!-- end of Style css -->
   </head>
   <body>
@@ -214,75 +214,48 @@
     <main>
       <div class="container-fluid">
         <div class="row">
-          <div class="col-12">
+          <div
+            class="col-12 searchBar d-flex align-items-center justify-content-center position-relative"
+          >
             <div
-              id="carouselExampleControls"
-              class="carousel slide"
-              data-bs-ride="carousel"
+              class="sortOption position-absolute d-flex align-items-center gap-3"
             >
-              <div class="carousel-inner">
-                <div
-                  class="carousel-item active"
-                  data-bs-interval="6000"
-                  data-bs-pause="false"
-                  data-bs-ride="false"
+              <div class="fliterIcon">
+                <svg
+                  width="26"
+                  height="26"
+                  viewBox="0 0 26 26"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <a href=""
-                    ><img
-                      src="/images/slideImg/1.webp"
-                      class="w-100 img-large-screen"
-                      alt="..."
-                  /></a>
-                  <a href=""
-                    ><img
-                      src="/images/slideImg/1as.jpg"
-                      class="w-100 img-small-screen"
-                      alt="..."
-                  /></a>
-                </div>
-                <div
-                  class="carousel-item"
-                  data-bs-interval="6000"
-                  data-bs-pause="false"
-                  data-bs-ride="false"
-                >
-                  <a href=""
-                    ><img
-                      src="/images/slideImg/2a.webp"
-                      class="w-100 img-large-screen"
-                      alt="..."
-                  /></a>
-                  <a href=""
-                    ><img
-                      src="/images/slideImg/2as.webp"
-                      class="w-100 img-small-screen"
-                      alt="..."
-                  /></a>
-                </div>
+                  <path
+                    d="M10.8333 19.5V17.3333H15.1667V19.5H10.8333ZM6.5 14.0833V11.9167H19.5V14.0833H6.5ZM3.25 8.66667V6.5H22.75V8.66667H3.25Z"
+                    fill="white"
+                  />
+                </svg>
               </div>
+            </div>
+            <div class="searchBox d-flex align-items-center">
+              <input
+                type="text"
+                name="search"
+                placeholder="Search for Products"
+              />
               <button
-                class="carousel-control-prev"
-                type="button"
-                data-bs-target="#carouselExampleControls"
-                data-bs-slide="prev"
+                class="searchBtn d-flex justify-content-center align-items-center"
               >
-                <span
-                  class="carousel-control-prev-icon slideBtn leftBtn"
-                  aria-hidden="true"
-                ></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button
-                class="carousel-control-next"
-                type="button"
-                data-bs-target="#carouselExampleControls"
-                data-bs-slide="next"
-              >
-                <span
-                  class="carousel-control-next-icon slideBtn"
-                  aria-hidden="true"
-                ></span>
-                <span class="visually-hidden">Next</span>
+                <svg
+                  width="20"
+                  height="21"
+                  viewBox="0 0 20 21"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16.3333 17.6101L11.0833 12.3455C10.6667 12.6798 10.1875 12.9444 9.64583 13.1394C9.10417 13.3343 8.52778 13.4318 7.91667 13.4318C6.40278 13.4318 5.12153 12.9061 4.07292 11.8545C3.02431 10.803 2.5 9.51818 2.5 8.00007C2.5 6.48196 3.02431 5.19714 4.07292 4.1456C5.12153 3.09407 6.40278 2.5683 7.91667 2.5683C9.43056 2.5683 10.7118 3.09407 11.7604 4.1456C12.809 5.19714 13.3333 6.48196 13.3333 8.00007C13.3333 8.61289 13.2361 9.19088 13.0417 9.73406C12.8472 10.2772 12.5833 10.7577 12.25 11.1756L17.5 16.4402L16.3333 17.6101ZM7.91667 11.7605C8.95833 11.7605 9.84375 11.3949 10.5729 10.6637C11.3021 9.93253 11.6667 9.04464 11.6667 8.00007C11.6667 6.9555 11.3021 6.06761 10.5729 5.33641C9.84375 4.60521 8.95833 4.23961 7.91667 4.23961C6.875 4.23961 5.98958 4.60521 5.26042 5.33641C4.53125 6.06761 4.16667 6.9555 4.16667 8.00007C4.16667 9.04464 4.53125 9.93253 5.26042 10.6637C5.98958 11.3949 6.875 11.7605 7.91667 11.7605Z"
+                    fill="black"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -290,150 +263,225 @@
       </div>
       <div class="container-fluid">
         <div class="row">
-          <div class="col-12" >
-            <div class="main-body">
-              <div class="col-12">
-                <div class="text-center">
-                  <h2>Newly Arrival</h2>
+          <div class="col-12 padding">
+            <div class="imgMain">
+              <div
+                class="d-flex justify-content-center align-items-center position-relative demo-area mainImg"
+              >
+                <!-- <div class="demo-area position-relative">
+                  
+                </div> -->
+                <img
+                class="demo-trigger mainFistImg"
+                src="/Productimag/<%=product.productImage[0]%>"
+                data-zoom="/Productimag/<%=product.productImage[0]%>"
+                alt=""
+                />
+                <div class="detail"></div>
+                <a href="/userWishlist/:id/1">
+                  <div
+                    class="favIcon position-absolute d-flex justify-content-center align-items-center"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18"
+                      fill="none"
+                    >
+                      <path
+                        d="M1.67344 10.5609L8.02617 16.4918C8.28984 16.7379 8.63789 16.875 9 16.875C9.36211 16.875 9.71016 16.7379 9.97383 16.4918L16.3266 10.5609C17.3953 9.56602 18 8.17032 18 6.71133V6.50743C18 4.05001 16.2246 1.95469 13.8023 1.5504C12.1992 1.28321 10.568 1.80704 9.42188 2.95313L9 3.37501L8.57812 2.95313C7.43203 1.80704 5.80078 1.28321 4.19766 1.5504C1.77539 1.95469 0 4.05001 0 6.50743V6.71133C0 8.17032 0.604687 9.56602 1.67344 10.5609Z"
+                        fill="#FF0000"
+                      />
+                    </svg>
+                  </div>
+                </a>
+              </div>
+
+              <div class="d-flex align-items-center">
+                <%product.productImage.forEach(data=>{%>
+                <div onclick="changeImg('/Productimag/<%=data%>')" class="smImg">
+                  <img src="/Productimag/<%=data%>" alt="" />
+                </div>
+                <%})%>  
+                
+                
+
+                
+
+              </div>
+            </div>
+            <div class="productContent">
+              <!-- <h2 class="pName">Fort S48</h2>
+              <p class="sTittle">48 Watts Soundbar</p> -->
+              <h2 class="hDescription">
+                <%=product.productName%>
+              </h2>
+
+              <!-- <p class="pDescription">
+                
+                <%=product.description%>  
+              </p> -->
+
+              <p class="colorPallet">COLOR:<%=product.colour%></p>
+              <div class="rating d-flex">
+                <p class="ratedStar">★</p>
+                <p class="ratedStar">★</p>
+                <p class="ratedStar">★</p>
+                <p class="ratedStar">★</p>
+                <p class="unRatedStar">★</p>
+              </div>
+              <div class="price">
+                <%const result = (product.price * product.discount) / 100;
+                            const discountedPrice = Math.ceil(product.price - result);%>
+                <p class="lPrice">₹<%=discountedPrice%></p>
+                <p class="fPrice">₹<%=product.price%></p>
+                <p class="stock text-success"><%=product.discount%>%</p>
+              </div>
+              <p class="stock text-success">Stock:<%=product.stock%></p>
+              <div class="btnBuy">
+                <a href="/userBuyNow/id">
+                  <button class="buyBtn">Buy Now</button>
+                </a>
+                <a href="/userCartNow/id">
+                  <button class="cartBtn">add to cart</button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+
+
+
+            <div class="rateReview">
+                <div
+                  class="review d-flex align-items-center justify-content-between"
+                >
+                  <h2>Discription</h2>
+  
+                  
+                </div>
+                <div class="contentf">
+                  
+                  <div class="userReview">
+                    
+                    <p class="reviewDetails" style="font-size: medium;"><%=product.description%></p>
+                  </div>
+  
+  
+                  
+  
+  
+                 
+  
+                   
+  
+  
                 </div>
               </div>
-              <div class="col-12" style="display:flex;flex-wrap: wrap; ">
-                <div>
-                  <ul
-                  class="col-12 m-2" style="display:flex;flex-wrap: wrap; gap: 40px; list-style: none;" 
-                  >
 
-          
 
-                  <% products.forEach(data=>{%>
-        
-                    <li >
-                      <a href="/user/viewsingleproduct?id=<%=data._id%>">
-                        <div class="newItems">
-                          <div class="productImg">
-                            <img src="/Productimag/<%= data.productImage[0]%>" alt="" />
-                          </div>
-                          <div class="text-area">
-                            <div class="productTittle">
-                              <p><%=data.productName%></p>
-                            </div>
-                            <div
-                              class="discountPrice d-flex align-items-baseline"
-                            >
-                            <%const result = (data.price * data.discount) / 100;
-                            const discountedPrice = Math.ceil(data.price - result);%>
-                          
-                              <p class="dprice">₹<%=discountedPrice%></p>
-                              <p class="oprice">₹<%= data.price %></p>
-                              <p class="discount"><%= data.discount%> %</p>
-                            </div>
-                            <div class="property">
-                              <div>
-                                <img
-                                  src="./images/newlyLaunched/hexagon-list-icon.svg"
-                                  alt=""
-                                />
-                                <p>Swift Charge Technology</p>
-                              </div>
-                              <div>
-                                <img
-                                  src="./images/newlyLaunched/hexagon-list-icon.svg"
-                                  alt=""
-                                />
-                                <p>Dual Connectivity</p>
-                              </div>
-                              <div>
-                                <img
-                                  src="./images/newlyLaunched/hexagon-list-icon.svg"
-                                  alt=""
-                                />
-                                <p>Powered By 13mm Powerful Drivers</p>
-                              </div>
-                            </div>
-                            <div class="colorOptions">
-                              <div class="d-flex align-items-center">
-                                <p>Colors</p>
-                                <div class="d-flex align-items-center">
-                                  <div class="bg-black"></div>
-                                  <div class="bg-white"></div>
-                                  <div class="bg-primary"></div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="shopOption">
-                              <div class="d-flex align-items-center">
-                                <p>shop Now</p>
-                                <svg
-                                  width="18"
-                                  height="12"
-                                  viewBox="0 0 18 12"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <g clip-path="url(#clip0_28_66)">
-                                    <path
-                                      d="M1 1L6 6L1 11"
-                                      stroke="#4B4955"
-                                      stroke-width="1.5"
-                                    />
-                                    <path
-                                      opacity="0.65"
-                                      d="M6 1L11 6L6 11"
-                                      stroke="#4B4955"
-                                      stroke-width="1.5"
-                                    />
-                                    <path
-                                      opacity="0.4"
-                                      d="M11 1L16 6L11 11"
-                                      stroke="#4B4955"
-                                      stroke-width="1.5"
-                                    />
-                                  </g>
-                                  <defs>
-                                    <clipPath id="clip0_28_66">
-                                      <rect
-                                        width="18"
-                                        height="12"
-                                        fill="white"
-                                      />
-                                    </clipPath>
-                                  </defs>
-                                </svg>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
 
-                    <%})%>
-                      </ul>
+
+
+
+
+            <div class="rateReview">
+              <div
+                class="review d-flex align-items-center justify-content-between"
+              >
+                <h2>Ratings & Reviews</h2>
+                <a href="/userProductRate/id">
+                  <button>Rate Product</button>
+                </a>
+              </div>
+              <div class="content">
+                <div class="userReview">
+                  <h2>Great product</h2>
+                  <div class="rating d-flex">
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                  </div>
+                  <p class="reviewDetails">
+                    It's sound quality is perfect as well as very loud and
+                    clear. It's built quality is upto the mark because it's
+                    woofer is made up of wood which is very good and it's bass
+                    and treble is very amazing after all you can listen any song
+                    and watch any movie like cinema hall experience. Overall it
+                    is best for this price.
+                  </p>
+                  <p class="ratedUserName">User 1</p>
+                </div>
+                <div class="userReview">
+                  <h2>Great product</h2>
+                  <div class="rating d-flex">
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                  </div>
+                  <p class="reviewDetails">
+                    It's sound quality is perfect as well as very loud and
+                    clear. It's built quality is upto the mark because it's
+                    woofer is made up of wood which is very good and it's bass
+                    and treble is very amazing after all you can listen any song
+                    and watch any movie like cinema hall experience. Overall it
+                    is best for this price.
+                  </p>
+                  <p class="ratedUserName">User 1</p>
+                </div>
+                <div class="userReview">
+                  <h2>Great product</h2>
+                  <div class="rating d-flex">
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                  </div>
+                  <p class="reviewDetails">
+                    It's sound quality is perfect as well as very loud and
+                    clear. It's built quality is upto the mark because it's
+                    woofer is made up of wood which is very good and it's bass
+                    and treble is very amazing after all you can listen any song
+                    and watch any movie like cinema hall experience. Overall it
+                    is best for this price.
+                  </p>
+                  <p class="ratedUserName">User 1</p>
+                </div>
+                <div class="userReview">
+                  <h2>Great product</h2>
+                  <div class="rating d-flex">
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                    <p class="ratedStar">★</p>
+                  </div>
+                  <p class="reviewDetails">
+                    It's sound quality is perfect as well as very loud and
+                    clear. It's built quality is upto the mark because it's
+                    woofer is made up of wood which is very good and it's bass
+                    and treble is very amazing after all you can listen any song
+                    and watch any movie like cinema hall experience. Overall it
+                    is best for this price.
+                  </p>
+                  <p class="ratedUserName">User 1</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="row slideProduct">
-          <div class="col-12 text-center">
-            <ul
-              class="slideButton d-flex align-items-center list-unstyled justify-content-center"
-            >
-              <li data-index="0">
-                <button onfocus="moveSlide(0)"></button>
-              </li>
-              <li data-index="1">
-                <button onfocus="moveSlide(1)"></button>
-              </li>
-              <li data-index="2">
-                <button onfocus="moveSlide(2)"></button>
-              </li>
-            </ul>
-          </div>
-        </div>
       </div>
     </main>
-
-
     <!-- end of main -->
 
     <!-- footer -->
@@ -937,7 +985,48 @@
     <!-- end of footer -->
 
     <!-- custom js -->
-    <script src="/js/userHome.js"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/drift-zoom@1.5.0/dist/Drift.min.js"></script>
+    <script >
+        const hamburgerBtn = document.querySelector(".hamburger");
+const mobilenavigationList = document.querySelector(".mobilenavigationList");
+const mobilenavigation = document.querySelector(".mobilenavigation");
+const logo = document.querySelector(".logo");
+
+hamburgerBtn.addEventListener("click", () => {
+  hamburgerBtn.classList.toggle("active");
+  mobilenavigationList.classList.toggle("active");
+  mobilenavigation.classList.toggle("active");
+  logo.classList.toggle("active");
+});
+
+const demoTrigger = document.querySelector(".demo-trigger");
+const paneContainer = document.querySelector(".detail");
+
+new Drift(demoTrigger, {
+  paneContainer: paneContainer,
+  inlinePane: false,
+});
+
+function changeImg(url) {
+  document.querySelector(".mainFistImg").setAttribute("src", `${url}`);
+  document.querySelector(".mainFistImg").setAttribute("data-zoom", `${url}`);
+}
+
+const filterBtn = document.querySelector(".fliterIcon");
+const fliterMoblie = document.querySelector(".fliter-moblie");
+
+filterBtn.addEventListener("click", () => {
+  fliterMoblie.classList.toggle("active");
+});
+
+document.querySelector('.mainImg').addEventListener('mouseover', () => {
+    document.querySelector('.detail').style.display = 'block';
+});
+
+document.querySelector('.mainImg').addEventListener('mouseout', () => {
+    document.querySelector('.detail').style.display = 'none';
+});
+    </script>
     <!-- end of custom js -->
     <!-- fontawesome -->
     <script
