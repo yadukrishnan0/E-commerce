@@ -84,7 +84,7 @@
                             <% }); %>
                           </optgroup>
                         </td>
-                        <td class="role"> <a href="/admin/updatecategory/<%=data._id%>"><p><i class="fa-solid fa-pen"></i></p></td></a>
+                        <td class="role"> <a href="/admin/editcategory?id=<%=data._id%>"><p><i class="fa-solid fa-pen"></i></p></td></a>
                         <td class="edit emoveCata"> <a href="" data-id="<%=data._id%>" id="deletebtn"><i class="fa-solid fa-trash" onclick="deleteCat(event,'<%=data._id%>')"></i></a></td>
                     </tr>
                  <%})%>

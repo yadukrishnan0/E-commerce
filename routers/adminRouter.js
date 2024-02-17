@@ -20,7 +20,7 @@ const {
   productDelete,
   updateProductGet,
   updateProductPost,
-  viewsingleProductGet
+  viewsingleProductGet,
 } = require("../controllers/productController");
 
 // coupon
@@ -39,6 +39,9 @@ const {
   addCatagoryPost,
   categoryList,
   deletecategory,
+  editcategory,
+  deletesubcategry,
+  updateCategory,
 } = require("../controllers/categoryController");
 
 // banner
@@ -49,7 +52,7 @@ const {
   AddbannerPost,
   DeleteBanner,
   updateBannerGET,
-  updateBannerPost
+  updateBannerPost,
 } = require("../controllers/bannerController");
 
 const upload = multer({ storage });
@@ -65,29 +68,35 @@ router.get("/userslist", UsersListGet);
 router.get("/delete/:id", deleteUser);
 
 router.get("/productslist", productsGet);
-router.get("/deleteproduct/:id", productDelete)
-      .get('/updateProduct',updateProductGet)
-      .post('/updateProduct',upload.array("productImage", 20),updateProductPost)
-      .get('/viewsingleProduct',viewsingleProductGet)
-
-router.get("/addcatagory", addCatagory);
-router.post("/addcatagory", upload.single("categoryImage"), addCatagoryPost);
-router.get("/couponslist", couponlistGet);
-router.get("/addcoupon", couponGet);
-router.post("/addcoupon", couponPost);
 router
+  .get("/deleteproduct/:id", productDelete)
+  .get("/updateProduct", updateProductGet)
+  .post("/updateProduct", upload.array("productImage", 20), updateProductPost)
+  .get("/viewsingleProduct", viewsingleProductGet);
+
+router
+  .get("/addcatagory", addCatagory)
+  .post("/addcatagory", upload.single("categoryImage"), addCatagoryPost)
+  .get("/categorylist", categoryList)
+  .delete("/deletecategory", deletecategory)
+  .get("/editcategory", editcategory)
+  .delete("/deletesubcategory", deletesubcategry)
+  .post("/updatecatagory", upload.single("categoryImage"),updateCategory);
+
+router
+  .get("/couponslist", couponlistGet)
+  .get("/addcoupon", couponGet)
+  .post("/addcoupon", couponPost)
   .get("/deleteCoupon/:id", DeleteCoupon)
   .get("/editcoupon/:id", editCouponGet)
-  .get("/categorylist", categoryList)
-  .post("/updatecoupon/:id", updateCoupon)
-  .delete("/deletecategory", deletecategory)
-  
+  .post("/updatecoupon/:id", updateCoupon);
 
-router.get("/bannerlist", bannerGet)
-      .get("/addbanner", AddbannerGet)
-      .post("/addbanner", upload.single("BannerImage"), AddbannerPost)
-       .delete("/deletebanner", DeleteBanner)
-       .get('/updateBanner',updateBannerGET)
-       .post('/updateBanner',upload.single("BannerImage"),updateBannerPost)
+router
+  .get("/bannerlist", bannerGet)
+  .get("/addbanner", AddbannerGet)
+  .post("/addbanner", upload.single("BannerImage"), AddbannerPost)
+  .delete("/deletebanner", DeleteBanner)
+  .get("/updateBanner", updateBannerGET)
+  .post("/updateBanner", upload.single("BannerImage"), updateBannerPost);
 
 module.exports = router;
