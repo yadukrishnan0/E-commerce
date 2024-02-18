@@ -93,25 +93,25 @@ module.exports = {
       const newsubCata = JSON.parse(subCategory);
       const newcatagory = JSON.parse(categoryName);
       let catagoryImage;
-    
+
       if (!req.file) {
         catagoryImage = category.catagoryImage;
       } else {
         catagoryImage = req.file.filname;
-      } 
-      
+      }
 
       await catagoryModel.updateOne(
         { _id },
         {
-          $addToSet: { subCategory: { $each: newsubCata} },
-          $set: { categoryName: newcatagory, catagoryImage: catagoryImage }
+          $addToSet: { subCategory: { $each: newsubCata } },
+          $set: { categoryName: newcatagory, catagoryImage: catagoryImage },
         }
       );
-      
-     res.status(200).redirect("/admin/categoryList")
+
+      res.status(200).redirect("/admin/categoryList");
     } catch (err) {
       console.log("update category err", err);
     }
   },
+  
 };

@@ -11,7 +11,7 @@ require("dotenv").config();
 const checkPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
 const bcrypt = require("bcrypt");
 
-const emailverification = require('../utilities/nodemailer')
+const emailverification = require("../utilities/nodemailer");
 const productModel = require("../models/adminSchema/productSchema");
 
 const serviceSID = process.env.serviceSID;
@@ -72,7 +72,7 @@ module.exports = {
 
       return res.status(20).redirect("/otp");
     } catch (err) {
-      console.error(err.message, "signup post error");
+      console.error(err.message, "signup post error", err);
       res.status(500).send("Internal Server Error");
     }
   },
@@ -119,7 +119,7 @@ module.exports = {
       } else if (!passmatch && accExist) {
         res.render("user/login", { error: "password incorrect" });
       } else if (accExist.role && passmatch) {
-        res.send("login successfully");
+        res.status(200).redirect("/home");
       }
     } catch (err) {
       console.error(err.message, "login post error");
@@ -138,8 +138,8 @@ module.exports = {
 
       if (account) {
         req.session.email = email;
-      const otp = Math.floor(Math.random() * 900000) + 100000;
-         emailverification(email,otp)
+        const otp = Math.floor(Math.random() * 900000) + 100000;
+        emailverification(email, otp);
         res.redirect("/forgotOtp");
       }
     } catch (err) {
@@ -201,14 +201,19 @@ module.exports = {
     }
   },
 
-  userHomeGet:async(req,res)=>{
-    try{
-       const products = await productModel.find({})
-      res.render('user/userHome',{products})
+  userHomeGet: async (req, res) => {
+    try {
+      const oneWeekAgo = new Date();
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+      // const products = await productModel.find({ createdAt: { $gte: oneWeekAgo } }).limit(4)
+      const products = await productModel
+        .find({ createdAt: { $gte: oneWeekAgo } })
+        .sort({ createdAt: -1 })
+        .limit(4);  
+      res.render("user/userHome", { products });
+    } catch (err) {
+      console.log("userhome get error", err);
     }
-    catch(err){
-      console.log('userhome get error',err)
-    }
-  }
-  
+  },
 };

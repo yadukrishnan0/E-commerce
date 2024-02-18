@@ -96,23 +96,23 @@ module.exports = {
    
   },
 
-  // ........................product maneaement.....................
+  
 
   
   UsersListGet: async (req, res) => {
     const users = await signupModel.find({});
     res.render("admin/usersList", { users });
   },
-  deleteUser: async (req, res) => {
-    try {
-      const _id = req.params.id;
-      await signupModel.deleteOne({ _id });
-      res.status(200).redirect("/admin/userslist");
-    } catch (err) {
-      res.status(400).json({ success: false });
-      console.log("delete user error", err.message);
-    }
-  },
- 
+userblock:async (req,res)=>{
+  console.log('hello')
+  try{
+   const _id=req.query.id;
+   await signupModel.updateOne({_id},{$set:{block:false}})
+   res.status(200).json({ success: true, message: "successfully deleted" });
+  }
+  catch(err){
+    console.log('user block err',err)
+  }
+}
  
 };

@@ -20,6 +20,10 @@ const signupSchema = mongoose.Schema({
   role:{
     default:false,
     type:Boolean
+  },
+  block:{
+    default:true,
+    type:Boolean
   }
 });
 
