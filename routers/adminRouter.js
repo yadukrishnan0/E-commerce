@@ -10,7 +10,9 @@ const {
   adminLoginPost,
   AdminHomeGet,
   UsersListGet,
-  userblock
+  userblock,
+  blocksers,
+  unblockUser
 } = require("../controllers/adminController");
 
 const {
@@ -66,11 +68,12 @@ router.get("/addproducts", addproductGet);
 router.post("/addproducts", upload.array("productImage", 20), addproductPost);
 router.get("/userslist", UsersListGet)
       .delete('/blockuser',userblock)
-      
+      .get('/blockeduser',blocksers)
+      .delete('/unblockuser',unblockUser)
 
 router.get("/productslist", productsGet);
 router
-  .get("/deleteproduct/:id", productDelete)
+  .delete("/deleteproduct", productDelete)
   .get("/updateProduct", updateProductGet)
   .post("/updateProduct", upload.array("productImage", 20), updateProductPost)
   .get("/viewsingleProduct", viewsingleProductGet);

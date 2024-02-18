@@ -1,14 +1,11 @@
 const { Module } = require("module");
 require("dotenv").config();
 
-
 const adminModel = require("../models/adminSchema/adminSChema");
 const signupModel = require("../models/userSchema/userSIgnupSchema");
 const catagoryModel = require("../models/adminSchema/catagorySChma");
-
-
+const productModel = require("../models/adminSchema/productSchema");
 const moment = require("moment");
-
 
 const { constants } = require("buffer");
 const { render } = require("ejs");
@@ -86,33 +83,49 @@ module.exports = {
     }
   },
   AdminHomeGet: async (req, res) => {
-    try{
-      const users =  await signupModel.find({});
-      res.render("admin/adminHome",{users});
+    try {
+      const users = await signupModel.find({});
+      const products =await productModel.find({});
+      res.render("admin/adminHome", {users,products});
+    } catch (err) {
+      console.log("adminhome get error", err);
     }
-    catch(err){
-      console.log('adminhome get error',err)
-    }
-   
   },
 
-  
-
-  
   UsersListGet: async (req, res) => {
-    const users = await signupModel.find({});
-    res.render("admin/usersList", { users });
+    try {
+      const users = await signupModel.find({ block: true });
+      res.render("admin/usersList", { users });
+    } catch (err) {
+      console.log("userslist err", err);
+    }
   },
-userblock:async (req,res)=>{
-  console.log('hello')
-  try{
-   const _id=req.query.id;
-   await signupModel.updateOne({_id},{$set:{block:false}})
-   res.status(200).json({ success: true, message: "successfully deleted" });
-  }
-  catch(err){
-    console.log('user block err',err)
-  }
-}
- 
+  userblock: async (req, res) => {
+    try {
+      const _id = req.query.id;
+
+      await signupModel.updateOne({ _id }, { $set: { block: false } });
+      res.status(200).json({ success: true, message: "successfully deleted" });
+    } catch (err) {
+      console.log("user block err", err);
+    }
+  },
+  blocksers: async (req, res) => {
+    try {
+      const users = await signupModel.find({ block: false });
+      res.render("admin/blockedusers", { users });
+    } catch (err) {
+      console.log("blocked users get err", err);
+    }
+  },
+  unblockUser: async (req, res) => {
+    try {
+      const _id = req.query.id;
+
+      await signupModel.updateOne({ _id }, { $set: { block:true} });
+      res.status(200).json({ success: true, message: "successfully deleted" });
+    } catch (err) {
+      console.log("users unblock err", err);
+    }
+  },
 };

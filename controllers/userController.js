@@ -118,7 +118,10 @@ module.exports = {
         res.render("user/login", { error: "please create acccount" });
       } else if (!passmatch && accExist) {
         res.render("user/login", { error: "password incorrect" });
-      } else if (accExist.role && passmatch) {
+      } else if(!accExist.block){
+        res.render("user/login", { error: "your account blocked" });
+      }
+      else if (accExist.role && passmatch && accExist.block) {
         res.status(200).redirect("/home");
       }
     } catch (err) {
@@ -210,7 +213,7 @@ module.exports = {
       const products = await productModel
         .find({ createdAt: { $gte: oneWeekAgo } })
         .sort({ createdAt: -1 })
-        .limit(4);  
+        .limit(4);
       res.render("user/userHome", { products });
     } catch (err) {
       console.log("userhome get error", err);
