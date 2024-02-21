@@ -219,7 +219,7 @@
           <div class="col-12">
             <div class="cartHead">
               <div class="d-flex align-items-center gap-2">
-                <h2 class="m-0 p-0">wishlist(2)</h2>
+                <h2 class="m-0 p-0 countwishlist">wishlist(<%=products.length%>)</h2>
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -790,13 +790,16 @@
 
     <!-- custom js -->
     <script >
+      const count=document.querySelector('.countwishlist')
      async function removeWishlist(id){
         console.log(id);
         const response = await axios.post(`/removewishlist?id=${id}`);
       const result = response.data;
       if (result.removeproduct === true) {
-        console.log('confirm')
-        document.querySelector(`.delete_tr${id}`).remove()
+        const length=result.length;
+      document.querySelector(`.delete_tr${id}`).remove()
+      count.innerHTML=`wishlist(${length})`
+      
       } else {
         console.log("remove wishlist error");
       }
