@@ -12,6 +12,7 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- end of Bootstrap css cdn link -->
     <!-- Style css -->
     <link rel="stylesheet" href='/userCss/wishlist.css' />
@@ -247,26 +248,16 @@
            <%products.forEach(data=>{%>
 
           
-                <div class="cartItems">
+                <div class="cartItems delete_tr<%=data.id%>">
                   <div class="items position-relative">
-                    <a
-                      class="position-absolute deleteBtn"
-                      href="/userCartDelete/id"
-                    >
-                      <svg
-                        viewBox="0 0 15 19"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M1.07143 16.8889C1.07143 18.05 2.03571 19 3.21429 19H11.7857C12.9643 19 13.9286 18.05 13.9286 16.8889V4.22222H1.07143V16.8889ZM15 1.05556H11.25L10.1786 0H4.82143L3.75 1.05556H0V3.16667H15V1.05556Z"
-                          fill="black"
-                        />
-                      </svg>
-                    </a>
+                    <button>
+                    <i class="fa-solid fa-trash-can position-absolute deleteBtn" onclick="removeWishlist('<%=data._id%>')" ></i>
+                  </button>
                     <div class="contentDiv d-flex gap-4">
                       <div class="itemImg">
+                        <a href="/user/viewsingleproduct?id=<%=data._id%>">
                         <img src="/Productimag/<%=data.productImage[0]%>" alt="" />
+                      </a>
                       </div>
                       <div class="productDetails">
                         <h2><%=data.productName%></h2>
@@ -798,7 +789,19 @@
     <!-- end of footer -->
 
     <!-- custom js -->
-    <script src="./js/userCart.js"></script>
+    <script >
+     async function removeWishlist(id){
+        console.log(id);
+        const response = await axios.post(`/removewishlist?id=${id}`);
+      const result = response.data;
+      if (result.removeproduct === true) {
+        console.log('confirm')
+        document.querySelector(`.delete_tr${id}`).remove()
+      } else {
+        console.log("remove wishlist error");
+      }
+     }
+    </script>
     <!-- end of custom js -->
     <!-- fontawesome -->
     <script

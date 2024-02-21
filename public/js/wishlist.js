@@ -41,6 +41,7 @@ async function wishlist(e, productId) {
       const response = await axios.post(`/removewishlist?id=${productId}`);
       const result = response.data;
       if (result.removeproduct === true) {
+
         heartbtn.classList.replace("fa-solid", "fa-regular");
       } else {
         console.log("remove wishlist error");

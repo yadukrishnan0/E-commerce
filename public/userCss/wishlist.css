@@ -659,6 +659,9 @@ footer {
   display: none;
   padding-bottom: 1rem;
 }
+.fa-trash-can:hover{
+color: red;
+}
 /*---------- end of footer ----------*/
 
 /*---------- media query ----------*/

@@ -50,5 +50,6 @@ router
   .post("/addwishlist", wishlist)
   .post("/removewishlist", removewishlist)
   .post("/showwishlist", showwishlist)
-  .get("/wishlist", wishlistGet);
+  .get("/wishlist", wishlistGet)
+
 module.exports = router;

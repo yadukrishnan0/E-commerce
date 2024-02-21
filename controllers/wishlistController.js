@@ -38,7 +38,9 @@ module.exports = {
   removewishlist: async (req, res) => {
     try {
       const productid = req.query.id;
+
       const userid = req.session.user;
+
       await wishlistModel.updateOne(
         {
           userId: userid,
@@ -71,12 +73,11 @@ module.exports = {
       if (!user) return res.redirect("/login");
 
       const wishlist = await wishlistModel.findOne({ userId: user });
-      let products=[]
+      let products = [];
       for (const ele of wishlist.productId) {
-       let product = await productModel.findOne({ _id: ele });
-        products.push( product)
+        let product = await productModel.findOne({ _id: ele });
+        products.push(product);
       }
-  // console.log(product);
       res.render("user/wishlist",{products});
     } catch (err) {
       console.log("wishlistaget error", err);
