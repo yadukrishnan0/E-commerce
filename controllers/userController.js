@@ -14,11 +14,14 @@ const bcrypt = require("bcrypt");
 const emailverification = require("../utilities/nodemailer");
 const productModel = require("../models/adminSchema/productSchema");
 
+const otp = Math.floor(Math.random() * 900000) + 100000;
+
 const serviceSID = process.env.serviceSID;
 const accountSID = process.env.accountSID;
 const authToken = process.env.authToken;
 
 const client = require("twilio")(accountSID, authToken);
+const catagoryModel = require("../models/adminSchema/catagorySChma");
 
 module.exports = {
   //........................................... .........signup.................................................//
@@ -122,11 +125,29 @@ module.exports = {
         res.render("user/login", { error: "your account blocked" });
       }
       else if (accExist.role && passmatch && accExist.block) {
+        
+        req.session.user=accExist._id;
+      
         res.status(200).redirect("/home");
       }
     } catch (err) {
-      console.error(err.message, "login post error");
+      console.error(err.message, "login post error",err);
       res.status(500).send("Internal Server Error");
+    }
+  },
+  logout:(req,res)=>{
+    try{
+      req.session.destroy((err) => {
+        if (err) {
+          console.error('Error destroying session:', err);
+        } else {
+          console.log('session destroy')
+          res.redirect('/login'); 
+        }
+      });
+    }
+    catch(err){
+      console.log('logout error')
     }
   },
   // .........................................forgot password.......................................................//
@@ -141,7 +162,7 @@ module.exports = {
 
       if (account) {
         req.session.email = email;
-        const otp = Math.floor(Math.random() * 900000) + 100000;
+        
         emailverification(email, otp);
         res.redirect("/forgotOtp");
       }
@@ -209,14 +230,25 @@ module.exports = {
       const oneWeekAgo = new Date();
       oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
-      // const products = await productModel.find({ createdAt: { $gte: oneWeekAgo } }).limit(4)
+      const category=await catagoryModel.find({})
       const products = await productModel
         .find({ createdAt: { $gte: oneWeekAgo } })
         .sort({ createdAt: -1 })
         .limit(4);
-      res.render("user/userHome", { products });
+      res.render("user/userHome", { products ,category});
     } catch (err) {
       console.log("userhome get error", err);
     }
   },
+  shopbycategoryGet:async(req,res)=>{
+
+    try{
+      const category=await catagoryModel.find({})
+      const products = await productModel.find({})
+    res.render('user/allproducts',{category,products})
+    }
+    catch(er){
+      console.log('shop by category error',err)
+    }
+  }
 };

@@ -78,23 +78,14 @@
                   <li>
                     <a href="/"> Home </a>
                   </li>
-                  <li>
-                    <a href="/earbuds"> Earbuds </a>
-                  </li>
-                  <li>
-                    <a href="/earphones"> Earphones </a>
-                  </li>
-                  <li>
-                    <a href="/speakers"> Speakers </a>
-                  </li>
-                  <li>
-                    <a href="/soundbars"> Soundbars </a>
-                  </li>
-                  <li>
-                    <a href="/smartWatch"> Smart Watch </a>
-                  </li>
-                  <li>
-                    <a href="/allprodutcs"> Shop By Category </a>
+                  <% category.forEach(data=>{%>
+                    <li>
+                      <a href="/earbuds"><%=data.categoryName%></a>
+                    </li>
+                    <%})%>>
+                  
+                    <li>
+                    <a href="/allproducts"> Shop By Category </a>
                   </li>
                 </ul>
               </div>
@@ -146,7 +137,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="/userOrders">
+                    <a href="/logout">
                       <svg
                         width="20"
                         height="20"
@@ -170,7 +161,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="/userWhislist">
+                    <a href="/wishlist">
                       <svg
                         width="20"
                         height="20"
