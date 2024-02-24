@@ -12,10 +12,9 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- end of Bootstrap css cdn link -->
     <!-- Style css -->
-    <link rel="stylesheet" href='/userCss/wishlist.css' />
+    <link rel="stylesheet" href="/userCss/wishlist.css" />
     <!-- end of Style css -->
   </head>
   <body>
@@ -78,7 +77,7 @@
               <div class="navigationnavbar">
                 <ul class="d-flex list-unstyled m-0 p-0 align-items-center">
                   <li>
-                    <a href="/home"> Home </a>
+                    <a href="/"> Home </a>
                   </li>
                   <li>
                     <a href="/earbuds"> Earbuds </a>
@@ -96,7 +95,7 @@
                     <a href="/smartWatch"> Smart Watch </a>
                   </li>
                   <li>
-                    <a href="/allproducts"> Shop By Category </a>
+                    <a href="/"> Shop By Category </a>
                   </li>
                 </ul>
               </div>
@@ -172,7 +171,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="/whislist">
+                    <a href="/userWhislist">
                       <svg
                         width="20"
                         height="20"
@@ -188,7 +187,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="/cart">
+                    <a href="/usersAddToCart">
                       <svg
                         width="20"
                         height="20"
@@ -219,7 +218,7 @@
           <div class="col-12">
             <div class="cartHead">
               <div class="d-flex align-items-center gap-2">
-                <h2 class="m-0 p-0 countwishlist">wishlist(<%=products.length%>)</h2>
+                <h2 class="m-0 p-0">Cart(2)</h2>
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -240,51 +239,167 @@
               </div>
             </div>
             <div class="cartBody d-flex">
-
               <div class="col-6 oneSection">
 
-           
 
-           <%products.forEach(data=>{%>
+                <div class="cartItems">
 
-          
-                <div class="cartItems delete_tr<%=data.id%>">
-                  <div class="items position-relative">
-                    <button>
-                    <i class="fa-solid fa-trash-can position-absolute deleteBtn" onclick="removeWishlist('<%=data._id%>')" ></i>
-                  </button>
+
+          <% cart.products.forEach(data=>{%>
+                   <div class="items position-relative">
+                    <a
+                      class="position-absolute deleteBtn"
+                      href="/userCartDelete/id"
+                    >
+                      <svg
+                        width="13"
+                        height="17"
+                        viewBox="0 0 15 19"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M1.07143 16.8889C1.07143 18.05 2.03571 19 3.21429 19H11.7857C12.9643 19 13.9286 18.05 13.9286 16.8889V4.22222H1.07143V16.8889ZM15 1.05556H11.25L10.1786 0H4.82143L3.75 1.05556H0V3.16667H15V1.05556Z"
+                          fill="black"
+                        />
+                      </svg>
+                    </a>
                     <div class="contentDiv d-flex gap-4">
+                    
                       <div class="itemImg">
-                        <a href="/user/viewsingleproduct?id=<%=data._id%>">
-                        <img src="/Productimag/<%=data.productImage[0]%>" alt="" />
-                      </a>
+                        <a href="/user/viewsingleproduct?id=<%=data.productId._id%>">
+                        <img src="/Productimag/<%=data.productId.productImage[0]%>" alt="" />
                       </div>
+                    </a>
                       <div class="productDetails">
-                        <h2><%=data.productName%></h2>
                         
+                        <h2><%=data.productId.productName%></h2>
+                        
+                        <div class="quandity d-flex align-items-center">
+                          <div
+                            class="dec d-flex justify-content-center align-items-center"
+                          >
+                            <i class="fa-solid fa-minus"></i>
+                          </div>
+                          <div
+                            class="qty d-flex justify-content-center align-items-center"
+                          >
+                            <p class="m-0 p-0 qtyOne">1</p>
+                          </div>
+                          <div
+                            class="inc d-flex justify-content-center align-items-center"
+                          >
+                            <i class="fa-solid fa-plus"></i>
+                          </div>
+                        </div>
                         <p class="color">COLOR</p>
-                        <p class="cName"><%=data.colour%></p>
+                        <p class="cName"><%=data.productId.colour%></p>
                         <div class="price d-flex align-items-baseline gap-2">
-                            <%const result = (data.price * data.discount) / 100;
-                            const discountedPrice = Math.ceil(data.price - result);%>
+                          <%const result = (data.productId.price * data.productId.discount) / 100;
+                          const discountedPrice = Math.ceil(data.productId.price - result);%>
                           <p class="lPrice">₹<%=discountedPrice%></p>
-                          <p class="fPrice">₹<%=data.price%></p>
-                          <p><%=data.discount%>%</p>
+                          <p class="fPrice">₹<%=data.productId.price%></p>
+                          <p><%=data.productId.discount%>% OFF</p>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-            
-                <%})%>
 
+      <%})%>
+
+
+
+                  <div class="coupons">
+                    <form
+                      action="/userApplyCoupon"
+                      class="d-flex align-items-center"
+                      method="post"
+                    >
+                      <div class="input">
+                        <input type="text" placeholder="Enter Coupon Code" />
+                      </div>
+                      <div>
+                        <button type="submit">APPLY</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
               </div>
-              
+              <div class="col-6 oneSection">
+                <div class="orderSummary">
+                  <div class="orderHeading">
+                    <h2>order summary</h2>
+                  </div>
+                  <div class="orderContent">
+                    <div
+                      class="sTotal d-flex justify-content-between align-items-center"
+                    >
+                      <p class="commonText m-0 p-0">Subtotal</p>
+                      <p class="commonSub m-0 p-0" id="sTotal">₹30,597</p>
+                    </div>
+
+                    <div
+                      class="ship d-flex justify-content-between align-items-center"
+                    >
+                      <p class="commonText m-0 p-0">Shipping</p>
+                      <p class="commonSub m-0 p-0" id="free">FREE</p>
+                    </div>
+
+                    <div
+                      class="ship d-flex justify-content-between align-items-center"
+                    >
+                      <p class="commonText m-0 p-0">Discount</p>
+                      <p class="commonSub m-0 p-0" id="dPrice">-21,100</p>
+                    </div>
+
+                    <div
+                      class="ship d-flex justify-content-between align-items-center"
+                    >
+                      <p class="commonText m-0 p-0">Coupon Discount</p>
+                      <p class="commonSub m-0 p-0" id="cDPrice">0</p>
+                    </div>
+                  </div>
+                  <div
+                    class="commonText tPrice d-flex justify-content-between align-items-center"
+                  >
+                    <p class="m-0 p-0">Total</p>
+                    <p class="m-0 p-0" id="tPrice">₹9,497</p>
+                  </div>
+                </div>
+                <!-- <div class="ms-auto orderSummary mb-0">
+                                <div class="orderHeading">
+                                    <h2>Delivery Address</h2>
+                                </div>
+                                <div class="deleviryContent">
+                                    <div class="chooseAdd position-relative">
+                                        <div class="existingAddress">
+                                            <p class="name">John D</p>
+                                            <p>Abc house, abc street,PIN: 673478</p>
+                                            <p class="phone">Phone: 98675555568</p>
+                                        </div>
+                                        <a href="/userChangeAddress">
+                                            <button class="position-absolute button">Change</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div> -->
+              </div>
             </div>
           </div>
         </div>
       </div>
 
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="checkOut">
+              <form action="/userCartCheckOut">
+                <button>CHECKOUT</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
     <!-- end of main -->
 
@@ -789,22 +904,7 @@
     <!-- end of footer -->
 
     <!-- custom js -->
-    <script >
-      const count=document.querySelector('.countwishlist')
-     async function removeWishlist(id){
-        console.log(id);
-        const response = await axios.post(`/removewishlist?id=${id}`);
-      const result = response.data;
-      if (result.removeproduct === true) {
-        const length=result.length;
-      document.querySelector(`.delete_tr${id}`).remove()
-      count.innerHTML=`wishlist(${length})`
-      
-      } else {
-        console.log("remove wishlist error");
-      }
-     }
-    </script>
+    <script src="/js/cart.js"></script>
     <!-- end of custom js -->
     <!-- fontawesome -->
     <script

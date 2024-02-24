@@ -41,18 +41,21 @@ module.exports = {
 
       const userid = req.session.user;
 
-   const data=   await wishlistModel.findOneAndUpdate(
+      const data = await wishlistModel.findOneAndUpdate(
         {
           userId: userid,
         },
         { $pull: { productId: productid } }
       );
-    const length=data.productId.length-1;
-  
-    
+      const length = data.productId.length - 1;
+
       res
         .status(200)
-        .json({ removeproduct: true,length, message: "product remove success" });
+        .json({
+          removeproduct: true,
+          length,
+          message: "product remove success",
+        });
     } catch (err) {
       console.log("remove wishlist error", err);
     }
@@ -76,12 +79,13 @@ module.exports = {
       if (!user) return res.redirect("/login");
 
       const wishlist = await wishlistModel.findOne({ userId: user });
+      console.log(wishlist);
       let products = [];
       for (const ele of wishlist.productId) {
         let product = await productModel.findOne({ _id: ele });
         products.push(product);
       }
-      res.render("user/wishlist",{products});
+      res.render("user/wishlist", {products});
     } catch (err) {
       console.log("wishlistaget error", err);
     }

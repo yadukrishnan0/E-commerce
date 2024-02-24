@@ -15,6 +15,7 @@
     <!-- Style css -->
     <link rel="stylesheet" href='/userCss/usersingleproduct.css' />
     <!-- end of Style css -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
     <!-- header -->
@@ -343,9 +344,9 @@
                 <a href="/userBuyNow/id">
                   <button class="buyBtn">Buy Now</button>
                 </a>
-                <a href="/userCartNow/id">
-                  <button class="cartBtn">add to cart</button>
-                </a>
+                
+      <button class="cartBtn<%=product._id%>  cartBtnclass" onclick="addTocart(event,'<%=product._id%>')" id="cartBtn" style="background-color: black;">add to cart</button>
+               
               </div>
             </div>
           </div>
@@ -985,6 +986,7 @@
     <!-- end of footer -->
 
     <!-- custom js -->
+    <script src="/js/addtocart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/drift-zoom@1.5.0/dist/Drift.min.js"></script>
     <script >
         const hamburgerBtn = document.querySelector(".hamburger");
@@ -1030,12 +1032,14 @@ document.querySelector('.mainImg').addEventListener('mouseout', () => {
     <!-- end of custom js -->
     <!-- fontawesome -->
     <script
+    
       src="https://kit.fontawesome.com/23d1247997.js"
       crossorigin="anonymous"
     ></script>
     <!-- end of fontawesome -->
     <!-- Bootstrap script file -->
     <script
+  
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"

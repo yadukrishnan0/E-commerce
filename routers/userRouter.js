@@ -52,4 +52,14 @@ router
   .post("/showwishlist", showwishlist)
   .get("/wishlist", wishlistGet)
 
+
+  const {
+    cartlist,
+    addTocart,
+    showaddtocart
+  } = require("../controllers/cartController");
+
+    router.get('/cart',cartlist)
+          .post('/addtocart',addTocart)
+          .post('/showaddtocart',showaddtocart)
 module.exports = router;
