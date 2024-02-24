@@ -79,7 +79,6 @@ module.exports = {
       if (!user) return res.redirect("/login");
 
       const wishlist = await wishlistModel.findOne({ userId: user });
-      console.log(wishlist);
       let products = [];
       for (const ele of wishlist.productId) {
         let product = await productModel.findOne({ _id: ele });

@@ -14,6 +14,7 @@
     />
     <!-- end of Bootstrap css cdn link -->
     <!-- Style css -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="/userCss/wishlist.css" />
     <!-- end of Style css -->
   </head>
@@ -218,7 +219,7 @@
           <div class="col-12">
             <div class="cartHead">
               <div class="d-flex align-items-center gap-2">
-                <h2 class="m-0 p-0">Cart(2)</h2>
+                <h2 class="m-0 p-0 count">Cart(<%=cart.products.length%>)</h2>
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -246,24 +247,9 @@
 
 
           <% cart.products.forEach(data=>{%>
-                   <div class="items position-relative">
-                    <a
-                      class="position-absolute deleteBtn"
-                      href="/userCartDelete/id"
-                    >
-                      <svg
-                        width="13"
-                        height="17"
-                        viewBox="0 0 15 19"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M1.07143 16.8889C1.07143 18.05 2.03571 19 3.21429 19H11.7857C12.9643 19 13.9286 18.05 13.9286 16.8889V4.22222H1.07143V16.8889ZM15 1.05556H11.25L10.1786 0H4.82143L3.75 1.05556H0V3.16667H15V1.05556Z"
-                          fill="black"
-                        />
-                      </svg>
-                    </a>
+                   <div class="items position-relative  delete_tr<%=data.productId._id%>">
+                    <i class="fa-solid fa-trash-can position-absolute deleteBtn " onclick="deleteCart('<%=data.productId._id%>')"></i>
+
                     <div class="contentDiv d-flex gap-4">
                     
                       <div class="itemImg">

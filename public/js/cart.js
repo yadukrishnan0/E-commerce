@@ -52,7 +52,6 @@ decBtn.forEach((value, index) => {
   });
 });
 
-
 incBtn.forEach((value, index) => {
   value.addEventListener("click", () => {
     qty[index].innerHTML = `${Number(qty[index].innerHTML) + 1}`;
@@ -82,4 +81,18 @@ incBtn.forEach((value, index) => {
   });
 });
 
-
+async function deleteCart(id) {
+  const response = await axios.post(`/deletecart?id=${id}`);
+  const result = response.data;
+  if (result.success === true) {
+    console.log('redy')
+    const length = result.length;
+    document.querySelector(`.delete_tr${id}`).remove();
+    const count=document.querySelector('.count').innerHTML = `Cart(${length})`;
+      
+  // 
+} 
+  else {
+    console.log("remove wishlist error");
+  }
+}

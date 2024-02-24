@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 async function addTocart(e, id) {
   e.preventDefault();
-  console.log(id);
   const cartBtn = document.querySelector(`.cartBtn${id}`);
   const cartBtnTxt = cartBtn.textContent;
 

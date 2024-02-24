@@ -72,5 +72,22 @@ module.exports = {
     catch(err){
       console.log('cartlist err',err)
     }
+  },
+  deleteCart:async(req,res)=>{
+    try{
+      const id =req.query.id
+      const userId =req.session.user;
+    
+     await cartModel.updateOne(
+      {userId},
+      { $pull: { products: { productId: id} } }
+    )
+    const cart = await cartModel.findOne({userId});
+    let length=cart.products.length;
+    res.status(200).json({success:true,message:' product deleted',length})
+    }
+    catch(err){
+      console.log('delete cart error',err)
+    }
   }
 };

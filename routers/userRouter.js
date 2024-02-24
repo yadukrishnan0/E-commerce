@@ -50,16 +50,18 @@ router
   .post("/addwishlist", wishlist)
   .post("/removewishlist", removewishlist)
   .post("/showwishlist", showwishlist)
-  .get("/wishlist", wishlistGet)
+  .get("/wishlist", wishlistGet);
 
+const {
+  cartlist,
+  addTocart,
+  showaddtocart,
+  deleteCart,
+} = require("../controllers/cartController");
 
-  const {
-    cartlist,
-    addTocart,
-    showaddtocart
-  } = require("../controllers/cartController");
-
-    router.get('/cart',cartlist)
-          .post('/addtocart',addTocart)
-          .post('/showaddtocart',showaddtocart)
+router
+  .get("/cart", cartlist)
+  .post("/addtocart", addTocart)
+  .post("/showaddtocart", showaddtocart)
+  .post("/deletecart", deleteCart);
 module.exports = router;
