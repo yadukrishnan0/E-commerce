@@ -161,4 +161,18 @@ module.exports = {
       console.log("user single product", err);
     }
   },
+  // search products
+  searchProduct: async (req, res) => {
+    try {
+      const Name = req.query.query;
+      const category = await catagoryModel.find({});
+   const products =  await productModel.find({
+        productName: { $regex: Name, $options: "i" },
+      });
+    
+      res.status(200).render("user/allproducts",{products,category});
+    } catch (err) {
+      console.log("search product err", err);
+    }
+  },
 };

@@ -17,6 +17,7 @@ const {
   userHomeGet,
   shopbycategoryGet,
   logout,
+  
 } = require("../controllers/userController");
 
 router.get("/signup", signupGet);
@@ -32,13 +33,14 @@ router.get("/resetPassword", ResetPassGet);
 router.post("/userLoginResetPass", resetpassPost);
 router.post("/userLogin", loginPost).get("/logout", logout);
 
-const { userSingleproduct } = require("../controllers/productController");
+
+const { userSingleproduct,searchProduct } = require("../controllers/productController");
 
 router
   .get("/home", userHomeGet)
   .get("/user/viewsingleproduct", userSingleproduct)
   .get("/allproducts", shopbycategoryGet);
-
+  router.get('/search',searchProduct)
 const {
   wishlist,
   removewishlist,
@@ -66,4 +68,7 @@ router
   .post("/showaddtocart", showaddtocart)
   .post("/deletecart", deleteCart)
   .post('/cartquantity',cartQtyUpdate)
+
+
+
 module.exports = router;

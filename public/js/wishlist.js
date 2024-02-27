@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 });
 
-
 async function wishlist(e, productId) {
   try {
     e.preventDefault();
@@ -41,7 +40,6 @@ async function wishlist(e, productId) {
       const response = await axios.post(`/removewishlist?id=${productId}`);
       const result = response.data;
       if (result.removeproduct === true) {
-
         heartbtn.classList.replace("fa-solid", "fa-regular");
       } else {
         console.log("remove wishlist error");
@@ -54,11 +52,14 @@ async function wishlist(e, productId) {
 
 // search products functionlity
 
-async function search(){
-  try{
-      console.log('hello')
-  }
-  catch(err){
-    console.log('search error',err)
+async function search() {
+  try {
+    const searchBar = document.getElementById("search_bar");
+    const searchValue = searchBar.value.trim();
+    if (searchValue) {
+      window.location.href = `/search?query=${searchValue}`;
+    }
+  } catch (err) {
+    console.log("search error", err);
   }
 }

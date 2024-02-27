@@ -121,33 +121,30 @@ module.exports = {
         res.render("user/login", { error: "please create acccount" });
       } else if (!passmatch && accExist) {
         res.render("user/login", { error: "password incorrect" });
-      } else if(!accExist.block){
+      } else if (!accExist.block) {
         res.render("user/login", { error: "your account blocked" });
-      }
-      else if (accExist.role && passmatch && accExist.block) {
-        
-        req.session.user=accExist._id;
-      
+      } else if (accExist.role && passmatch && accExist.block) {
+        req.session.user = accExist._id;
+
         res.status(200).redirect("/home");
       }
     } catch (err) {
-      console.error(err.message, "login post error",err);
+      console.error(err.message, "login post error", err);
       res.status(500).send("Internal Server Error");
     }
   },
-  logout:(req,res)=>{
-    try{
+  logout: (req, res) => {
+    try {
       req.session.destroy((err) => {
         if (err) {
-          console.error('Error destroying session:', err);
+          console.error("Error destroying session:", err);
         } else {
-          console.log('session destroy')
-          res.redirect('/login'); 
+          console.log("session destroy");
+          res.redirect("/login");
         }
       });
-    }
-    catch(err){
-      console.log('logout error')
+    } catch (err) {
+      console.log("logout error");
     }
   },
   // .........................................forgot password.......................................................//
@@ -162,7 +159,7 @@ module.exports = {
 
       if (account) {
         req.session.email = email;
-        
+
         emailverification(email, otp);
         res.redirect("/forgotOtp");
       }
@@ -230,25 +227,23 @@ module.exports = {
       const oneWeekAgo = new Date();
       oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
-      const category=await catagoryModel.find({})
+      const category = await catagoryModel.find({});
       const products = await productModel
         .find({ createdAt: { $gte: oneWeekAgo } })
         .sort({ createdAt: -1 })
         .limit(4);
-      res.render("user/userHome", { products ,category});
+      res.render("user/userHome", { products, category });
     } catch (err) {
       console.log("userhome get error", err);
     }
   },
-  shopbycategoryGet:async(req,res)=>{
-
-    try{
-      const category=await catagoryModel.find({})
-      const products = await productModel.find({})
-    res.render('user/allproducts',{category,products})
-    }
-    catch(er){
-      console.log('shop by category error',err)
+  shopbycategoryGet: async (req, res) => {
+    try {
+      const category = await catagoryModel.find({});
+      const products = await productModel.find({});
+      res.render("user/allproducts", { category, products });
+    } catch (er) {
+      console.log("shop by category error", err);
     }
   }
 };
