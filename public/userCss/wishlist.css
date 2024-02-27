@@ -662,6 +662,10 @@ footer {
 .fa-trash-can:hover{
 color: red;
 }
+.red{
+  color: red !important;
+  text-decoration: line-through;
+}
 /*---------- end of footer ----------*/
 
 /*---------- media query ----------*/

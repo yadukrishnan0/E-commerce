@@ -51,3 +51,14 @@ async function wishlist(e, productId) {
     console.log(err);
   }
 }
+
+// search products functionlity
+
+async function search(){
+  try{
+      console.log('hello')
+  }
+  catch(err){
+    console.log('search error',err)
+  }
+}

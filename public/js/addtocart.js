@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
     if (result.success == true) {
       let cart = response.data.cartlist;
-      console.log(cart);
+  
       
       cart.forEach((id) => {
       
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           const cartBtn3=document.querySelector(`.cartBtn${id}`)
           cartBtn3.innerHTML = "go to cart";
         }
-        console.log(id);
+      
       });
     }
   } catch (err) {
@@ -38,6 +38,7 @@ async function addTocart(e, id) {
       const response = await axios.post(`/addtocart?id=${id}`);
       const result = response.data;
       console.log(result);
+      
       if (result.login == false) {
         window.location.href = "/login";
       } else if (result.success == true) {

@@ -26,11 +26,13 @@ module.exports = {
           await newdata.save();
         } else {
           // let productsExists=false
-          const productsExists = cart.products.find(item => item.productId.equals(productObjId));
+          const productsExists = cart.products.find((item) =>
+            item.productId.equals(productObjId)
+          );
           // console.log(abc);
           if (!productsExists) {
             await cartModel.updateOne(
-              { userId:userObjId },
+              { userId: userObjId },
               { $push: { products: { productId: productObjId, quantity: 1 } } }
             );
           }
@@ -45,49 +47,72 @@ module.exports = {
     try {
       const userId = req.session.user;
       if (!userId) {
-        console.log('user is not login');
+        console.log("user is not login");
         res.status(404).json({ success: false, msg: "user not login" });
       } else {
-        const cart = await cartModel.find({ userId });  
-        const cartlist=[]  
-        cart.forEach(element => {
-            element.products.forEach( async (product) => {
-              cartlist.push(product.productId);
-            });
+        const cart = await cartModel.find({ userId });
+        const cartlist = [];
+        cart.forEach((element) => {
+          element.products.forEach(async (product) => {
+            cartlist.push(product.productId);
+          });
         });
-        
-        res.status(200).json({ success: true,cartlist});
+
+        res.status(200).json({ success: true, cartlist });
       }
     } catch (err) {
-      console.log("show add to cart  eror",err);
+      console.log("show add to cart  eror", err);
     }
   },
-  cartlist:async(req,res)=>{
-    try{
+  cartlist: async (req, res) => {
+    try {
       const { user } = req.session;
       if (!user) return res.redirect("/login");
-      const cart = await cartModel.findOne({ userId: user }).populate('products.productId')
-      res.render("user/cart",{cart})
-    }
-    catch(err){
-      console.log('cartlist err',err)
+      const cart = await cartModel
+        .findOne({ userId: user })
+        .populate("products.productId");
+      const totalAmt=  cart.products.reduce((accu,data)=>{
+        const result = (data.productId.price * data.productId.discount) / 100;
+        const discountedPrice = Math.ceil(data.productId.price - result);
+       return accu+= discountedPrice * data.quantity;
+      
+        },0)
+       
+      res.render("user/cart", {cart,totalAmt});
+    } catch (err) {
+      console.log("cartlist err", err);
     }
   },
-  deleteCart:async(req,res)=>{
-    try{
-      const id =req.query.id
-      const userId =req.session.user;
-    
-     await cartModel.updateOne(
-      {userId},
-      { $pull: { products: { productId: id} } }
-    )
-    const cart = await cartModel.findOne({userId});
-    let length=cart.products.length;
-    res.status(200).json({success:true,message:' product deleted',length})
+  deleteCart: async (req, res) => {
+    try {
+      const id = req.query.id;
+      const userId = req.session.user;
+
+      await cartModel.updateOne(
+        { userId },
+        { $pull: { products: { productId: id } } }
+      );
+      const cart = await cartModel.findOne({ userId });
+      let length = cart.products.length;
+      res
+        .status(200)
+        .json({ success: true, message: " product deleted", length });
+    } catch (err) {
+      console.log("delete cart error", err);
     }
-    catch(err){
-      console.log('delete cart error',err)
+  },
+  cartQtyUpdate: async (req, res) => {
+    try {
+      const userId = req.session.user;
+      const productid = req.body.productid;
+      const qty = req.body.qty;
+      await cartModel.updateOne(
+        { userId, "products.productId":productid},
+        { "products.$.quantity":qty} 
+        );
+      res.status(200).json({success:true,message:'quantity updated'})
+    } catch (err) {
+      console.log("cart quantity Update", err);
     }
-  }
+  },
 };

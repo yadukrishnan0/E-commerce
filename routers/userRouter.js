@@ -57,11 +57,13 @@ const {
   addTocart,
   showaddtocart,
   deleteCart,
+  cartQtyUpdate
 } = require("../controllers/cartController");
 
 router
   .get("/cart", cartlist)
   .post("/addtocart", addTocart)
   .post("/showaddtocart", showaddtocart)
-  .post("/deletecart", deleteCart);
+  .post("/deletecart", deleteCart)
+  .post('/cartquantity',cartQtyUpdate)
 module.exports = router;
