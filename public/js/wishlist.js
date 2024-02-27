@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", async function () {
+window.onload = async function () {
   try {
     const response = await axios.post("/showwishlist");
 
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   } catch (err) {
     console.log(err);
   }
-});
+};
 
 async function wishlist(e, productId) {
   try {

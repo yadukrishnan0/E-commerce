@@ -32,6 +32,12 @@ async function inc (id, price, stock) {
    qty:qtyval
  })
  
+  
+    lPrice.innerHTML = `₹${newprice}`;
+ 
+  const total1 = total(price)
+  sTotal.innerHTML = `₹${total1}`;
+  tPrice.innerHTML=`₹${total1}`
   if (qtyval <= stockval) {
     lPrice.classList.remove("red");
     lPrice.innerHTML = `₹${newprice}`;
@@ -39,11 +45,6 @@ async function inc (id, price, stock) {
     lPrice.classList.add("red");
     lPrice.innerHTML = "out of stock";
   }
-    lPrice.innerHTML = `₹${newprice}`;
- 
-  const total1 = total(price)
-  sTotal.innerHTML = `₹${total1}`;
-  tPrice.innerHTML=`₹${total1}`
 }
 function total(price){
   const subtoal=sTotal.innerHTML.replace('₹','')

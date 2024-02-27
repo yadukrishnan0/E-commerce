@@ -75,7 +75,6 @@ module.exports = {
   },
   productDelete: async (req, res) => {
     try {
-  
       const _id = req.query.id;
       const product = await productModel.findOne({ _id });
 
@@ -156,7 +155,7 @@ module.exports = {
     try {
       const _id = req.query.id;
       const product = await productModel.findOne({ _id });
-      res.render("user/usersingleproduct",{product});
+      res.render("user/usersingleproduct", { product });
     } catch (err) {
       console.log("user single product", err);
     }
@@ -166,13 +165,26 @@ module.exports = {
     try {
       const Name = req.query.query;
       const category = await catagoryModel.find({});
-   const products =  await productModel.find({
+      const products = await productModel.find({
         productName: { $regex: Name, $options: "i" },
       });
-    
-      res.status(200).render("user/allproducts",{products,category});
+
+      res.status(200).render("user/allproducts", { products, category });
     } catch (err) {
       console.log("search product err", err);
     }
   },
+  MinMaxfilter: async (req, res) => {
+    try {
+      const { minPrice, maxPrice } = req.body;
+      const category = await catagoryModel.find({});
+      const products = await productModel.find({
+        price: { $gte: minPrice, $lte: maxPrice },
+      });
+      res.status(200).render("user/allproducts", { products, category });
+    } catch (err) {
+      console.log("max to minimum error:", err);
+    }
+  },
 };
+

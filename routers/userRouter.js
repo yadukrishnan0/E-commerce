@@ -34,13 +34,15 @@ router.post("/userLoginResetPass", resetpassPost);
 router.post("/userLogin", loginPost).get("/logout", logout);
 
 
-const { userSingleproduct,searchProduct } = require("../controllers/productController");
+const { userSingleproduct,searchProduct,MinMaxfilter } = require("../controllers/productController");
 
 router
   .get("/home", userHomeGet)
   .get("/user/viewsingleproduct", userSingleproduct)
-  .get("/allproducts", shopbycategoryGet);
-  router.get('/search',searchProduct)
+  .get("/allproducts", shopbycategoryGet)
+  .get('/search',searchProduct)
+  .post('/userFliterByPrice',MinMaxfilter)
+  
 const {
   wishlist,
   removewishlist,
