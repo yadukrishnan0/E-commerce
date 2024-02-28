@@ -288,12 +288,12 @@ module.exports = {
   },
   editaddresslist: async (req, res) => {
     try {
-      
       if (req.session.user) {
-        const userId=req.session.user;
-        const userprofile=await profileModel.findOne({userId}).populate('userId')
-        console.log(userprofile)
-       res.render("user/editaddress",{userprofile});
+        const userId = req.session.user;
+        const userprofile = await profileModel
+          .findOne({ userId })
+          .populate("userId");
+        res.render("user/editaddress", { userprofile });
       } else {
         res.redirect("/login");
       }
@@ -301,6 +301,7 @@ module.exports = {
       console.log("edit address list get error", err);
     }
   },
+
   addAddressPost: async (req, res) => {
     try {
       const userId = req.session.user;
@@ -323,7 +324,7 @@ module.exports = {
           },
         });
         await newdata.save();
-        res.status(200).redirect('/userEditAddress')
+        res.status(200).redirect("/userEditAddress");
       } else {
         await profileModel.updateOne(
           { userId: userObjId },
@@ -342,18 +343,24 @@ module.exports = {
             },
           }
         );
-        res.status(200).redirect('/userEditAddress')
+        res.status(200).redirect("/userEditAddress");
       }
     } catch (err) {
       console.log("addAddress ", err);
     }
   },
-  deleteaddress:async(req,res)=>{
-    try{
-   console.log('helo');
+  deleteaddress: async (req, res) => {
+    try {
+      const id = req.query.id;
+      const userId = req.session.user;
+
+      await profileModel.updateOne(
+        { userId },
+        { $pull: { addresses: { _id: id } } }
+      );
+      res.status(200).json({ success: true, message: "address deleted"});
+    } catch (err) {
+      console.log("delete address err", err);
     }
-    catch(err){
-      console.log('delete address err',err)
-    }
-  }
+  },
 };
