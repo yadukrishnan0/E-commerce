@@ -13,7 +13,10 @@ const bcrypt = require("bcrypt");
 
 const emailverification = require("../utilities/nodemailer");
 const productModel = require("../models/adminSchema/productSchema");
-
+const profileModel = require("../models/userSchema/profie");
+const { ObjectId } = require("mongodb");
+const { Types } = require("mongoose");
+const mongoose = require("mongoose");
 const otp = Math.floor(Math.random() * 900000) + 100000;
 
 const serviceSID = process.env.serviceSID;
@@ -244,6 +247,113 @@ module.exports = {
       res.render("user/allproducts", { category, products });
     } catch (er) {
       console.log("shop by category error", err);
+    }
+  },
+  userAcctGet: async (req, res) => {
+    try {
+      const _id = req.session.user;
+      if (_id) {
+        const user = await signupModel.findOne({ _id });
+        res.status(200).render("user/userProfile", { user });
+      } else {
+        res.redirect("/login");
+      }
+    } catch (err) {
+      console.log("useraccount get error:", err);
+    }
+  },
+  userAccUpdate: async (res, req) => {
+    try {
+      const _id = req.session.user;
+
+      if (_id) {
+        const acc = await signupModel.findOne({ _id });
+      } else {
+        res.redirect("/login");
+      }
+    } catch (err) {
+      console.log("user account update", err);
+    }
+  },
+  addAddressGet: async (req, res) => {
+    try {
+      if (req.session.user) {
+        res.render("user/addAddress");
+      } else {
+        res.redirect("/login");
+      }
+    } catch (err) {
+      console.log("add address get err", err);
+    }
+  },
+  editaddresslist: async (req, res) => {
+    try {
+      
+      if (req.session.user) {
+        const userId=req.session.user;
+        const userprofile=await profileModel.findOne({userId}).populate('userId')
+        console.log(userprofile)
+       res.render("user/editaddress",{userprofile});
+      } else {
+        res.redirect("/login");
+      }
+    } catch (err) {
+      console.log("edit address list get error", err);
+    }
+  },
+  addAddressPost: async (req, res) => {
+    try {
+      const userId = req.session.user;
+      const { house, country, altnumber, district, state, city, hNo, pin } =
+        req.body;
+      const userObjId = new mongoose.Types.ObjectId(userId);
+      const userprofile = await profileModel.findOne({ userId: userObjId });
+      if (!userprofile) {
+        const newdata = new profileModel({
+          userId: userObjId,
+          addresses: {
+            address: house,
+            city: city,
+            house_No: hNo,
+            altr_number: altnumber,
+            postcode: pin,
+            country: country,
+            district: district,
+            state: state,
+          },
+        });
+        await newdata.save();
+        res.status(200).redirect('/userEditAddress')
+      } else {
+        await profileModel.updateOne(
+          { userId: userObjId },
+          {
+            $push: {
+              addresses: {
+                address: house,
+                city: city,
+                house_No: hNo,
+                altr_number: altnumber,
+                postcode: pin,
+                country: country,
+                district: district,
+                state: state,
+              },
+            },
+          }
+        );
+        res.status(200).redirect('/userEditAddress')
+      }
+    } catch (err) {
+      console.log("addAddress ", err);
+    }
+  },
+  deleteaddress:async(req,res)=>{
+    try{
+   console.log('helo');
+    }
+    catch(err){
+      console.log('delete address err',err)
     }
   }
 };

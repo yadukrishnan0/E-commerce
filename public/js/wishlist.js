@@ -18,6 +18,7 @@ window.onload = async function () {
   }
 };
 
+
 async function wishlist(e, productId) {
   try {
     e.preventDefault();

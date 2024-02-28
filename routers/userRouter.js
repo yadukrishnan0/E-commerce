@@ -17,7 +17,12 @@ const {
   userHomeGet,
   shopbycategoryGet,
   logout,
-  
+  userAcctGet,
+  userAccUpdate,
+  addAddressGet,
+  editaddresslist,
+  addAddressPost,
+  deleteaddress
 } = require("../controllers/userController");
 
 router.get("/signup", signupGet);
@@ -31,8 +36,13 @@ router.get("/forgotOtp", forgetOtpverifiGet);
 router.post("/userLoginOtpVerify", forgototpPOst);
 router.get("/resetPassword", ResetPassGet);
 router.post("/userLoginResetPass", resetpassPost);
-router.post("/userLogin", loginPost).get("/logout", logout);
-
+router.post("/userLogin", loginPost).get("/logout", logout)
+      .get('/userAccont',userAcctGet)
+      .get('/userUpdateAccount',userAccUpdate)
+      .get('/userEditAddress',editaddresslist)
+      .get('/addAddress',addAddressGet)
+      .post('/userUpdateAccount',addAddressPost)
+      .post('/deleteaddress',deleteaddress)
 
 const { userSingleproduct,searchProduct,MinMaxfilter } = require("../controllers/productController");
 

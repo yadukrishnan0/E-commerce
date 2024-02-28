@@ -169,6 +169,7 @@ module.exports = {
         productName: { $regex: Name, $options: "i" },
       });
 
+      
       res.status(200).render("user/allproducts", { products, category });
     } catch (err) {
       console.log("search product err", err);
