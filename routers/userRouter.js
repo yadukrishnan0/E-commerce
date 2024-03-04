@@ -22,7 +22,7 @@ const {
   addAddressGet,
   editaddresslist,
   addAddressPost,
-  deleteaddress
+  deleteaddress,
 } = require("../controllers/userController");
 
 router.get("/signup", signupGet);
@@ -36,23 +36,29 @@ router.get("/forgotOtp", forgetOtpverifiGet);
 router.post("/userLoginOtpVerify", forgototpPOst);
 router.get("/resetPassword", ResetPassGet);
 router.post("/userLoginResetPass", resetpassPost);
-router.post("/userLogin", loginPost).get("/logout", logout)
-      .get('/userAccont',userAcctGet)
-      .get('/userUpdateAccount',userAccUpdate)
-      .get('/userEditAddress',editaddresslist)
-      .get('/addAddress',addAddressGet)
-      .post('/userUpdateAccount',addAddressPost)
-      .post('/deleteaddress',deleteaddress)
+router
+  .post("/userLogin", loginPost)
+  .get("/logout", logout)
+  .get("/userAccont", userAcctGet)
+  .get("/userUpdateAccount", userAccUpdate)
+  .get("/userEditAddress", editaddresslist)
+  .get("/addAddress", addAddressGet)
+  .post("/userUpdateAccount", addAddressPost)
+  .post("/deleteaddress", deleteaddress);
 
-const { userSingleproduct,searchProduct,MinMaxfilter } = require("../controllers/productController");
+const {
+  userSingleproduct,
+  searchProduct,
+  MinMaxfilter,
+} = require("../controllers/productController");
 
 router
   .get("/home", userHomeGet)
   .get("/user/viewsingleproduct", userSingleproduct)
   .get("/allproducts", shopbycategoryGet)
-  .get('/search',searchProduct)
-  .post('/userFliterByPrice',MinMaxfilter)
-  
+  .get("/search", searchProduct)
+  .post("/userFliterByPrice", MinMaxfilter);
+
 const {
   wishlist,
   removewishlist,
@@ -71,7 +77,7 @@ const {
   addTocart,
   showaddtocart,
   deleteCart,
-  cartQtyUpdate
+  cartQtyUpdate,
 } = require("../controllers/cartController");
 
 router
@@ -79,8 +85,21 @@ router
   .post("/addtocart", addTocart)
   .post("/showaddtocart", showaddtocart)
   .post("/deletecart", deleteCart)
-  .post('/cartquantity',cartQtyUpdate)
+  .post("/cartquantity", cartQtyUpdate);
 
-
-
+const {
+  checkOutGet,
+  applyCoupon,
+  chechkOutPost,
+  orderConfirmOtp,
+  orderConfirmOtpPost,
+  confirmSuccess,
+} = require("../controllers/paymentController");
+router
+  .get("/checkout", checkOutGet)
+  .post("/userApplyCoupon", applyCoupon)
+  .post("/chechkoutPayment", chechkOutPost)
+  .get("/oderConfirm", orderConfirmOtp)
+  .post("/oderConfirm", orderConfirmOtpPost)
+  .get('/confirm',confirmSuccess)
 module.exports = router;

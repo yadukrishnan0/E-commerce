@@ -33,11 +33,11 @@ async function addTocart(e, id) {
   const cartBtnTxt = cartBtn.textContent;
 
   try {
-    console.log(id);
+  
     if (cartBtnTxt == "add to cart") {
       const response = await axios.post(`/addtocart?id=${id}`);
       const result = response.data;
-      console.log(result);
+      
       
       if (result.login == false) {
         window.location.href = "/login";

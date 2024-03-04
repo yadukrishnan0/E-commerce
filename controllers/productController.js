@@ -105,8 +105,11 @@ module.exports = {
   },
   updateProductPost: async (req, res) => {
     try {
-      const productImage = req.files.map((file) => file.filename);
       const _id = req.query.id;
+      const product = await productModel.findOne({ _id });
+
+      const productImage = req.files.map((file) => file.filename);
+
       const {
         productName,
         price,
@@ -169,7 +172,6 @@ module.exports = {
         productName: { $regex: Name, $options: "i" },
       });
 
-      
       res.status(200).render("user/allproducts", { products, category });
     } catch (err) {
       console.log("search product err", err);
@@ -188,4 +190,3 @@ module.exports = {
     }
   },
 };
-

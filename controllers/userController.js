@@ -17,6 +17,7 @@ const profileModel = require("../models/userSchema/profie");
 const { ObjectId } = require("mongodb");
 const { Types } = require("mongoose");
 const mongoose = require("mongoose");
+
 const otp = Math.floor(Math.random() * 900000) + 100000;
 
 const serviceSID = process.env.serviceSID;
@@ -254,6 +255,7 @@ module.exports = {
       const _id = req.session.user;
       if (_id) {
         const user = await signupModel.findOne({ _id });
+        // const address =await profileModel.findOne({userId:_id})
         res.status(200).render("user/userProfile", { user });
       } else {
         res.redirect("/login");
@@ -262,12 +264,13 @@ module.exports = {
       console.log("useraccount get error:", err);
     }
   },
-  userAccUpdate: async (res, req) => {
+  userAccUpdate: async (req, res) => {
     try {
       const _id = req.session.user;
-
+     
       if (_id) {
-        const acc = await signupModel.findOne({ _id });
+        const user=await signupModel.findOne({_id});
+        res.render('user/Accupdate',{user});
       } else {
         res.redirect("/login");
       }
@@ -358,7 +361,7 @@ module.exports = {
         { userId },
         { $pull: { addresses: { _id: id } } }
       );
-      res.status(200).json({ success: true, message: "address deleted"});
+      res.status(200).json({ success: true, message: "address deleted" });
     } catch (err) {
       console.log("delete address err", err);
     }

@@ -13,6 +13,7 @@ const signupSchema = mongoose.Schema({
   password: {
     type: String
     
+    
   }
 });
 

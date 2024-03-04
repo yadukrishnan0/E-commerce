@@ -35,6 +35,7 @@ async function inc(id, price, stock) {
   const total1 = total(price);
   sTotal.innerHTML = `₹${total1}`;
   tPrice.innerHTML = `₹${total1}`;
+  
   if (qtyval <= stockval) {
     lPrice.classList.remove("red");
     lPrice.innerHTML = `₹${newprice}`;
