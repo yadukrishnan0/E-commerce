@@ -94,6 +94,7 @@ const {
   orderConfirmOtp,
   orderConfirmOtpPost,
   confirmSuccess,
+  userBuyNow
 } = require("../controllers/paymentController");
 router
   .get("/checkout", checkOutGet)
@@ -102,4 +103,5 @@ router
   .get("/oderConfirm", orderConfirmOtp)
   .post("/oderConfirm", orderConfirmOtpPost)
   .get('/confirm',confirmSuccess)
+  .get('/userBuyNow',userBuyNow)
 module.exports = router;

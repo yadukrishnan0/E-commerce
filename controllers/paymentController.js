@@ -10,17 +10,24 @@ const otpC = Math.floor(Math.random() * 900000) + 100000;
 module.exports = {
   checkOutGet: async (req, res) => {
     try {
+      let totalAmt;
       const _id = req.session.user;
       if (_id) {
         const cart = await cartModel
           .findOne({ userId: _id })
           .populate("products.productId");
         const useraddress = await profileModel.findOne({ userId: _id });
-        const totalAmt = cart.products.reduce((accu, data) => {
-          const result = (data.productId.price * data.productId.discount) / 100;
-          const discountedPrice = Math.ceil(data.productId.price - result);
-          return (accu += discountedPrice * data.quantity);
-        }, 0);
+        if (req.session.sprice) {
+          totalAmt = req.session.sprice;
+          delete req.session.sprice;
+        } else {
+          totalAmt = cart.products.reduce((accu, data) => {
+            const result =
+              (data.productId.price * data.productId.discount) / 100;
+            const discountedPrice = Math.ceil(data.productId.price - result);
+            return (accu += discountedPrice * data.quantity);
+          }, 0);
+        }
         res.render("user/checkout", { useraddress, totalAmt });
       } else {
         res.redirect("/login");
@@ -77,16 +84,9 @@ module.exports = {
         req.session.payMethod = payMethod;
         req.session.address = address;
         req.session.totalPrice = totalPrice;
-        console.log(otpC);
         emailverification(email, otpC);
+        console.log(otpC);
         res.status(200).json({ success: true, COD: true });
-        // const newdata = new orderModel({
-        //   userId:_id ,
-        //   products:'1',
-        //   totalprice:price,
-        //   address:address
-        // });
-        // await newdata.save();
       } else {
         console.log("not cod");
       }
@@ -107,40 +107,66 @@ module.exports = {
   },
   orderConfirmOtpPost: async (req, res) => {
     try {
+      let cart=[]
       const _id = req.session.user;
       const { otp } = req.body;
+    
       if (otp == otpC) {
         const payMethod = req.session.payMethod;
         const address = req.session.address;
         const totalPrice = req.session.totalPrice;
-        const cart = await cartModel.findOne({ userId: _id });
-
+        console.log('hello');
+        let carts = await cartModel.findOne({ userId: _id });
+        console.log(cart);
+        if (req.session.productId) {
+          let products=[{
+            productId: req.session.productId,
+            quantity: 1,
+          }]
+          cart =products;
+        } else {
+          cart = carts.products;
+        }
         const newdata = new orderModel({
           userId: _id,
-          products: cart.products,
+          products:cart,
           totalprice: totalPrice,
           address: address,
           paymentMethod: payMethod,
-          Status:'pending'
-
+          Status: "pending",
         });
         await newdata.save();
         await cartModel.deleteOne({ userId: _id });
-        res.redirect('/confirm');
+       delete  req.session.sprice;
+       delete  req.session.productId;
+       res.redirect("/confirm");
       }
     } catch (err) {
       console.log("orderConfirmOtpPost error", err);
     }
   },
-  confirmSuccess:(req,res)=>{
-    try{
-    if(req.session.user){
-  res.render('user/confirm')
-    }else{
-  res.redirect('/login')
+  confirmSuccess: (req, res) => {
+    try {
+      if (req.session.user) {
+        res.render("user/confirm");
+      } else {
+        res.redirect("/login");
+      }
+    } catch (err) {
+      console.log("confirmSuccess", err);
     }
-    }catch(err){
-      console.log('confirmSuccess',err)
+  },
+  userBuyNow: async (req, res) => {
+    try {
+      const _id = req.query.id;
+      const product = await productModel.findOne({ _id });
+      const result = (product.price * product.discount) / 100;
+      const discountedPrice = Math.ceil(product.price - result);
+      req.session.sprice = discountedPrice;
+      req.session.productId = _id;
+      res.redirect("/checkout");
+    } catch (err) {
+      console.log("userBuyNow errr", err);
     }
-  }
+  },
 };
