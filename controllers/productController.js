@@ -11,6 +11,7 @@ const { render } = require("ejs");
 const session = require("express-session");
 require("dotenv").config();
 const { json } = require("stream/consumers");
+const orderModel = require("../models/userSchema/orderSchema");
 
 module.exports = {
   addproductGet: async (req, res) => {
@@ -189,4 +190,27 @@ module.exports = {
       console.log("max to minimum error:", err);
     }
   },
+adminSideOrderGet:async(req,res)=>{
+  try{
+    const orders = await orderModel
+          .find({})
+          .populate("products.productId");
+    
+    res.render('admin/orderslist',{orders});
+
+  }catch(err){
+    console.log('adminSideOrderGet',err)
+  }
+},
+updateStatus:async (req,res)=>{
+  try{
+
+  const _id =req.body.id;
+  const Status =req.body.Status
+  await orderModel.updateOne({_id},{$set:{Status:Status}})
+  res.status(200).json({success:true,Status})
+  }catch(err){
+    console.log('updateStatus error',err)
+  }
+}
 };

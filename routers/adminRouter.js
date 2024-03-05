@@ -23,6 +23,8 @@ const {
   updateProductGet,
   updateProductPost,
   viewsingleProductGet,
+  adminSideOrderGet,
+  updateStatus
 } = require("../controllers/productController");
 
 // coupon
@@ -101,6 +103,7 @@ router
   .post("/addbanner", upload.single("BannerImage"), AddbannerPost)
   .delete("/deletebanner", DeleteBanner)
   .get("/updateBanner", updateBannerGET)
-  .post("/updateBanner", upload.single("BannerImage"), updateBannerPost);
-
+  .post("/updateBanner", upload.single("BannerImage"), updateBannerPost)
+  .get('/order',adminSideOrderGet)
+  .post('/updatestatus',updateStatus)
 module.exports = router;

@@ -50,6 +50,7 @@ const {
   userSingleproduct,
   searchProduct,
   MinMaxfilter,
+
 } = require("../controllers/productController");
 
 router
@@ -57,7 +58,8 @@ router
   .get("/user/viewsingleproduct", userSingleproduct)
   .get("/allproducts", shopbycategoryGet)
   .get("/search", searchProduct)
-  .post("/userFliterByPrice", MinMaxfilter);
+  .post("/userFliterByPrice", MinMaxfilter)
+  
 
 const {
   wishlist,

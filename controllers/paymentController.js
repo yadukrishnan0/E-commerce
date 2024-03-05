@@ -256,8 +256,9 @@ module.exports = {
           const orders = await orderModel
           .findOne({_id})
           .populate("products.productId")
+        const user =await signupModel.findOne({_id:req.session.user})
         
-            res.render('user/productSummary',{orders});
+            res.render('user/productSummary',{orders,user});
         }else{
           res.redirect('/login')
         }
