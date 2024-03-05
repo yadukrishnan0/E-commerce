@@ -7,6 +7,13 @@ const orderModel = require("../models/userSchema/orderSchema");
 const emailverification = require("../utilities/nodemailer");
 const signupModel = require("../models/userSchema/userSIgnupSchema");
 const otpC = Math.floor(Math.random() * 900000) + 100000;
+const razorpay = require("razorpay");
+
+const instance = new razorpay({
+  key_id: process.env.key_id,
+  key_secret: process.env.key_secret,
+});
+
 module.exports = {
   checkOutGet: async (req, res) => {
     try {
@@ -85,10 +92,18 @@ module.exports = {
         req.session.address = address;
         req.session.totalPrice = totalPrice;
         emailverification(email, otpC);
-        console.log(otpC);
         res.status(200).json({ success: true, COD: true });
       } else {
-        console.log("not cod");
+        req.session.payMethod = payMethod;
+        req.session.address = address;
+        req.session.totalPrice = totalPrice;
+
+        const options = {
+          amount: totalPrice * 100,
+          currency: "INR",
+        };
+        const razorpayorder = await instance.orders.create(options);
+        res.status(200).json({ razorpayorder });
       }
     } catch (err) {
       console.log("chechk out post error", err);
@@ -107,29 +122,31 @@ module.exports = {
   },
   orderConfirmOtpPost: async (req, res) => {
     try {
-      let cart=[]
+      let cart = [];
       const _id = req.session.user;
       const { otp } = req.body;
-    
+
       if (otp == otpC) {
         const payMethod = req.session.payMethod;
         const address = req.session.address;
         const totalPrice = req.session.totalPrice;
-        console.log('hello');
+
         let carts = await cartModel.findOne({ userId: _id });
-        console.log(cart);
+
         if (req.session.productId) {
-          let products=[{
-            productId: req.session.productId,
-            quantity: 1,
-          }]
-          cart =products;
+          let products = [
+            {
+              productId: req.session.productId,
+              quantity: 1,
+            },
+          ];
+          cart = products;
         } else {
           cart = carts.products;
         }
         const newdata = new orderModel({
           userId: _id,
-          products:cart,
+          products: cart,
           totalprice: totalPrice,
           address: address,
           paymentMethod: payMethod,
@@ -137,9 +154,9 @@ module.exports = {
         });
         await newdata.save();
         await cartModel.deleteOne({ userId: _id });
-       delete  req.session.sprice;
-       delete  req.session.productId;
-       res.redirect("/confirm");
+        delete req.session.sprice;
+        delete req.session.productId;
+        res.redirect("/confirm");
       }
     } catch (err) {
       console.log("orderConfirmOtpPost error", err);
@@ -167,6 +184,69 @@ module.exports = {
       res.redirect("/checkout");
     } catch (err) {
       console.log("userBuyNow errr", err);
+    }
+  },
+  orderpageGet: async (req, res) => {
+    try {
+      if (req.session.user) {
+        const userId = req.session.user;
+        const order = await orderModel
+          .find({ userId })
+          .populate("products.productId");
+
+        res.render("user/orderpage", { order });
+      } else {
+        res.redirect("/login");
+      }
+    } catch (err) {
+      console.log("orderpageGet err", err);
+    }
+  },
+  razorpayPost: async (req, res) => {
+    
+    try {
+      let cart = [];
+      const _id = req.session.user;
+      const payMethod = req.session.payMethod;
+      const address = req.session.address;
+      const totalPrice = req.session.totalPrice;
+      let carts = await cartModel.findOne({ userId: _id });
+
+      if (req.session.productId) {
+        let products = [
+          {
+            productId: req.session.productId,
+            quantity: 1,
+          },
+        ];
+        cart = products;
+      } else {
+        cart = carts.products;
+      }
+
+      const newdata = new orderModel({
+        userId: _id,
+        products: cart,
+        totalprice: totalPrice,
+        address: address,
+        paymentMethod: payMethod,
+        Status: "pending",
+      });
+      await newdata.save();
+
+      await cartModel.deleteOne({ userId: _id });
+
+      delete req.session.sprice;
+      delete req.session.productId;
+      delete req.session.address;
+      delete req.session.payMethod;
+      delete req.session.totalPrice;
+
+      res
+        .status(200)
+        .json({ success: true, message: "product order successfully" });
+    } catch (err) {
+      console.log("razorpayPost", err);
     }
   },
 };

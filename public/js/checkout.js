@@ -149,8 +149,30 @@ async function payment(e){
       totalPrice:totalPrice,
     });
     const result = response.data;
+    
     if(result.COD == true){
       window.location.href = '/oderConfirm'
+    }else{
+     const razorpayOrder =result.razorpayorder;
+     const options = {
+      key: 'rzp_test_AQ716HfKBQv4A3',
+      amount: razorpayOrder.amount,
+      currency: razorpayOrder.currency,
+      name: 'Your Company Name',
+      description: 'Test Payment',
+      order_id: razorpayOrder.id,
+      handler: async function (response) {
+         
+          const ordeplacementResponse = await axios.post('/razorpayment');
+          const orderresult = ordeplacementResponse.data
+          if( orderresult.success === true){
+            window.location.href='/confirm'
+          }
+       },
+      };
+  const paymentObject = new Razorpay(options);
+  paymentObject.open();
+     
     }
   }
  

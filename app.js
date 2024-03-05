@@ -37,7 +37,7 @@ app.use("/admin", adminRouter);
 Dbconnection()
   .then(() => {
     app.listen(port, () => {
-      console.log(`server running ${port}`);
+      console.log(`server connecting ${port}`);
     });
   })
   .catch(() => {

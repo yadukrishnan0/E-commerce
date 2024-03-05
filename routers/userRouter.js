@@ -94,8 +94,11 @@ const {
   orderConfirmOtp,
   orderConfirmOtpPost,
   confirmSuccess,
-  userBuyNow
+  userBuyNow,
+  orderpageGet,
+  razorpayPost
 } = require("../controllers/paymentController");
+const Razorpay = require("razorpay");
 router
   .get("/checkout", checkOutGet)
   .post("/userApplyCoupon", applyCoupon)
@@ -104,4 +107,6 @@ router
   .post("/oderConfirm", orderConfirmOtpPost)
   .get('/confirm',confirmSuccess)
   .get('/userBuyNow',userBuyNow)
+  .get('/userOrders',orderpageGet)
+  .post('/razorpayment',razorpayPost)
 module.exports = router;

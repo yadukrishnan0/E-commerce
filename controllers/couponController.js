@@ -66,6 +66,7 @@ module.exports = {
       const _id = req.params.id;
       abc = await couponModel.updateOne(
         { _id },
+
         {
           $set: {
             couponCode: code,
@@ -73,6 +74,7 @@ module.exports = {
             validFrom: validFrom,
             validTo: validTo,
           },
+          
         }
       );
 
@@ -81,10 +83,13 @@ module.exports = {
       console.log("coupon update err", err);
     }
   },
+
   DeleteCoupon: async (req, res) => {
     try {
       const _id = req.params.id;
+
       await couponModel.deleteOne({});
+
       res.redirect("/admin/couponslist");
     } catch (err) {
       res.status(500).send("");
