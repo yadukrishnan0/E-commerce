@@ -193,7 +193,7 @@ module.exports = {
         const order = await orderModel
           .find({ userId })
           .populate("products.productId");
-
+    
         res.render("user/orderpage", { order });
       } else {
         res.redirect("/login");
@@ -249,4 +249,20 @@ module.exports = {
       console.log("razorpayPost", err);
     }
   },
+  orderSummary: async (req,res)=>{
+    try{
+        if(req.session.user){
+          const _id =req.query.id;
+          const orders = await orderModel
+          .findOne({_id})
+          .populate("products.productId")
+        
+            res.render('user/productSummary',{orders});
+        }else{
+          res.redirect('/login')
+        }
+    }catch(err){
+      console.log('order summary error',err)
+    }
+  }
 };
