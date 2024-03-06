@@ -108,12 +108,19 @@
 
                         <td class="role"><%=data.createdAt.toISOString().substring(0, 10)%></td>
                         <td class="edit"> 
+                           <% if(data.Status == 'Delivered'){ %>
+                             <span style="color:green;">Delivered</span>
+                           <%}else if(data.Status == 'Cancelled'){%>
+                            <span style="color:red;">Cancelled</span>
+                           <%}
+                           else{%>
                             <select id="dropdown" onchange="status(event,'<%=data._id%>')" class="dropdownClass">
                             <option value="" disabled selected><%=data.Status%></option>
                             <option value="shipped">shipped</option>
                             <option value="Delivered">Delivered</option>
                             <option value="pending">pending</option>
                           </select>
+                           <%}%>
                         </td>
                     </tr>
                     </tr>

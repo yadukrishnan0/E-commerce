@@ -248,8 +248,10 @@
                 </div>
               </div>
 
+
            <%})%>   
-              <div class="ODhead pt-4 pb-4">
+           <% if(orders.Status == 'Delivered' ||orders.Status == 'pending' ||orders.Status == 'pending' ){%>
+           <div class="ODhead pt-4 pb-4">
                 <div class="d-flex gap-3 align-items-center">
                   <p class="dot done"></p>
               
@@ -260,20 +262,83 @@
 
                     </div>
                 </div>
+
                 <div class="d-flex gap-3 align-items-center">
                   <p class="dot done"></p>
                   <p id="oText">Shipped</p>
                 </div>
+              
+                
+<%if(orders.Status == 'Delivered'){%>
+
                 <div class="lineParent position-relative">
-                    <div class="line position-relative doneLine">
+                    <div class="line position-relative doneLine" >
+                  </div>
+                </div>
+                <div class="d-flex gap-3 align-items-center">
+               
+                  <p class="dot done"></p>
+                  <p id="oText">Delivered</p>
+                  <% }
+                  else{%>
+
+
+
+                    <div class="lineParent position-relative">
+                      <div class="line position-relative doneLine" style="background-color:rgb(184, 180, 180);" >
+                    </div>
+                  </div>
+                  <div class="d-flex gap-3 align-items-center">
+                 
+                    <p class="dot done" style="background-color:rgb(184, 180, 180);"></p>
+                    <p id="oText">Delivered</p>
+
+                  <%}%>
+
+     <%}%>
+
+
+<%if(orders.Status == 'Cancelled'){%>
+  <div class="ODhead pt-4 pb-4">
+    <div class="d-flex gap-3 align-items-center">
+         <p class="dot done" style="background-color: red;"></p>
+                  <p id="oText">Ordered Confirmed,<%=orders.createdAt.toISOString().substring(0, 10)%></p>
+                </div>
+                <div class="lineParent position-relative">
+                    <div class="line position-relative doneLine" style="background-color: red;">
 
                     </div>
                 </div>
+
                 <div class="d-flex gap-3 align-items-center">
-                  <p class="dot done"></p>
-                  <p id="oText">Delivered</p>
+                  <p class="dot done" style="background-color: red;"></p>
+                  <!-- <p id="oText">Shipped</p> -->
                 </div>
+
+
+               <div class="lineParent position-relative">
+                <div class="line position-relative doneLine" style="background-color: red;" >
               </div>
+            </div>
+            <div class="d-flex gap-3 align-items-center">
+           
+              <p class="dot done" style="background-color: red;"></p>
+              <p id="oText">Cancelled</p>
+
+
+<%}%>
+
+
+
+                </div>
+
+              </div>
+
+
+
+
+              
+
               <div class="ODhead sDetails">
                 <p>Shipping Details</p>
               </div>

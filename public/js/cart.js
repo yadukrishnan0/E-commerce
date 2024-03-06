@@ -85,7 +85,17 @@ async function deleteCart(id) {
   const result = response.data;
   if (result.success === true) {
     const length = result.length;
+    const proprice =document.querySelector(`.lPrice${id}`)
+    let ttalprce = parseInt(tPrice.textContent.replace('₹',''))
+    let productPrice =parseInt(proprice.textContent.replace('₹',''));
+
+    let calculate =parseInt(ttalprce - productPrice) 
+   
+    tPrice.innerHTML=`₹${calculate}`
+    sTotal.innerHTML=`₹${calculate}`
     document.querySelector(`.delete_tr${id}`).remove();
+   
+   
     const count = (document.querySelector(
       ".count"
     ).innerHTML = `Cart(${length})`);
