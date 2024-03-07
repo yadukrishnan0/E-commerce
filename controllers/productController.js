@@ -204,9 +204,23 @@ adminSideOrderGet:async(req,res)=>{
 },
 updateStatus:async (req,res)=>{
   try{
+let _id;
+let Status;
+if(!req.body.id){
+  // this is user side oder cancel
+ _id =req.query.id
+}else{
+  //admin can update the status two side are the same router
+  _id =req.body.id;
+}
+if(!req.body.Status){
+Status ='Cancelled'
+}else{
 
-  const _id =req.body.id;
-  const Status =req.body.Status
+  Status =req.body.Status
+}
+  
+   
   await orderModel.updateOne({_id},{$set:{Status:Status}})
   res.status(200).json({success:true,Status})
   }catch(err){

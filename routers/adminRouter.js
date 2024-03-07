@@ -59,6 +59,10 @@ const {
   updateBannerPost,
 } = require("../controllers/bannerController");
 
+const{chart}=require('../controllers/chartController');
+
+router.post('/chart',chart);
+
 const upload = multer({ storage });
 
 router.get("/signup", adminSignUpGet);

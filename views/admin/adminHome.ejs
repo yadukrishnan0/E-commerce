@@ -57,17 +57,17 @@
             <div class="val-box">
                 <i class="fa-solid fa-users"></i>
                 <div>
-                    <h3><%=users.length%></h3>
+                    <h3><%=data.users.length%></h3>
                     <span>New Users</span>
                 </div>
             </div>
 
-
-
+            
+            
             <div class="val-box">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <div>
-                    <h3>200,521</h3>
+                    <h3><%=data.orders.length%></h3>
                     <span>Total Orders</span>
                 </div>
             </div>
@@ -77,157 +77,40 @@
             <div class="val-box">
                 <i class="fa-regular fa-circle-check"></i>
                 <div>
-                    <h3><%=products.length%></h3>
+                    <h3><%=data.products.length%></h3>
                     <span>Products </span>
                 </div>
             </div>
-
-
+            
+            
             
             <div class="val-box">
                 <i class="fa-solid fa-dollar-sign"></i>
                 <div>
-                    <h3>$677.89</h3>
-                    <span>This Month</span>
+                    <h3>₹<%=data.total%></h3>
+                    <span>Total sale</span>
                 </div>
             </div>
         </div>
+        
+        
+          <div class="board">
+            <div style="width: 500px; height: 500px; display: flex;gap:100px;align-items: center;">
+            <canvas id="myChart" ></canvas>
+            <canvas id="myChart2" ></canvas>
+            <!-- <canvas id="myChart3" ></canvas> -->
+            </div>
+            <!-- <div style="width: 500px; height: 500px; display: flex;">
+                <canvas id="salesChart" ></canvas>
+            </div> -->
+          <div>
 
-
-        <dir class="board">
-            <table width="100%"> 
-                <thead>
-                    <tr>
-                        <td>Name</td>
-                        <td>Title</td>
-                        <td>Status</td>
-                        <td>Role</td>
-                        <td></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="people"> 
-                            <img src="/images/ramees.jpeg" alt="">
-                            <div class="people-de">
-                                <h5>Ramees Kakkavayil</h5>
-                                <p>kakavayil@gmail.com</p>
-                            </div>
-                        </td>
-
-                        <td class="people-des">
-                          <h5>Software Engineer</h5>
-                          <p>web dev</p>
-                        </td>
-
-                        <td class="active"><p>Active</p></td>
-
-                        <td class="role"> <p>Owner</p></td>
-
-                        <td class="edit"> <a href="#">Edit</a></td>
-                    </tr>
-
-
-                    <tr>
-                        <td class="people"> 
-                            <img src="/images/ramees.jpeg" alt="">
-                            <div class="people-de">
-                                <h5>Ramees Kakkavayil</h5>
-                                <p>kakavayil@gmail.com</p>
-                            </div>
-                        </td>
-
-                        <td class="people-des">
-                          <h5>Software Engineer</h5>
-                          <p>web dev</p>
-                        </td>
-
-                        <td class="active"><p>Active</p></td>
-
-                        <td class="role"> <p>Owner</p></td>
-
-                        <td class="edit"> <a href="#">Edit</a></td>
-                    </tr>
-
-
-
-                    <tr>
-                        <td class="people"> 
-                            <img src="/images/ramees.jpeg" alt="">
-                            <div class="people-de">
-                                <h5>Ramees Kakkavayil</h5>
-                                <p>kakavayil@gmail.com</p>
-                            </div>
-                        </td>
-
-                        <td class="people-des">
-                          <h5>Software Engineer</h5>
-                          <p>web dev</p>
-                        </td>
-
-                        <td class="active"><p>Active</p></td>
-
-                        <td class="role"> <p>Owner</p></td>
-
-                        <td class="edit"> <a href="#">Edit</a></td>
-                    </tr>
-
-
-
-                    <tr>
-                        <td class="people"> 
-                            <img src="/images/ramees.jpeg" alt="">
-                            <div class="people-de">
-                                <h5>Ramees Kakkavayil</h5>
-                                <p>kakavayil@gmail.com</p>
-                            </div>
-                        </td>
-
-                        <td class="people-des">
-                          <h5>Software Engineer</h5>
-                          <p>web dev</p>
-                        </td>
-
-                        <td class="active"><p>Active</p></td>
-
-                        <td class="role"> <p>Owner</p></td>
-
-                        <td class="edit"> <a href="#">Edit</a></td>
-                    </tr>
-
-
-
-                    <tr>
-                        <td class="people"> 
-                            <img src="/images/ramees.jpeg" alt="">
-                            <div class="people-de">
-                                <h5>Ramees Kakkavayil</h5>
-                                <p>kakavayil@gmail.com</p>
-                            </div>
-                        </td>
-
-                        <td class="people-des">
-                          <h5>Software Engineer</h5>
-                          <p>web dev</p>
-                        </td>
-
-                        <td class="active"><p>Active</p></td>
-
-                        <td class="role"> <p>Owner</p></td>
-
-                        <td class="edit"> <a href="#">Edit</a></td>
-                    </tr>
-                    
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <script>
-        $('#menu-btn').click(function() {
-           $('#menu').toggleClass('active')
-        })
-    </script>
+</div> 
+</div>
+</section>
+    
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/chart.js"></script>
 </html>

@@ -16,6 +16,7 @@ const checkPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
 const bcrypt = require("bcrypt");
 const otp = require("../public/js/optgenerator");
 const { json } = require("stream/consumers");
+const orderModel = require("../models/userSchema/orderSchema");
 
 module.exports = {
   //  ..............admin signup............................
@@ -84,9 +85,21 @@ module.exports = {
   },
   AdminHomeGet: async (req, res) => {
     try {
+      
       const users = await signupModel.find({});
       const products =await productModel.find({});
-      res.render("admin/adminHome", {users,products});
+      const orders =await orderModel.find({Status:'Delivered'})
+     const total =orders.reduce((accu,data)=>{
+      return accu+=data.totalprice
+     },0)
+      const data ={
+        users:users,
+        products:products,
+        orders: orders,
+        total:total
+      } 
+    
+      res.render("admin/adminHome", {data});
     } catch (err) {
       console.log("adminhome get error", err);
     }

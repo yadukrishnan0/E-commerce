@@ -25,7 +25,7 @@ const signupSchema = mongoose.Schema({
     default:true,
     type:Boolean
   }
-});
+},{timestamps:true});
 
 const usersignupModel = mongoose.model("usersignups", signupSchema);
 module.exports = usersignupModel;

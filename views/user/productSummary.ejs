@@ -250,7 +250,7 @@
 
 
            <%})%>   
-           <% if(orders.Status == 'Delivered' ||orders.Status == 'pending' ||orders.Status == 'pending' ){%>
+           <% if(orders.Status == 'Delivered' ||orders.Status == 'pending' ||orders.Status == 'shipped' ){%>
            <div class="ODhead pt-4 pb-4">
                 <div class="d-flex gap-3 align-items-center">
                   <p class="dot done"></p>
@@ -926,6 +926,7 @@ hamburgerBtn.addEventListener("click", () => {
   mobilenavigation.classList.toggle("active");
   logo.classList.toggle("active");
 });
+
 
 try {
   document.querySelector('.shopByCat').addEventListener('click', ()=>{

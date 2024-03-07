@@ -15,6 +15,7 @@
     <!-- end of Bootstrap css cdn link -->
     <!-- Style css -->
     <link rel="stylesheet" href="/userCss/orderpage.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- end of Style css -->
   </head>
   <body>
@@ -267,11 +268,13 @@
                       </div>
                       <div class="d-flex align-items-center gap-2">
                         <div class="statusCircle"></div>
-                        <p class="statusOrder me-3"><%=data.Status%></p>
+                        <p class="statusOrder me-3" id="statusOrder<%=data._id%>"><%=data.Status%></p>
                       </div>
-                      <a href="/userOrderCancled">
-                        <button class="cancelBtn margin">Cancel</button>
-                      </a>
+                     <% if(data.Status == 'pending' || data.Status == 'shipped'){%>
+
+                     
+                        <button class="cancelBtn margin" onclick="cancelOption('<%=data._id%>')">Cancel</button>
+                      <%}%>
                     </div>
                   </div>
                 </div>
@@ -806,12 +809,24 @@ const mobilenavigationList = document.querySelector(".mobilenavigationList");
 const mobilenavigation = document.querySelector(".mobilenavigation");
 const logo = document.querySelector(".logo");
 
+
 hamburgerBtn.addEventListener("click", () => {
   hamburgerBtn.classList.toggle("active");
   mobilenavigationList.classList.toggle("active");
   mobilenavigation.classList.toggle("active");
   logo.classList.toggle("active");
 });
+const cancelBtn =document.querySelector('.cancelBtn');
+
+async function cancelOption(id){
+  const statusOrder =document.getElementById('statusOrder'+id)
+  const response = await axios.post(`/admin/updatestatus?id=${id}`)
+  const result =response.data;
+  if(result.success == true){
+  statusOrder.innerHTML = 'Cancelled'
+  cancelBtn.style.display ='none'
+}
+}
 
     </script>
     <!-- end of custom js -->
