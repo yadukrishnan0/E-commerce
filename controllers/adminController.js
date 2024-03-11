@@ -69,7 +69,7 @@ module.exports = {
       const accExist = await adminModel.findOne({ email });
 
       const passmatch = await bcrypt.compare(password, accExist.password);
-
+      req.session.admin = accExist._id;
       if (!accExist) {
         req.flash("error", "please create account");
         return res.redirect("/admin/login");
@@ -85,21 +85,24 @@ module.exports = {
   },
   AdminHomeGet: async (req, res) => {
     try {
-      
-      const users = await signupModel.find({});
-      const products =await productModel.find({});
-      const orders =await orderModel.find({Status:'Delivered'})
-     const total =orders.reduce((accu,data)=>{
-      return accu+=data.totalprice
-     },0)
-      const data ={
-        users:users,
-        products:products,
-        orders: orders,
-        total:total
-      } 
-    
-      res.render("admin/adminHome", {data});
+      if (req.session.admin) {
+        const users = await signupModel.find({});
+        const products = await productModel.find({});
+        const orders = await orderModel.find({ Status: "Delivered" });
+        const total = orders.reduce((accu, data) => {
+          return (accu += data.totalprice);
+        }, 0);
+        const data = {
+          users: users,
+          products: products,
+          orders: orders,
+          total: total,
+        };
+
+        res.render("admin/adminHome", { data });
+      } else {
+        res.redirect("/admin/login");
+      }
     } catch (err) {
       console.log("adminhome get error", err);
     }
@@ -107,8 +110,12 @@ module.exports = {
 
   UsersListGet: async (req, res) => {
     try {
-      const users = await signupModel.find({ block: true });
-      res.render("admin/usersList", { users });
+      if (req.session.admin) {
+        const users = await signupModel.find({ block: true });
+        res.render("admin/usersList", { users });
+      } else {
+        res.redirect("/admin/login");
+      }
     } catch (err) {
       console.log("userslist err", err);
     }
@@ -125,8 +132,12 @@ module.exports = {
   },
   blocksers: async (req, res) => {
     try {
-      const users = await signupModel.find({ block: false });
-      res.render("admin/blockedusers", { users });
+      if (req.session.admin) {
+        const users = await signupModel.find({ block: false });
+        res.render("admin/blockedusers", { users });
+      } else {
+        res.redirect("/admin/login");
+      }
     } catch (err) {
       console.log("blocked users get err", err);
     }
@@ -135,7 +146,7 @@ module.exports = {
     try {
       const _id = req.query.id;
 
-      await signupModel.updateOne({ _id }, { $set: { block:true} });
+      await signupModel.updateOne({ _id }, { $set: { block: true } });
       res.status(200).json({ success: true, message: "successfully deleted" });
     } catch (err) {
       console.log("users unblock err", err);

@@ -15,7 +15,11 @@ const { json } = require("stream/consumers");
 module.exports = {
   couponGet: (req, res) => {
     try {
-      res.status(200).render("admin/addcoupon");
+      if (req.session.admin) {
+        res.status(200).render("admin/addcoupon");
+      } else {
+        res.redirect("/admin/login");
+      }
     } catch (err) {
       console.log("coupon get err", err);
     }
@@ -44,17 +48,25 @@ module.exports = {
 
   couponlistGet: async (req, res) => {
     try {
-      const data = await couponModel.find({});
-      res.render("admin/couponList", { data });
+      if (req.session.admin) {
+        const data = await couponModel.find({});
+        res.render("admin/couponList", { data });
+      } else {
+        res.redirect("/admin/login");
+      }
     } catch (err) {
       res.status(500).send("internal sever eroor");
     }
   },
   editCouponGet: async (req, res) => {
     try {
-      const _id = req.params.id;
-      const data = await couponModel.findOne({ _id });
-      res.status(200).render("admin/editCoupon", { data });
+      if (req.session.admin) {
+        const _id = req.params.id;
+        const data = await couponModel.findOne({ _id });
+        res.status(200).render("admin/editCoupon", { data });
+      } else {
+        res.redirect("/admin/login");
+      }
     } catch (err) {
       console.log("edit coupon error", err);
     }
@@ -74,7 +86,6 @@ module.exports = {
             validFrom: validFrom,
             validTo: validTo,
           },
-          
         }
       );
 

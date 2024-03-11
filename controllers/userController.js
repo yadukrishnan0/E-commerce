@@ -232,10 +232,7 @@ module.exports = {
       oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
       const category = await catagoryModel.find({});
-      const products = await productModel
-        .find({ createdAt: { $gte: oneWeekAgo } })
-        .sort({ createdAt: -1 })
-        .limit(4);
+      const products = await productModel.find({}).limit(4);
       res.render("user/userHome", { products, category });
     } catch (err) {
       console.log("userhome get error", err);
@@ -267,10 +264,10 @@ module.exports = {
   userAccUpdate: async (req, res) => {
     try {
       const _id = req.session.user;
-     
+
       if (_id) {
-        const user=await signupModel.findOne({_id});
-        res.render('user/Accupdate',{user});
+        const user = await signupModel.findOne({ _id });
+        res.render("user/Accupdate", { user });
       } else {
         res.redirect("/login");
       }
@@ -366,5 +363,35 @@ module.exports = {
       console.log("delete address err", err);
     }
   },
-};
+  userprofileUpdate: async (req, res) => {
+    try {
+      const _id = req.session.user;
+      const user = await signupModel.findOne({ _id });
+      let { fName, email, phone, oldPass, password, cPass } = req.body;
+      let pass;
+      const salt = await bcrypt.genSalt(10);
+      await bcrypt.hash(password, salt);
+      const passmatch = await bcrypt.compare(password, user.password);
 
+      if (password == "") {
+        pass = user.password;
+      } else {
+        pass = await bcrypt.hash(password, salt);
+      }
+        await signupModel.updateOne(
+          { _id },
+          {
+            $set: {
+              fullName: fName,
+              phoneNumber: phone,
+              email: email,
+              password: pass,
+            },
+          }
+        )
+     res.status(200).redirect('/userAccont')
+    } catch (err) {
+      console.log("userprofileUpdate", err);
+    }
+  },
+};

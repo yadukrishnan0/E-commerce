@@ -14,7 +14,11 @@ const { json } = require("stream/consumers");
 module.exports = {
   addCatagory: (req, res) => {
     try {
-      res.status(200).render("admin/addcatagory");
+      if (req.session.admin) {
+        res.status(200).render("admin/addcatagory");
+      } else {
+        res.redirect("/admin/login");
+      }
     } catch (err) {
       console.log("catagory get", err);
 
@@ -43,8 +47,12 @@ module.exports = {
 
   categoryList: async (req, res) => {
     try {
-      const categorys = await catagoryModel.find({});
-      res.render("admin/categoryList", { categorys });
+      if (req.session.admin) {
+        const categorys = await catagoryModel.find({});
+        res.render("admin/categoryList", { categorys });
+      } else {
+        res.redirect("/admin/login");
+      }
     } catch (err) {
       console.log("caegory list error", err);
     }
@@ -67,9 +75,13 @@ module.exports = {
   },
   editcategory: async (req, res) => {
     try {
-      const _id = req.query.id;
-      const catagory = await catagoryModel.findOne({ _id });
-      res.render("admin/editcategory", { catagory });
+      if (req.session.admin) {
+        const _id = req.query.id;
+        const catagory = await catagoryModel.findOne({ _id });
+        res.render("admin/editcategory", { catagory });
+      } else {
+        res.redirect("/admin/login");
+      }
     } catch (err) {
       console.log("edit categoty err", err);
     }
@@ -113,5 +125,4 @@ module.exports = {
       console.log("update category err", err);
     }
   },
-  
 };

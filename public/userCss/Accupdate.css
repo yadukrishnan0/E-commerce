@@ -123,6 +123,9 @@ a {
 .topheadingimgtwo {
   justify-content: flex-start;
 }
+.redlabel{
+  color:red;
+}
 
 .mobilenavigationList {
   display: none;

@@ -23,6 +23,7 @@ const {
   editaddresslist,
   addAddressPost,
   deleteaddress,
+  userprofileUpdate
 } = require("../controllers/userController");
 
 router.get("/signup", signupGet);
@@ -44,7 +45,8 @@ router
   .get("/userEditAddress", editaddresslist)
   .get("/addAddress", addAddressGet)
   .post("/userUpdateAccount", addAddressPost)
-  .post("/deleteaddress", deleteaddress);
+  .post("/deleteaddress", deleteaddress)
+  .post('/userprofileupdate', userprofileUpdate)
 
 const {
   userSingleproduct,

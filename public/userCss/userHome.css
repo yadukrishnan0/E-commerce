@@ -152,7 +152,7 @@ a {
 .navigation {
   width: 100vw;
   height: 62px;
-  background: linear-gradient(180deg, #d9d9d9 -406.45%, #000 139.51%);
+  background: linear-gradient(180deg, #d9d9d9 -406.45%, #ffffff 139.51%);
 }
 .hamburger {
   position: relative;
@@ -198,7 +198,7 @@ a {
   margin-right: 2rem;
 }
 .navigationnavbar ul li a {
-  color: #fff;
+  color: #000000;
   font-family: Inter;
   font-size: 0.9rem;
   font-style: normal;

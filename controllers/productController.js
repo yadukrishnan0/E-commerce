@@ -16,9 +16,14 @@ const orderModel = require("../models/userSchema/orderSchema");
 module.exports = {
   addproductGet: async (req, res) => {
     try {
+      if(req.session.admin ){
+
+      
       const data = await catagoryModel.find({});
       res.render("admin/addproducts", { data });
-    } catch (err) {
+    }else{
+      res.redirect('/admin/login')
+    }} catch (err) {
       console.log(err);
       res.status(404).json({ success: false });
     }
@@ -66,10 +71,16 @@ module.exports = {
 
   productsGet: async (req, res) => {
     try {
+      if(req.session.admin ){
+
+      
       const products = await productModel.find({});
 
       res.render("admin/productsList", { products });
-    } catch (err) {
+    }
+  else{
+    res.redirect('/admin/login')
+  }} catch (err) {
       console.log(err);
       res.status(404).json({ success: false });
     }
@@ -96,11 +107,16 @@ module.exports = {
   },
   updateProductGet: async (req, res) => {
     try {
+      if(req.session.admin ){
+
+      
       const _id = req.query.id;
       const productdata = await productModel.findOne({ _id });
       const data = await catagoryModel.find({});
       res.render("admin/updateProduct", { data, productdata });
-    } catch (err) {
+    }else{
+      res.redirect('/admin/login')
+    }} catch (err) {
       console.log("update product get error", err);
     }
   },
@@ -148,10 +164,16 @@ module.exports = {
   },
   viewsingleProductGet: async (req, res) => {
     try {
+      if('/admin/login'){
+
+      
       const _id = req.query.id;
       const product = await productModel.findOne({ _id });
       res.render("admin/viewSingleProduct", { product });
-    } catch (err) {
+    }
+  else{
+    res.redirect('/admin/login')
+  }} catch (err) {
       console.log("viewsingleproduct admin error", err);
     }
   },
