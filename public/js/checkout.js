@@ -135,13 +135,14 @@ radioBtn.forEach((radio)=>{
   })
 })
 
-async function payment(e){
+async function payment(e,t){
   e.preventDefault();
   if(!payMethod){
     error.innerHTML='please select payment method'
   }else{
     error.innerHTML =''
-    const totalPrice = tPrice.textContent.replace('₹','');
+    
+    const totalPrice = t
     const address = paymentaddres.textContent.replace(/\s+/g, ' ').trim()
     const response = await axios.post('/chechkoutPayment',{
       payMethod:payMethod,

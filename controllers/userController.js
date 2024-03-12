@@ -17,7 +17,7 @@ const profileModel = require("../models/userSchema/profie");
 const { ObjectId } = require("mongodb");
 const { Types } = require("mongoose");
 const mongoose = require("mongoose");
-
+const bannerModel = require("../models/adminSchema/bannerSchema");
 const otp = Math.floor(Math.random() * 900000) + 100000;
 
 const serviceSID = process.env.serviceSID;
@@ -232,8 +232,9 @@ module.exports = {
       oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
       const category = await catagoryModel.find({});
+      const banner =await bannerModel.find({})
       const products = await productModel.find({}).limit(4);
-      res.render("user/userHome", { products, category });
+      res.render("user/userHome", { products, category,banner});
     } catch (err) {
       console.log("userhome get error", err);
     }

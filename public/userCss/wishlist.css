@@ -535,7 +535,7 @@ a {
   width: 10rem;
   border: transparent;
   outline: transparent;
-  color: #000;
+  color:white;
   font-family: Inter;
   font-size: 0.7rem;
   font-style: normal;
@@ -543,7 +543,7 @@ a {
   line-height: normal;
   letter-spacing: 0.175rem;
   text-transform: uppercase;
-  background-color: #0f0;
+  background-color:black;
   padding: 1rem;
 }
 /*---------- end of main COntent ----------*/

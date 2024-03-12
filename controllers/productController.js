@@ -3,6 +3,7 @@ require("dotenv").config();
 
 const productModel = require("../models/adminSchema/productSchema");
 const catagoryModel = require("../models/adminSchema/catagorySChma");
+const reviewModel = require("../models/userSchema/reviewSchema");
 const fs = require("fs");
 const moment = require("moment");
 
@@ -16,14 +17,13 @@ const orderModel = require("../models/userSchema/orderSchema");
 module.exports = {
   addproductGet: async (req, res) => {
     try {
-      if(req.session.admin ){
-
-      
-      const data = await catagoryModel.find({});
-      res.render("admin/addproducts", { data });
-    }else{
-      res.redirect('/admin/login')
-    }} catch (err) {
+      if (req.session.admin) {
+        const data = await catagoryModel.find({});
+        res.render("admin/addproducts", { data });
+      } else {
+        res.redirect("/admin/login");
+      }
+    } catch (err) {
       console.log(err);
       res.status(404).json({ success: false });
     }
@@ -71,16 +71,14 @@ module.exports = {
 
   productsGet: async (req, res) => {
     try {
-      if(req.session.admin ){
+      if (req.session.admin) {
+        const products = await productModel.find({});
 
-      
-      const products = await productModel.find({});
-
-      res.render("admin/productsList", { products });
-    }
-  else{
-    res.redirect('/admin/login')
-  }} catch (err) {
+        res.render("admin/productsList", { products });
+      } else {
+        res.redirect("/admin/login");
+      }
+    } catch (err) {
       console.log(err);
       res.status(404).json({ success: false });
     }
@@ -107,16 +105,15 @@ module.exports = {
   },
   updateProductGet: async (req, res) => {
     try {
-      if(req.session.admin ){
-
-      
-      const _id = req.query.id;
-      const productdata = await productModel.findOne({ _id });
-      const data = await catagoryModel.find({});
-      res.render("admin/updateProduct", { data, productdata });
-    }else{
-      res.redirect('/admin/login')
-    }} catch (err) {
+      if (req.session.admin) {
+        const _id = req.query.id;
+        const productdata = await productModel.findOne({ _id });
+        const data = await catagoryModel.find({});
+        res.render("admin/updateProduct", { data, productdata });
+      } else {
+        res.redirect("/admin/login");
+      }
+    } catch (err) {
       console.log("update product get error", err);
     }
   },
@@ -164,16 +161,14 @@ module.exports = {
   },
   viewsingleProductGet: async (req, res) => {
     try {
-      if('/admin/login'){
-
-      
-      const _id = req.query.id;
-      const product = await productModel.findOne({ _id });
-      res.render("admin/viewSingleProduct", { product });
-    }
-  else{
-    res.redirect('/admin/login')
-  }} catch (err) {
+      if ("/admin/login") {
+        const _id = req.query.id;
+        const product = await productModel.findOne({ _id });
+        res.render("admin/viewSingleProduct", { product });
+      } else {
+        res.redirect("/admin/login");
+      }
+    } catch (err) {
       console.log("viewsingleproduct admin error", err);
     }
   },
@@ -181,7 +176,9 @@ module.exports = {
     try {
       const _id = req.query.id;
       const product = await productModel.findOne({ _id });
-      res.render("user/usersingleproduct", { product });
+      const review =await reviewModel.findOne({productId:_id}).populate('review.UserId');
+     
+      res.render("user/usersingleproduct", { product,review});
     } catch (err) {
       console.log("user single product", err);
     }
@@ -212,41 +209,74 @@ module.exports = {
       console.log("max to minimum error:", err);
     }
   },
-adminSideOrderGet:async(req,res)=>{
-  try{
-    const orders = await orderModel
-          .find({})
-          .populate("products.productId");
-    
-    res.render('admin/orderslist',{orders});
+  adminSideOrderGet: async (req, res) => {
+    try {
+      if (req.session.admin) {
+        const orders = await orderModel.find({}).populate("products.productId");
 
-  }catch(err){
-    console.log('adminSideOrderGet',err)
-  }
-},
-updateStatus:async (req,res)=>{
-  try{
-let _id;
-let Status;
-if(!req.body.id){
-  // this is user side oder cancel
- _id =req.query.id
-}else{
-  //admin can update the status two side are the same router
-  _id =req.body.id;
-}
-if(!req.body.Status){
-Status ='Cancelled'
-}else{
+        res.render("admin/orderslist", { orders });
+      } else {
+        res.redirect("/admin/login");
+      }
+    } catch (err) {
+      console.log("adminSideOrderGet", err);
+    }
+  },
+  updateStatus: async (req, res) => {
+    try {
+      let _id;
+      let Status;
+      if (!req.body.id) {
+        // this is user side oder cancel
+        _id = req.query.id;
+      } else {
+        //admin can update the status two side are the same router
+        _id = req.body.id;
+      }
+      if (!req.body.Status) {
+        Status = "Cancelled";
+      } else {
+        Status = req.body.Status;
+      }
 
-  Status =req.body.Status
-}
-  
-   
-  await orderModel.updateOne({_id},{$set:{Status:Status}})
-  res.status(200).json({success:true,Status})
-  }catch(err){
-    console.log('updateStatus error',err)
-  }
-}
+      await orderModel.updateOne({ _id }, { $set: { Status: Status } });
+      res.status(200).json({ success: true, Status });
+    } catch (err) {
+      console.log("updateStatus error", err);
+    }
+  },
+  reviewGet: async (req, res) => {
+    try {
+      if (req.session.user) {
+        const product = await productModel.findOne({ _id: req.query.id });
+        res.render("user/review", { product });
+      } else {
+        res.redirect("/login");
+      }
+    } catch (err) {
+      console.log("reviewget", err);
+    }
+  },
+  reviewPost: async (req, res) => {
+    try {
+      const productId = req.query.id;
+      const userid = req.session.user;
+      const { description } = req.body;
+      const review = await reviewModel.findOne({ productId: productId })
+      // console.log(review.UserId);
+      if (!review) {
+        const newdata = new reviewModel({
+          productId: productId,
+          review: [{ UserId: userid, comment: description }],
+        });
+        await newdata.save()
+        res.redirect('/userOrders');
+      } else {
+       await reviewModel.updateOne({productId: productId},{$push:{review:{UserId: userid, comment: description}}})
+       res.redirect('/userOrders');
+      }
+    } catch (err) {
+      console.log("reviewpost", err);
+    }
+  },
 };

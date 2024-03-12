@@ -35,7 +35,7 @@ module.exports = {
           $sort: { year: 1, month: 1 },
         },
       ]);
-      
+    
  const users = await signupModel.find({});
       res.status(200).json({ success: true, data: monthlyTotals,users });
     } catch (err) {

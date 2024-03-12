@@ -111,7 +111,7 @@ module.exports = {
   UsersListGet: async (req, res) => {
     try {
       if (req.session.admin) {
-        const users = await signupModel.find({ block: true });
+        const users = await signupModel.find({ block: true },{password:0});
         res.render("admin/usersList", { users });
       } else {
         res.redirect("/admin/login");
