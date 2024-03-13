@@ -8,6 +8,9 @@ const emailverification = require("../utilities/nodemailer");
 const signupModel = require("../models/userSchema/userSIgnupSchema");
 const otpC = Math.floor(Math.random() * 900000) + 100000;
 const razorpay = require("razorpay");
+const {
+  LegacyContentListInstance,
+} = require("twilio/lib/rest/content/v1/legacyContent");
 
 const instance = new razorpay({
   key_id: process.env.key_id,
@@ -35,9 +38,11 @@ module.exports = {
             return (accu += discountedPrice * data.quantity);
           }, 0);
         }
-        const Coupon =await couponModel.find({price:{$lte:totalAmt}})
+        const Coupon = await couponModel
+          .find({ price: { $lte: totalAmt } })
+          .limit(1);
 
-        res.render("user/checkout", { useraddress, totalAmt,Coupon});
+        res.render("user/checkout", { useraddress, totalAmt, Coupon });
       } else {
         res.redirect("/login");
       }
@@ -48,33 +53,20 @@ module.exports = {
   applyCoupon: async (req, res) => {
     try {
       const couponCode = req.body.couponCode;
-
+      const amount = req.body.amount;
       if (req.session.user) {
         const _id = req.session.user;
         const coupon = await couponModel.findOne({
           couponCode,
         });
+        const result = (amount * coupon.upTo) / 100;
+        const discountedPrice = Math.ceil(amount - result);
 
-        if (coupon) {
-          const cart = await cartModel
-            .findOne({ userId: _id })
-            .populate("products.productId");
+        const coupondiscount = coupon.upTo;
 
-          const totalAmt = cart.products.reduce((accu, data) => {
-            const result =
-              (data.productId.price * data.productId.discount) / 100;
-            const discountedPrice = Math.ceil(data.productId.price - result);
-            return (accu += discountedPrice * data.quantity);
-          }, 0);
-          const coupondiscount = coupon.upTo;
-          const discountedPrice = Math.ceil(
-            totalAmt - totalAmt * (coupon.upTo / 100)
-          );
-          res
-            .status(200)
-            .json({ success: true, discountedPrice, coupondiscount });
-        } else {
-        }
+        res
+          .status(200)
+          .json({ success: true, discountedPrice, coupondiscount });
       } else {
         res.status(401).json("please login");
       }
@@ -155,9 +147,9 @@ module.exports = {
           Status: "pending",
         });
         await newdata.save();
-        if(!req.session.productId){
-         await cartModel.deleteOne({ userId: _id });
-      }
+        if (!req.session.productId) {
+          await cartModel.deleteOne({ userId: _id });
+        }
         delete req.session.sprice;
         delete req.session.productId;
         res.redirect("/confirm");
@@ -197,7 +189,7 @@ module.exports = {
         const order = await orderModel
           .find({ userId })
           .populate("products.productId");
-    
+
         res.render("user/orderpage", { order });
       } else {
         res.redirect("/login");
@@ -207,7 +199,6 @@ module.exports = {
     }
   },
   razorpayPost: async (req, res) => {
-    
     try {
       let cart = [];
       const _id = req.session.user;
@@ -238,9 +229,9 @@ module.exports = {
       });
       await newdata.save();
 
-if(!req.session.productId){
- await cartModel.deleteOne({ userId: _id });
-}
+      if (!req.session.productId) {
+        await cartModel.deleteOne({ userId: _id });
+      }
 
       delete req.session.sprice;
       delete req.session.productId;
@@ -255,21 +246,21 @@ if(!req.session.productId){
       console.log("razorpayPost", err);
     }
   },
-  orderSummary: async (req,res)=>{
-    try{
-        if(req.session.user){
-          const _id =req.query.id;
-          const orders = await orderModel
-          .findOne({_id})
-          .populate("products.productId")
-        const user =await signupModel.findOne({_id:req.session.user})
-        
-            res.render('user/productSummary',{orders,user});
-        }else{
-          res.redirect('/login')
-        }
-    }catch(err){
-      console.log('order summary error',err)
+  orderSummary: async (req, res) => {
+    try {
+      if (req.session.user) {
+        const _id = req.query.id;
+        const orders = await orderModel
+          .findOne({ _id })
+          .populate("products.productId");
+        const user = await signupModel.findOne({ _id: req.session.user });
+
+        res.render("user/productSummary", { orders, user });
+      } else {
+        res.redirect("/login");
+      }
+    } catch (err) {
+      console.log("order summary error", err);
     }
-  }
+  },
 };

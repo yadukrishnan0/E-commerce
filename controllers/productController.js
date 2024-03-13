@@ -4,6 +4,7 @@ require("dotenv").config();
 const productModel = require("../models/adminSchema/productSchema");
 const catagoryModel = require("../models/adminSchema/catagorySChma");
 const reviewModel = require("../models/userSchema/reviewSchema");
+const wishlistModel = require("../models/userSchema/wishlistSchema");
 const fs = require("fs");
 const moment = require("moment");
 
@@ -13,6 +14,7 @@ const session = require("express-session");
 require("dotenv").config();
 const { json } = require("stream/consumers");
 const orderModel = require("../models/userSchema/orderSchema");
+const { truncate } = require("fs/promises");
 
 module.exports = {
   addproductGet: async (req, res) => {
@@ -72,7 +74,7 @@ module.exports = {
   productsGet: async (req, res) => {
     try {
       if (req.session.admin) {
-        const products = await productModel.find({});
+        const products = await productModel.find({deleted:false})
 
         res.render("admin/productsList", { products });
       } else {
@@ -88,15 +90,16 @@ module.exports = {
       const _id = req.query.id;
       const product = await productModel.findOne({ _id });
 
-      product.productImage.forEach((element) => {
-        const imagePath = "./public/" + "Productimag/" + element;
+      // product.productImage.forEach((element) => {
+      //   const imagePath = "./public/" + "Productimag/" + element;
 
-        if (fs.existsSync(imagePath)) {
-          fs.unlinkSync(imagePath);
-        }
-      });
+      //   if (fs.existsSync(imagePath)) {
+      //     fs.unlinkSync(imagePath);
+      //   }
+      // });
 
-      await productModel.deleteOne({ _id });
+      await productModel.updateOne({ _id },{$set:{deleted:true}});
+     await wishlistModel.updateMany({},{$pull:{productId:_id}})
       res.status(200).json({ success: true, message: "successfully deleted" });
     } catch (err) {
       res.status(400).json({ success: false });

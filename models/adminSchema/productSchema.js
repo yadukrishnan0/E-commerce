@@ -41,6 +41,9 @@ const productSchema = new mongoose.Schema({
     productImage: {
         type:Array,
         required: true
+    },
+    deleted:{
+        type:Boolean
     }
 },{timestamps:true});
 

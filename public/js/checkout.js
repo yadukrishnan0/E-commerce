@@ -104,13 +104,15 @@ radio.forEach((element) => {
 });
 
 let crctprice =''
-async function applyCoupon(event) {
+async function applyCoupon(event,amount) {
+  
     event.preventDefault()
   try {
     const couponName = document.querySelector(".couponName").value;
   const discount =document.getElementById('cDPrice')
     const response = await axios.post(`/userApplyCoupon`, {
       couponCode: couponName,
+      amount:amount
     });
     const result = response.data;
     const discountedPrice=result.discountedPrice;
@@ -142,7 +144,8 @@ async function payment(e,t){
   e.preventDefault();
   if(!payMethod){
     error.innerHTML='please select payment method'
-  }else{
+  }
+  else{
     error.innerHTML =''
     if(!crctprice == ''){
       t=crctprice

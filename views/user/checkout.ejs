@@ -164,6 +164,7 @@
             </div>
 
             <div class="modal-body">
+             <%if(useraddress&&useraddress.addresses.length>0) {%>
 <% useraddress.addresses.forEach(data=>{ %>
 
 
@@ -178,7 +179,7 @@
                 <input name="adId" class="position-absolute radio" type="radio" value="<%= JSON.stringify(data) %>">
               </div>
     <%})%>
-
+<%}%>
               
 
 
@@ -266,12 +267,16 @@
                       <div class="chooseAdd position-relative">
                       
                         <div class="existingAddress">
+                          <%if(useraddress&&useraddress.addresses.length>0) {%>
                           <p class="name paymentaddress"><%= useraddress.addresses[0].address%>,
                             <%=useraddress.addresses[0].city%>,
                             <%=useraddress.addresses[0].district%>,
                             <%=useraddress.addresses[0].state%>,
                             <%=useraddress.addresses[0].postcode%>
                             </p>
+                            <%}else{%>
+                            <p>please go to your profile and add the address</p>
+                            <%}%>
                             <!-- <p></p> -->
                         </div>
                        
@@ -302,7 +307,7 @@
                             <input type="text" placeholder="Enter Coupon Code" class="couponName" name="couponCode" />
                           </div>
                           <div>
-                            <button type="button" onclick="applyCoupon(event)">APPLY</button>
+                            <button type="button" onclick="applyCoupon(event,'<%=totalAmt%>')">APPLY</button>
                           </div>
                         </form>
          
