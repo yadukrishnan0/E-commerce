@@ -9,12 +9,16 @@ const couponSchema = new mongoose.Schema({
         type: Number,
     
     },
+    price:{
+   type:Number
+    },
     validFrom: {
         type: Date
     },
     validTo: {
         type: Date
-    }
+    },
+    
 });
 
 const Coupon = mongoose.model('Coupon', couponSchema);

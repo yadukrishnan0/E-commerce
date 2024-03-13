@@ -103,6 +103,7 @@ radio.forEach((element) => {
   });
 });
 
+let crctprice =''
 async function applyCoupon(event) {
     event.preventDefault()
   try {
@@ -117,6 +118,8 @@ async function applyCoupon(event) {
     if (result.success) {
        tPrice.innerHTML=`₹${discountedPrice}`;
        discount.innerHTML=`${discountValue}%`;
+       crctprice =discountedPrice
+      
     }
   } catch (err) {
     console.log(err);
@@ -141,7 +144,9 @@ async function payment(e,t){
     error.innerHTML='please select payment method'
   }else{
     error.innerHTML =''
-    
+    if(!crctprice == ''){
+      t=crctprice
+    }
     const totalPrice = t
     const address = paymentaddres.textContent.replace(/\s+/g, ' ').trim()
     const response = await axios.post('/chechkoutPayment',{

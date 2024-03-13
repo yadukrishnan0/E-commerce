@@ -1,6 +1,139 @@
 
     <!-- end of header -->
-    <%- include('../partials/header.ejs') %>
+    <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account</title>
+    <!-- <link rel="shortcut icon" href="#" type="image/x-icon" /> -->
+    <!-- Bootstrap css cdn link -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <!-- end of Bootstrap css cdn link -->
+    <!-- Style css -->
+    <link rel="stylesheet" href="/userCss/userprofile.css" />
+    <!-- end of Style css -->
+  </head>
+  <body>
+
+    <!-- header -->
+    <header>
+      <div class="container-fluid">
+        <div class="row header">
+          <div class="col-6 topheader topheaderone">
+            <div class="topheadingimg topheadingimgone">
+              <img
+                src="./images/header/shipping-icon.svg"
+                alt="shipping-icon"
+              />
+              <p>Free Shipping</p>
+            </div>
+          </div>
+          <div class="col-6 topheader topheadertwo">
+            <div class="topheadingimg topheadingimgtwo">
+              <img
+                src="./images/header/warranty-icon.svg"
+                alt="warranty-icon"
+              />
+              <p>1 Year Warranty</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav>
+        <div class="container-fluid">
+          <div class="row navigation">
+            <div
+              class="col-12 d-flex align-items-center justify-content-between"
+            >
+              <div class="logo d-flex align-items-center m-0 p-0">
+                <div class="mobilenavigation">
+                  <button class="hamburger">
+                    <span class="d-block mt-0"></span>
+                    <span class="d-block"></span>
+                    <span class="d-block mb-0"></span>
+                  </button>
+                </div>
+
+                
+              </div>
+
+              <div class="navigationnavbar">
+                <ul class="d-flex list-unstyled m-0 p-0 align-items-center">
+                  <li>
+                    <a href="/home"> Home </a>
+                  </li>
+                  <li>
+                    <a href="/catagory?id=Men"> Men </a>
+                  </li>
+                  <li>
+                    <a href="/catagory?id=Women">Women</a>
+                  </li>
+                  <li>
+                    <a href="/catagory?id=Electronics"> Electronics</a>
+                  </li>
+                    <li>
+                    <a href="/allproducts"> Shop By Category </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="mobilenavigationList">
+                <h2>Shop By Category</h2>
+                <ul class="m-0 list-unstyled">
+                  <li>
+                    <a href="/home"> Home </a>
+                  </li>
+                  <li>
+                    <a href="/catagory?id=Men"> Men </a>
+                  </li>
+                  <li>
+                    <a href="/catagory?id=Women">Women</a>
+                  </li>
+                  <li>
+                    <a href="/catagory?id=Electronics"> Electronics</a>
+                  </li>
+                    <li>
+                    <a href="/allproducts"> Shop By Category </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="useroptions d-flex">
+                <ul class="m-0 p-0 d-flex align-items-center list-unstyled">
+                  <li>
+                    <a href="/userAccont">
+                        <i class="fa-solid fa-user" style="color: black;"></i>
+                    </a>                                   
+                </li>
+                <li>
+                    <a href="/userOrders">
+                        <i class="fa-solid fa-bag-shopping" style="color: black;"></i>
+                    </a>                                    
+                </li>
+                <li>
+                    <a href="/wishlist">
+                        <i class="fa-solid fa-heart" style="color: black;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="/cart">
+                        <i class="fa-solid fa-cart-shopping" style="color: black;"></i>
+                    </a>
+                </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
     <!-- main -->
     <main>
       <div class="container-fluid main">

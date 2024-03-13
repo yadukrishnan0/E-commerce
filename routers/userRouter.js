@@ -53,7 +53,8 @@ const {
   searchProduct,
   MinMaxfilter,
   reviewGet,
-  reviewPost
+  reviewPost,
+  category
 } = require("../controllers/productController");
 
 router
@@ -64,6 +65,7 @@ router
   .post("/userFliterByPrice", MinMaxfilter)
   .get('/reviewproduct',reviewGet)
   .post('/reviewproduct',reviewPost)
+  .get('/catagory',category)
 const {
   wishlist,
   removewishlist,

@@ -35,7 +35,9 @@ module.exports = {
             return (accu += discountedPrice * data.quantity);
           }, 0);
         }
-        res.render("user/checkout", { useraddress, totalAmt });
+        const Coupon =await couponModel.find({price:{$lte:totalAmt}})
+
+        res.render("user/checkout", { useraddress, totalAmt,Coupon});
       } else {
         res.redirect("/login");
       }
@@ -153,7 +155,9 @@ module.exports = {
           Status: "pending",
         });
         await newdata.save();
-        await cartModel.deleteOne({ userId: _id });
+        if(!req.session.productId){
+         await cartModel.deleteOne({ userId: _id });
+      }
         delete req.session.sprice;
         delete req.session.productId;
         res.redirect("/confirm");
@@ -234,7 +238,9 @@ module.exports = {
       });
       await newdata.save();
 
-      await cartModel.deleteOne({ userId: _id });
+if(!req.session.productId){
+ await cartModel.deleteOne({ userId: _id });
+}
 
       delete req.session.sprice;
       delete req.session.productId;

@@ -146,7 +146,7 @@ module.exports = {
     try {
       const _id = req.query.id;
 
-      await signupModel.updateOne({ _id }, { $set: { block: true } });
+      await signupModel.updateOne({ _id }, { $set:{ block:true}});
       res.status(200).json({ success: true, message: "successfully deleted" });
     } catch (err) {
       console.log("users unblock err", err);

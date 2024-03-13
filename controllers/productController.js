@@ -201,6 +201,7 @@ module.exports = {
     try {
       const { minPrice, maxPrice } = req.body;
       const category = await catagoryModel.find({});
+
       const products = await productModel.find({
         price: { $gte: minPrice, $lte: maxPrice },
       });
@@ -279,4 +280,14 @@ module.exports = {
       console.log("reviewpost", err);
     }
   },
+  category:async(req,res)=>{
+    try{
+       const data = req.query.id;
+       const products = await productModel.find({category:data});
+      const  category =await catagoryModel.find({});
+      res.status(200).render("user/allproducts", { products, category });
+    }catch(err){
+      console.log('category ',err)  
+    }
+  }
 };

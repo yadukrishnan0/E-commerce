@@ -27,7 +27,7 @@ module.exports = {
 
   couponPost: async (req, res) => {
     try {
-      const { couponCode, upTo, validFrom, validTo } = req.body;
+      const { couponCode, upTo, validFrom, validTo,price} = req.body;
 
       const validFromFormatted = moment(validFrom).format("MM-DD-YYYY");
       const validToFormatted = moment(validTo).format("MM-DD-YYYY");
@@ -37,6 +37,7 @@ module.exports = {
         upTo,
         validFrom: validFromFormatted,
         validTo: validToFormatted,
+        price
       });
       await newdata.save();
       res.status(230).redirect("/admin/couponslist");
@@ -73,7 +74,7 @@ module.exports = {
   },
   updateCoupon: async (req, res) => {
     try {
-      const { couponCode, upTo, validFrom, validTo } = req.body;
+      const { couponCode, upTo, validFrom, validTo,price} = req.body;
       const code = couponCode.toUpperCase();
       const _id = req.params.id;
       abc = await couponModel.updateOne(
@@ -85,6 +86,7 @@ module.exports = {
             upTo: upTo,
             validFrom: validFrom,
             validTo: validTo,
+            price
           },
         }
       );

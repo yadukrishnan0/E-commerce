@@ -8,7 +8,7 @@
           <div class="col-12">
             <div class="cartHead">
               <div class="d-flex align-items-center gap-2">
-                <% if(cart.products){ %>
+                <% if(cart&&cart.products.length>0){ %>
                 <h2 class="m-0 p-0 count">Cart(<%=cart.products.length%>)</h2>
                 <%}%>
                 <svg
@@ -36,7 +36,7 @@
 
                 <div class="cartItems">
 
-<% if(cart.products){ %>
+<% if(cart&&cart.products.length>0){ %>
 
 
 
@@ -101,9 +101,9 @@
                       class="sTotal d-flex justify-content-between align-items-center"
                     >
                       <p class="commonText m-0 p-0">Subtotal</p>
-                     <%if(cart){%>
+                    
                       <p class="commonSub m-0 p-0" id="sTotal">₹<%=totalAmt%></p>
-                      <%}%>
+                     
                     </div>
 
                     <div
@@ -167,6 +167,8 @@
                 <button>CHECKOUT</button>
               </form>
             </div>
+            <%}else{%>
+              <h2>your cart is empty</h2>
             <%}%>
           </div>
         </div>
