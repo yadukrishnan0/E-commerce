@@ -54,7 +54,8 @@ const {
   MinMaxfilter,
   reviewGet,
   reviewPost,
-  category
+  category,
+  highTolow
 } = require("../controllers/productController");
 
 router
@@ -66,6 +67,7 @@ router
   .get('/reviewproduct',reviewGet)
   .post('/reviewproduct',reviewPost)
   .get('/catagory',category)
+  .post('/userFilterByRateing',highTolow)
 const {
   wishlist,
   removewishlist,

@@ -604,6 +604,31 @@ footer{
     display: none;
     padding-bottom: 1rem;
 }
+.pagination {
+    display: inline-block;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.pagination a {
+    color: rgb(247, 173, 37);
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border: 1px solid rgb(40, 40, 40);
+    margin: 0 4px;
+    background-color: rgb(20, 20, 20);
+}
+
+.pagination a.active {
+    background-color: rgb(247, 173, 37);
+    color: black;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: rgb(34, 34, 34);
+}
 /*---------- end of footer ----------*/
 
 

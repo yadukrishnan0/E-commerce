@@ -49,13 +49,11 @@ module.exports = {
       );
       const length = data.productId.length - 1;
 
-      res
-        .status(200)
-        .json({
-          removeproduct: true,
-          length,
-          message: "product remove success",
-        });
+      res.status(200).json({
+        removeproduct: true,
+        length,
+        message: "product remove success",
+      });
     } catch (err) {
       console.log("remove wishlist error", err);
     }
@@ -80,11 +78,15 @@ module.exports = {
 
       const wishlist = await wishlistModel.findOne({ userId: user });
       let products = [];
-      for (const ele of wishlist.productId) {
-        let product = await productModel.findOne({ _id: ele });
-        products.push(product);
+      if (wishlist) {
+        for (const ele of wishlist.productId) {
+          let product = await productModel.findOne({ _id: ele });
+          products.push(product);
+        }
+        res.render("user/wishlist", { products });
+      } else {
+        res.render("user/wishlist", { products });
       }
-      res.render("user/wishlist", {products});
     } catch (err) {
       console.log("wishlistaget error", err);
     }

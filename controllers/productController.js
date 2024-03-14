@@ -292,5 +292,15 @@ module.exports = {
     }catch(err){
       console.log('category ',err)  
     }
+  },
+  highTolow:async(req,res)=>{
+    try{
+      const value =JSON.parse(req.body.sort);
+      const products = await productModel.find({}).sort({price:value});
+      const  category =await catagoryModel.find({});
+      res.status(200).render("user/allproducts", { products, category });
+    }catch(err){
+      console.log('highTolow',err)
+    }
   }
 };

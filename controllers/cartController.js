@@ -72,12 +72,14 @@ module.exports = {
         .findOne({ userId: user })
         .populate("products.productId");
         if(cart&&cart.products.length>0){
+
       const totalAmt=  cart.products.reduce((accu,data)=>{
         const result = (data.productId.price * data.productId.discount) / 100;
         const discountedPrice = Math.ceil(data.productId.price - result);
        return accu+= discountedPrice * data.quantity;
       
         },0)
+        
         res.render("user/cart", {cart,totalAmt});
       }else{
         

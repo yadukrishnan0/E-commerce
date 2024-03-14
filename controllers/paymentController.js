@@ -40,7 +40,7 @@ module.exports = {
         }
         const Coupon = await couponModel
           .find({ price: { $lte: totalAmt } })
-          .limit(1);
+          
 
         res.render("user/checkout", { useraddress, totalAmt, Coupon });
       } else {

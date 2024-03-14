@@ -61,7 +61,7 @@ a{
 /*---------- end of BS var ----------*/
 
 /*---------- header ----------*/
-.header{
+/* .header{
     width: 100vw;
     height: 2rem;
 }
@@ -238,7 +238,7 @@ a{
 .mobilenavigationList ul::-webkit-scrollbar-track{
     border-radius: 10px;
     box-shadow: none;
-}
+} */
 /*---------- end of header ----------*/
 
 /*---------- main ----------*/
@@ -373,7 +373,7 @@ a{
     margin-top: 8px;
 }
 .ratedStar{
-    color: #0F0;
+    color:rgb(255, 234, 0);
 }
 .unRatedStar{
     color: #E7E7E7;

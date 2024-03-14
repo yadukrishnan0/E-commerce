@@ -77,7 +77,7 @@ module.exports = {
 
       req.flash("data", data);
 
-      return res.status(20).redirect("/otp");
+      return res.status(200).redirect("/otp");
     } catch (err) {
       console.error(err.message, "signup post error", err);
       res.status(500).send("Internal Server Error");
@@ -232,9 +232,9 @@ module.exports = {
       oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
       const category = await catagoryModel.find({});
-      const banner =await bannerModel.find({})
-      const products = await productModel.find({deleted:false}).limit(4);
-      res.render("user/userHome", { products, category,banner});
+      const banner = await bannerModel.find({});
+      const products = await productModel.find({ deleted: false }).limit(4);
+      res.render("user/userHome", { products, category, banner });
     } catch (err) {
       console.log("userhome get error", err);
     }
@@ -242,7 +242,7 @@ module.exports = {
   shopbycategoryGet: async (req, res) => {
     try {
       const category = await catagoryModel.find({});
-      const products = await productModel.find({deleted:false});
+      const products = await productModel.find({ deleted: false });
       res.render("user/allproducts", { category, products });
     } catch (er) {
       console.log("shop by category error", err);
@@ -379,18 +379,18 @@ module.exports = {
       } else {
         pass = await bcrypt.hash(password, salt);
       }
-        await signupModel.updateOne(
-          { _id },
-          {
-            $set: {
-              fullName: fName,
-              phoneNumber: phone,
-              email: email,
-              password: pass,
-            },
-          }
-        )
-     res.status(200).redirect('/userAccont')
+      await signupModel.updateOne(
+        { _id },
+        {
+          $set: {
+            fullName: fName,
+            phoneNumber: phone,
+            email: email,
+            password: pass,
+          },
+        }
+      );
+      res.status(200).redirect("/userAccont");
     } catch (err) {
       console.log("userprofileUpdate", err);
     }
