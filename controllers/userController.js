@@ -1,31 +1,29 @@
 const { Module } = require("module");
-require("dotenv").config();
-const signupModel = require("../models/userSchema/userSIgnupSchema");
-const nodemailer = require("nodemailer");
-
 const { constants } = require("buffer");
 const { render } = require("ejs");
 const session = require("express-session");
+const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
+const mongoose = require("mongoose");
+const client = require("twilio")(process.env.accountSID, process.env.authToken);
+
 require("dotenv").config();
 
+const signupModel = require("../models/userSchema/userSIgnupSchema");
 const checkPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
-const bcrypt = require("bcrypt");
-
 const emailverification = require("../utilities/nodemailer");
 const productModel = require("../models/adminSchema/productSchema");
 const profileModel = require("../models/userSchema/profie");
+const bannerModel = require("../models/adminSchema/bannerSchema");
+const catagoryModel = require("../models/adminSchema/catagorySChma");
+
 const { ObjectId } = require("mongodb");
 const { Types } = require("mongoose");
-const mongoose = require("mongoose");
-const bannerModel = require("../models/adminSchema/bannerSchema");
 const otp = Math.floor(Math.random() * 900000) + 100000;
-
 const serviceSID = process.env.serviceSID;
 const accountSID = process.env.accountSID;
 const authToken = process.env.authToken;
 
-const client = require("twilio")(accountSID, authToken);
-const catagoryModel = require("../models/adminSchema/catagorySChma");
 
 module.exports = {
   //........................................... .........signup.................................................//
@@ -234,7 +232,12 @@ module.exports = {
       const category = await catagoryModel.find({});
       const banner = await bannerModel.find({});
       const products = await productModel.find({ deleted: false }).limit(4);
-      res.render("user/userHome", { products, category, banner });
+      const men =await productModel.find({category:"Men",deleted: false}).limit(4)
+      const  women =await productModel.find({category:"Women",deleted: false}).limit(4)
+      const offer = await productModel.find({discount: { $gte: 70 } }).limit(4)
+
+
+      res.render("user/userHome", { products, category, banner,men,women,offer});
     } catch (err) {
       console.log("userhome get error", err);
     }

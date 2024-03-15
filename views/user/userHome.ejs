@@ -17,7 +17,7 @@
                   data-bs-pause="false"
                   data-bs-ride="false"
                 >
-
+ 
                   <a href=""
                     ><img
                       src="/images/slideImg/1.webp"
@@ -30,7 +30,9 @@
                       src="/images/slideImg/1as.jpg"
                       class="w-100 img-small-screen"
                       alt="..."
-                  /></a>
+                  />
+                </a>
+
                 </div>
                 <div
                   class="carousel-item"
@@ -38,6 +40,7 @@
                   data-bs-pause="false"
                   data-bs-ride="false"
                 >
+
                   <a href=""
                     ><img
                       src="/images/slideImg/2a.webp"
@@ -49,7 +52,9 @@
                       src="/images/slideImg/2as.webp"
                       class="w-100 img-small-screen"
                       alt="..."
-                  /></a>
+                  />
+                </a>
+
                 </div>
               </div>
               <button
@@ -83,6 +88,9 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12" >
+
+
+
             <div class="main-body">
               <div class="col-12">
                 <div class="text-center">
@@ -125,21 +133,21 @@
                                   src="./images/newlyLaunched/hexagon-list-icon.svg"
                                   alt=""
                                 />
-                                <p>Swift Charge Technology</p>
+                                <p>Return</p>
                               </div>
                               <div>
                                 <img
                                   src="./images/newlyLaunched/hexagon-list-icon.svg"
                                   alt=""
                                 />
-                                <p>Dual Connectivity</p>
+                                <p>cash on delivery</p>
                               </div>
                               <div>
                                 <img
                                   src="./images/newlyLaunched/hexagon-list-icon.svg"
                                   alt=""
                                 />
-                                <p>Powered By 13mm Powerful Drivers</p>
+                                <p>All inida</p>
                               </div>
                             </div>
                             <div class="colorOptions">
@@ -199,10 +207,400 @@
                     </li>
 
                     <%})%>
+
                       </ul>
+                    
                 </div>
               </div>
             </div>
+
+
+            <div class="main-body">
+              <div class="col-12">
+                <div class="text-center">
+                  <h2>MENS</h2>
+                </div>
+              </div>
+              <div class="col-12" style="display:flex;flex-wrap: wrap; ">
+                <div>
+                  <ul
+                  class="col-12 m-2" style="display:flex;flex-wrap: wrap; gap: 40px; list-style: none;" 
+                  >
+
+          
+
+                  <% men.forEach(data=>{%>
+        
+                    <li >
+                      <a href="/user/viewsingleproduct?id=<%=data._id%>">
+                        <div class="newItems">
+                          <div class="productImg">
+                            <img src="/Productimag/<%= data.productImage[0]%>" alt="" />
+                          </div>
+                          <div class="text-area">
+                            <div class="productTittle">
+                              <p><%=data.productName%></p>
+                            </div>
+                            <div
+                              class="discountPrice d-flex align-items-baseline"
+                            >
+                            <%const result = (data.price * data.discount) / 100;
+                            const discountedPrice = Math.ceil(data.price - result);%>
+                          
+                              <p class="dprice">₹<%=discountedPrice%></p>
+                              <p class="oprice">₹<%= data.price %></p>
+                              <p class="discount"><%= data.discount%> %</p>
+                            </div>
+                            <div class="property">
+                              <div>
+                                <img
+                                  src="./images/newlyLaunched/hexagon-list-icon.svg"
+                                  alt=""
+                                />
+                                <p>Return</p>
+                              </div>
+                              <div>
+                                <img
+                                  src="./images/newlyLaunched/hexagon-list-icon.svg"
+                                  alt=""
+                                />
+                                <p>Cash on delivery</p>
+                              </div>
+                              <div>
+                                <img
+                                  src="./images/newlyLaunched/hexagon-list-icon.svg"
+                                  alt=""
+                                />
+                                <p>all india</p>
+                              </div>
+                            </div>
+                            <div class="colorOptions">
+                              <div class="d-flex align-items-center">
+                                <p>Colors</p>
+                                <div class="d-flex align-items-center">
+                                  <div class="bg-black"></div>
+                                  <div class="bg-white"></div>
+                                  <div class="bg-primary"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="shopOption">
+                              <div class="d-flex align-items-center">
+                                <p>shop Now</p>
+                                <svg
+                                  width="18"
+                                  height="12"
+                                  viewBox="0 0 18 12"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <g clip-path="url(#clip0_28_66)">
+                                    <path
+                                      d="M1 1L6 6L1 11"
+                                      stroke="#4B4955"
+                                      stroke-width="1.5"
+                                    />
+                                    <path
+                                      opacity="0.65"
+                                      d="M6 1L11 6L6 11"
+                                      stroke="#4B4955"
+                                      stroke-width="1.5"
+                                    />
+                                    <path
+                                      opacity="0.4"
+                                      d="M11 1L16 6L11 11"
+                                      stroke="#4B4955"
+                                      stroke-width="1.5"
+                                    />
+                                  </g>
+                                  <defs>
+                                    <clipPath id="clip0_28_66">
+                                      <rect
+                                        width="18"
+                                        height="12"
+                                        fill="white"
+                                      />
+                                    </clipPath>
+                                  </defs>
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+
+                    <%})%>
+
+                      </ul>
+                    
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+            <div class="main-body">
+              <div class="col-12">
+                <div class="text-center">
+                  <h2>WOMENS</h2>
+                </div>
+              </div>
+              <div class="col-12" style="display:flex;flex-wrap: wrap; ">
+                <div>
+                  <ul
+                  class="col-12 m-2" style="display:flex;flex-wrap: wrap; gap: 40px; list-style: none;" 
+                  >
+
+          
+
+                  <% women.forEach(data=>{%>
+        
+                    <li >
+                      <a href="/user/viewsingleproduct?id=<%=data._id%>">
+                        <div class="newItems">
+                          <div class="productImg">
+                            <img src="/Productimag/<%= data.productImage[0]%>" alt="" />
+                          </div>
+                          <div class="text-area">
+                            <div class="productTittle">
+                              <p><%=data.productName%></p>
+                            </div>
+                            <div
+                              class="discountPrice d-flex align-items-baseline"
+                            >
+                            <%const result = (data.price * data.discount) / 100;
+                            const discountedPrice = Math.ceil(data.price - result);%>
+                          
+                              <p class="dprice">₹<%=discountedPrice%></p>
+                              <p class="oprice">₹<%= data.price %></p>
+                              <p class="discount"><%= data.discount%> %</p>
+                            </div>
+                            <div class="property">
+                              <div>
+                                <img
+                                  src="./images/newlyLaunched/hexagon-list-icon.svg"
+                                  alt=""
+                                />
+                                <p>Return</p>
+                              </div>
+                              <div>
+                                <img
+                                  src="./images/newlyLaunched/hexagon-list-icon.svg"
+                                  alt=""
+                                />
+                                <p>cash on delivery</p>
+                              </div>
+                              <div>
+                                <img
+                                  src="./images/newlyLaunched/hexagon-list-icon.svg"
+                                  alt=""
+                                />
+                                <p>all india</p>
+                              </div>
+                            </div>
+                            <div class="colorOptions">
+                              <div class="d-flex align-items-center">
+                                <p>Colors</p>
+                                <div class="d-flex align-items-center">
+                                  <div class="bg-black"></div>
+                                  <div class="bg-white"></div>
+                                  <div class="bg-primary"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="shopOption">
+                              <div class="d-flex align-items-center">
+                                <p>shop Now</p>
+                                <svg
+                                  width="18"
+                                  height="12"
+                                  viewBox="0 0 18 12"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <g clip-path="url(#clip0_28_66)">
+                                    <path
+                                      d="M1 1L6 6L1 11"
+                                      stroke="#4B4955"
+                                      stroke-width="1.5"
+                                    />
+                                    <path
+                                      opacity="0.65"
+                                      d="M6 1L11 6L6 11"
+                                      stroke="#4B4955"
+                                      stroke-width="1.5"
+                                    />
+                                    <path
+                                      opacity="0.4"
+                                      d="M11 1L16 6L11 11"
+                                      stroke="#4B4955"
+                                      stroke-width="1.5"
+                                    />
+                                  </g>
+                                  <defs>
+                                    <clipPath id="clip0_28_66">
+                                      <rect
+                                        width="18"
+                                        height="12"
+                                        fill="white"
+                                      />
+                                    </clipPath>
+                                  </defs>
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+
+                    <%})%>
+
+                      </ul>
+                    
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+            
+            <div class="main-body">
+              <div class="col-12">
+                <div class="text-center">
+                  <h2>70% offer</h2>
+                </div>
+              </div>
+              <div class="col-12" style="display:flex;flex-wrap: wrap; ">
+                <div>
+                  <ul
+                  class="col-12 m-2" style="display:flex;flex-wrap: wrap; gap: 40px; list-style: none;" 
+                  >
+
+          
+
+                  <% offer.forEach(data=>{%>
+        
+                    <li >
+                      <a href="/user/viewsingleproduct?id=<%=data._id%>">
+                        <div class="newItems">
+                          <div class="productImg">
+                            <img src="/Productimag/<%= data.productImage[0]%>" alt="" />
+                          </div>
+                          <div class="text-area">
+                            <div class="productTittle">
+                              <p><%=data.productName%></p>
+                            </div>
+                            <div
+                              class="discountPrice d-flex align-items-baseline"
+                            >
+                            <%const result = (data.price * data.discount) / 100;
+                            const discountedPrice = Math.ceil(data.price - result);%>
+                          
+                              <p class="dprice">₹<%=discountedPrice%></p>
+                              <p class="oprice">₹<%= data.price %></p>
+                              <p class="discount"><%= data.discount%> %</p>
+                            </div>
+                            <div class="property">
+                              <div>
+                                <img
+                                  src="./images/newlyLaunched/hexagon-list-icon.svg"
+                                  alt=""
+                                />
+                                <p>Return</p>
+                              </div>
+                              <div>
+                                <img
+                                  src="./images/newlyLaunched/hexagon-list-icon.svg"
+                                  alt=""
+                                />
+                                <p>Cash on delivery</p>
+                              </div>
+                              <div>
+                                <img
+                                  src="./images/newlyLaunched/hexagon-list-icon.svg"
+                                  alt=""
+                                />
+                                <p>All inida</p>
+                              </div>
+                            </div>
+                            <div class="colorOptions">
+                              <div class="d-flex align-items-center">
+                                <p>Colors</p>
+                                <div class="d-flex align-items-center">
+                                  <div class="bg-black"></div>
+                                  <div class="bg-white"></div>
+                                  <div class="bg-primary"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="shopOption">
+                              <div class="d-flex align-items-center">
+                                <p>shop Now</p>
+                                <svg
+                                  width="18"
+                                  height="12"
+                                  viewBox="0 0 18 12"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <g clip-path="url(#clip0_28_66)">
+                                    <path
+                                      d="M1 1L6 6L1 11"
+                                      stroke="#4B4955"
+                                      stroke-width="1.5"
+                                    />
+                                    <path
+                                      opacity="0.65"
+                                      d="M6 1L11 6L6 11"
+                                      stroke="#4B4955"
+                                      stroke-width="1.5"
+                                    />
+                                    <path
+                                      opacity="0.4"
+                                      d="M11 1L16 6L11 11"
+                                      stroke="#4B4955"
+                                      stroke-width="1.5"
+                                    />
+                                  </g>
+                                  <defs>
+                                    <clipPath id="clip0_28_66">
+                                      <rect
+                                        width="18"
+                                        height="12"
+                                        fill="white"
+                                      />
+                                    </clipPath>
+                                  </defs>
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+
+                    <%})%>
+
+                      </ul>
+                    
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
           </div>
         </div>
         <div class="row slideProduct">

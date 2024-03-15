@@ -61,7 +61,7 @@ a{
 /*---------- end of BS var ----------*/
 
 /*---------- header ----------*/
-/* .header{
+.header{
     width: 100vw;
     height: 2rem;
 }
@@ -238,7 +238,7 @@ a{
 .mobilenavigationList ul::-webkit-scrollbar-track{
     border-radius: 10px;
     box-shadow: none;
-} */
+}
 /*---------- end of header ----------*/
 
 /*---------- main ----------*/
@@ -508,7 +508,7 @@ a{
 }
 .content{
     overflow-y: scroll;
-    height: 50vh;
+    height: 26vh;
 }
 .contentf{
     overflow-y: scroll;

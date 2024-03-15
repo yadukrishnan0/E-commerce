@@ -1,18 +1,17 @@
 const { Module } = require("module");
+const { constants } = require("buffer");
+const { render } = require("ejs");
+const session = require("express-session");
+const { json } = require("stream/consumers");
+const fs = require("fs");
+const moment = require("moment");
+
 require("dotenv").config();
 
 const productModel = require("../models/adminSchema/productSchema");
 const catagoryModel = require("../models/adminSchema/catagorySChma");
 const reviewModel = require("../models/userSchema/reviewSchema");
 const wishlistModel = require("../models/userSchema/wishlistSchema");
-const fs = require("fs");
-const moment = require("moment");
-
-const { constants } = require("buffer");
-const { render } = require("ejs");
-const session = require("express-session");
-require("dotenv").config();
-const { json } = require("stream/consumers");
 const orderModel = require("../models/userSchema/orderSchema");
 const { truncate } = require("fs/promises");
 
@@ -74,7 +73,7 @@ module.exports = {
   productsGet: async (req, res) => {
     try {
       if (req.session.admin) {
-        const products = await productModel.find({deleted:false})
+        const products = await productModel.find({ deleted: false });
 
         res.render("admin/productsList", { products });
       } else {
@@ -90,16 +89,8 @@ module.exports = {
       const _id = req.query.id;
       const product = await productModel.findOne({ _id });
 
-      // product.productImage.forEach((element) => {
-      //   const imagePath = "./public/" + "Productimag/" + element;
-
-      //   if (fs.existsSync(imagePath)) {
-      //     fs.unlinkSync(imagePath);
-      //   }
-      // });
-
-      await productModel.updateOne({ _id },{$set:{deleted:true}});
-     await wishlistModel.updateMany({},{$pull:{productId:_id}})
+      await productModel.updateOne({ _id }, { $set: { deleted: true } });
+      await wishlistModel.updateMany({}, { $pull: { productId: _id } });
       res.status(200).json({ success: true, message: "successfully deleted" });
     } catch (err) {
       res.status(400).json({ success: false });
@@ -179,9 +170,11 @@ module.exports = {
     try {
       const _id = req.query.id;
       const product = await productModel.findOne({ _id });
-      const review =await reviewModel.findOne({productId:_id}).populate('review.UserId');
-     
-      res.render("user/usersingleproduct", { product,review});
+      const review = await reviewModel
+        .findOne({ productId: _id })
+        .populate("review.UserId");
+
+      res.render("user/usersingleproduct", { product, review });
     } catch (err) {
       console.log("user single product", err);
     }
@@ -191,9 +184,8 @@ module.exports = {
     try {
       const Name = req.query.query;
       const category = await catagoryModel.find({});
-      const products = await productModel.find({
-        productName: { $regex: Name, $options: "i" },
-      });
+      const products = await productModel.find({ productName: { $regex: Name, $options: "i" }, deleted: false });
+
 
       res.status(200).render("user/allproducts", { products, category });
     } catch (err) {
@@ -205,9 +197,8 @@ module.exports = {
       const { minPrice, maxPrice } = req.body;
       const category = await catagoryModel.find({});
 
-      const products = await productModel.find({
-        price: { $gte: minPrice, $lte: maxPrice },
-      });
+      const products = await productModel.find({ price: { $gte: minPrice, $lte: maxPrice }, deleted: false });
+
       res.status(200).render("user/allproducts", { products, category });
     } catch (err) {
       console.log("max to minimum error:", err);
@@ -216,7 +207,7 @@ module.exports = {
   adminSideOrderGet: async (req, res) => {
     try {
       if (req.session.admin) {
-        const orders = await orderModel.find({}).populate("products.productId");
+        const orders = await orderModel.find({}).sort({ createdAt:-1}).populate("products.productId");
 
         res.render("admin/orderslist", { orders });
       } else {
@@ -266,41 +257,44 @@ module.exports = {
       const productId = req.query.id;
       const userid = req.session.user;
       const { description } = req.body;
-      const review = await reviewModel.findOne({ productId: productId })
+      const review = await reviewModel.findOne({ productId: productId });
       // console.log(review.UserId);
       if (!review) {
         const newdata = new reviewModel({
           productId: productId,
           review: [{ UserId: userid, comment: description }],
         });
-        await newdata.save()
-        res.redirect('/userOrders');
+        await newdata.save();
+        res.redirect("/userOrders");
       } else {
-       await reviewModel.updateOne({productId: productId},{$push:{review:{UserId: userid, comment: description}}})
-       res.redirect('/userOrders');
+        await reviewModel.updateOne(
+          { productId: productId },
+          { $push: { review: { UserId: userid, comment: description } } }
+        );
+        res.redirect("/userOrders");
       }
     } catch (err) {
       console.log("reviewpost", err);
     }
   },
-  category:async(req,res)=>{
-    try{
-       const data = req.query.id;
-       const products = await productModel.find({category:data});
-      const  category =await catagoryModel.find({});
+  category: async (req, res) => {
+    try {
+      const data = req.query.id;
+      const products = await productModel.find({ category: data });
+      const category = await catagoryModel.find({});
       res.status(200).render("user/allproducts", { products, category });
-    }catch(err){
-      console.log('category ',err)  
+    } catch (err) {
+      console.log("category ", err);
     }
   },
-  highTolow:async(req,res)=>{
-    try{
-      const value =JSON.parse(req.body.sort);
-      const products = await productModel.find({}).sort({price:value});
-      const  category =await catagoryModel.find({});
+  highTolow: async (req, res) => {
+    try {
+      const value = JSON.parse(req.body.sort);
+      const products = await productModel.find({}).sort({ price:value});
+      const category = await catagoryModel.find({});
       res.status(200).render("user/allproducts", { products, category });
-    }catch(err){
-      console.log('highTolow',err)
+    } catch (err) {
+      console.log("highTolow", err);
     }
-  }
+  },
 };
