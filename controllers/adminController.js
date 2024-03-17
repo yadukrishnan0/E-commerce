@@ -17,7 +17,7 @@ const bcrypt = require("bcrypt");
 const otp = require("../public/js/optgenerator");
 const { json } = require("stream/consumers");
 const orderModel = require("../models/userSchema/orderSchema");
-
+const emailverification = require("../utilities/nodemailer");
 module.exports = {
   //  ..............admin signup............................
   adminSignUpGet: async (req, res) => {
@@ -111,7 +111,7 @@ module.exports = {
   UsersListGet: async (req, res) => {
     try {
       if (req.session.admin) {
-        const users = await signupModel.find({ block: true },{password:0});
+        const users = await signupModel.find({ block: true }, { password: 0 });
         res.render("admin/usersList", { users });
       } else {
         res.redirect("/admin/login");
@@ -146,10 +146,82 @@ module.exports = {
     try {
       const _id = req.query.id;
 
-      await signupModel.updateOne({ _id }, { $set:{ block:true}});
+      await signupModel.updateOne({ _id }, { $set: { block: true } });
       res.status(200).json({ success: true, message: "successfully deleted" });
     } catch (err) {
       console.log("users unblock err", err);
     }
   },
+  adminforgotGet: (req, res) => {
+    try {
+      res.render("admin/adminforgot", { error: req.flash("error") });
+    } catch (err) {
+      console.log("adminforgotGet", err);
+    }
+  },
+  adminforgotPost: async (req, res) => {
+    try {
+      const admin = await adminModel.findOne({ email: req.body.email });
+      if (!admin) {
+        req.flash("error", "please create account");
+        return res.redirect("/admin/adminForgotPassword");
+      } else {
+        const otp = Math.floor(Math.random() * 900000) + 100000;
+        console.log(otp);
+        emailverification(req.body.email, otp);
+        req.session.adminemail = req.body.email;
+        req.session.otp = otp;
+        res.redirect("/admin//adminotp");
+      }
+    } catch (err) {
+      console.log(" adminforgotPost", err);
+    }
+  },
+  //admin forgot password otp
+  adminOtp: (req, res) => {
+    try {
+      res.render("admin/adminOtp", { error: req.flash("error") });
+    } catch (err) {
+      console.log("adminOtp", err);
+    }
+  },
+  adminOtpPost: (req, res) => {
+    try {
+      if (req.body.otp == req.session.otp) {
+        delete req.session.otp;
+        res.redirect('/admin/adminupdatepassword')
+      } else {
+        req.flash("error", "otp is wrong");
+        return res.redirect("/admin//adminotp");
+      }
+    } catch (err) {
+      console.log("adminOtpPost", err);
+    }
+  },
+  adminforgotpassGet:(req,res)=>{
+    try{
+    res.render('admin/adminFogotPass',{ error: req.flash("error") })
+    }catch(err){
+      console.log(err)
+    }
+  },
+  adminforgotpassPost: async (req,res)=>{
+    try{
+    const{ Newpassword,confirmpassword}=req.body;
+    const passValidation = checkPass.test(confirmpassword);
+    if(Newpassword == confirmpassword && passValidation){
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(confirmpassword, salt);
+      const email =  req.session.adminemail;
+      await adminModel.updateOne({email},{$set:{password:hashedPassword}});
+      res.redirect('/admin/login')
+    }else{
+      req.flash("error", "your password format is wrong or your newpassword and confirmpassword is not match");
+      return res.redirect("/admin/adminupdatepassword");
+    }
+    }catch(err){
+
+      console.log(' adminforgotpassPost',err)
+    }
+  }
 };

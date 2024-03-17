@@ -17,6 +17,7 @@ const instance = new razorpay({
   key_secret: process.env.key_secret,
 });
 
+
 module.exports = {
   checkOutGet: async (req, res) => {
     try {

@@ -22,26 +22,26 @@
                     <div class="col-12 m-0 loginsection d-flex align-items-center justify-content-center">
                         <div class="loginbox">
                             <div class="headingLogin d-inline-block">
-                                <p>Login</p>
+                                <p>update password</p>
                             </div>
                             <!-- <div class="error p-0 d-inline-block">
                                 <p><i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i> Invalid credentials</p>
                             </div> -->
                             <div class="inputForm d-inline-block">
-                                <form action="/admin/login" method="post">
-                                    <label class="d-block" for="email">Email</label>
-                                    <input class="d-block" type="email" name="email"  required />
-                                    <label class="d-block" for="password">Password</label>
-                                    <input class="d-block" type="password" name="password" required/>
+                                <form action='/admin/adminupdatepassword' method="post">
+                                    <label class="d-block labpassword" for="email">Newpassword</label>
+                                    <input class="d-block" type="password" name="Newpassword"  required id="password"/>
+
+                                    <label class="d-block" for="password">Confirm password</label>
+                                    <input class="d-block" type="password" name="confirmpassword" required/>
                                     <div class="text-end">
-                                        <a href="/admin/adminForgotPassword">Forgot Password</a>
+                                       
                                     </div>
                                     <div class="text-center m-0">
                                         <button class="loginBtn" type="submit">Login</button>
                                     </div>
                                 </form>
-                                <div class="registerText text-center m-0">
-                                    <a href="/admin/signup">Register an account</a>
+                                
                                     <%if(error){ %>
                                         <p class="error"><%=error%></>
                             
@@ -59,7 +59,24 @@
 
     
     <!-- custom js -->
-    <script src="./js/userLogin.js"></script>
+    <script >
+      const password=document.getElementById('password');
+      const labpass=document.querySelector(".labpassword")
+      const checkPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/; 
+      password.onblur = () => {
+    if (checkPass.test(password.value)) {
+        labpass.innerHTML = 'password';
+        labpass.classList.remove('redlabel');
+    } else if (!checkPass.test(password.value)){
+        labpass.innerHTML = 'Invalid password format';
+        labpass.classList.add('redlabel');
+    }
+    else if(!password.value){
+        labpass.innerHTML = 'enter your password';
+        labpass.classList.add('redlabel');
+    }
+};
+    </script>
     <!-- end of custom js -->
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/23d1247997.js" crossorigin="anonymous"></script>

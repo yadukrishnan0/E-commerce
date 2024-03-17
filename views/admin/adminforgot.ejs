@@ -22,26 +22,23 @@
                     <div class="col-12 m-0 loginsection d-flex align-items-center justify-content-center">
                         <div class="loginbox">
                             <div class="headingLogin d-inline-block">
-                                <p>Login</p>
+                                <!-- <p>forgo</p> -->
                             </div>
                             <!-- <div class="error p-0 d-inline-block">
                                 <p><i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i> Invalid credentials</p>
                             </div> -->
                             <div class="inputForm d-inline-block">
-                                <form action="/admin/login" method="post">
-                                    <label class="d-block" for="email">Email</label>
-                                    <input class="d-block" type="email" name="email"  required />
-                                    <label class="d-block" for="password">Password</label>
-                                    <input class="d-block" type="password" name="password" required/>
-                                    <div class="text-end">
-                                        <a href="/admin/adminForgotPassword">Forgot Password</a>
-                                    </div>
+                                <form action="/admin/adminForgotPassword" method="post">
+                                    <label class="d-block labemail" for="email" >Email</label>
+                                    <input class="d-block" type="email" name="email"  required  id="email" />
+                                    
+                                    
                                     <div class="text-center m-0">
-                                        <button class="loginBtn" type="submit">Login</button>
+                                        <button class="loginBtn" type="submit">confirm</button>
                                     </div>
                                 </form>
                                 <div class="registerText text-center m-0">
-                                    <a href="/admin/signup">Register an account</a>
+                                    
                                     <%if(error){ %>
                                         <p class="error"><%=error%></>
                             
@@ -59,7 +56,22 @@
 
     
     <!-- custom js -->
-    <script src="./js/userLogin.js"></script>
+    <!-- <script src="./js/userLogin.js"></script> -->
+    <script>
+        const checkemail = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+        const labemail=document.querySelector(".labemail")
+        const email=document.getElementById('email')
+        email.onblur = () => {
+    
+    if (checkemail.test(email.value)) {
+        labemail.innerHTML = 'Email';
+        labemail.classList.remove('redlabel');
+    } else {
+        labemail.innerHTML = 'Invalid email ';
+        labemail.classList.add('redlabel');
+    }
+};
+    </script>
     <!-- end of custom js -->
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/23d1247997.js" crossorigin="anonymous"></script>

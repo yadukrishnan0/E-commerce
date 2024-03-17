@@ -12,7 +12,13 @@ const {
   UsersListGet,
   userblock,
   blocksers,
-  unblockUser
+  unblockUser,
+  adminforgotGet,
+  adminforgotPost,
+  adminOtp,
+  adminOtpPost,
+  adminforgotpassGet,
+  adminforgotpassPost
 } = require("../controllers/adminController");
 
 const {
@@ -110,4 +116,10 @@ router
   .post("/updateBanner", upload.single("BannerImage"), updateBannerPost)
   .get('/order',adminSideOrderGet)
   .post('/updatestatus',updateStatus)
+  .get('/adminForgotPassword',adminforgotGet)
+  .post('/adminForgotPassword', adminforgotPost)
+  .get('/adminotp', adminOtp)
+  .post('/adminotp', adminOtpPost)
+   .get('/adminupdatepassword',adminforgotpassGet)
+   .post('/adminupdatepassword', adminforgotpassPost)
 module.exports = router;
