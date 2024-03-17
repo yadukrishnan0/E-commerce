@@ -302,12 +302,13 @@ footer {
     1491.2% 240.19% at -108.46% 256.46%,
     #d9d9d9 0%,
     #a3a3a3 0%,
-    #000 100%
+    #f6f6f7 100%
   );
   flex-shrink: 0;
+  /* border-top: 1px solid rgb(40, 39, 39); */
 }
 .subheading h2 {
-  color: #fff;
+  color: #000000;
   font-family: Ubuntu;
   font-size: 1.25rem;
   font-style: normal;
@@ -319,7 +320,7 @@ footer {
   margin-right: 1.25rem;
 }
 .contact {
-  color: #fff;
+  color:black;
   font-family: Ubuntu;
   font-size: 0.875rem;
   font-style: normal;
@@ -327,7 +328,7 @@ footer {
   line-height: normal;
 }
 .dateTime {
-  color: rgba(255, 255, 255, 0.4);
+  color:black;
   font-family: Ubuntu;
   font-size: 0.75rem;
   font-style: normal;
@@ -338,7 +339,7 @@ footer {
   margin-bottom: 1.25rem;
 }
 .descriptionTwo a {
-  color: rgba(255, 255, 255, 0.4);
+  color:black;
   font-family: Ubuntu;
   font-size: 0.75rem;
   font-style: normal;

@@ -123,8 +123,21 @@
                 </tbody>
             </table>
         </div>
+        <div class="pagination">
+            <% if (currentPage > 1) { %>
+            <a href="?page=<%= currentPage - 1 %>&limit=<%= itemsPerPage %>">&laquo;</a>
+            <% } %> 
+               <% for (let i = 1; i <= totalPages; i++) { %>
+                 <a href="?page=<%= i %>&limit=<%= itemsPerPage %>"
+                  class="<%= (i === currentPage) ? 'active' : '' %>"><%= i %>
+                </a>
+               <% } %> 
+            <% if (products.length === itemsPerPage) { %>
+                 <a href="?page=<%= currentPage + 1 %>&limit=<%= itemsPerPage %>">&raquo;</a>
+            <% } %>
+          </div>
     </section>
-
+     
     <script>
         $('#menu-btn').click(function() {
            $('#menu').toggleClass('active')

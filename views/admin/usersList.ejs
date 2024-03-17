@@ -78,7 +78,7 @@
                         <td>Name</td>
                         <td>Email</td>
                         <td>Number</td>
-                        <td>Role</td>
+                        <!-- <td>Role</td> -->
                         <td>Action</td>
                     </tr>
                 </thead>
@@ -86,7 +86,7 @@
                     <% users.forEach(data=>{%>
                     <tr class="people<%=data._id%>">
                         <td class="people"> 
-                            <img src="/images/ramees.jpeg" alt="">
+                            <!-- <img src="/images/ramees.jpeg" alt=""> -->
                             <div class="people-de">
                                 <h5><%=data.fullName%></h5>
                                 <!-- <p>hello</p> -->
@@ -100,7 +100,7 @@
 
                         <td class="active"><p><%=data.phoneNumber%></p></td>
 
-                        <td class="role"> <p>Owner</p></td>
+                        <!-- <td class="role"> <p>Owner</p></td> -->
 
                         <td class="edit"><button onclick="unblockuser(event,'<%=data._id%>')" class="btn">BLOCK</button></td>
                        
@@ -122,9 +122,11 @@
                     
                 </tbody>
             </table>
+            
         </div>
-    </section>
-
+    </dir>
+   
+</section>
     <script>
     $("#menu-btn").click(function () {
   $("#menu").toggleClass("active");

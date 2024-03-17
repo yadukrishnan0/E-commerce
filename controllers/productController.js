@@ -73,9 +73,20 @@ module.exports = {
   productsGet: async (req, res) => {
     try {
       if (req.session.admin) {
-        const products = await productModel.find({ deleted: false });
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+        
+        const productsCount = await productModel.countDocuments();
+        const totalPages = Math.ceil(productsCount / limit);
 
-        res.render("admin/productsList", { products });
+    
+        const products = await productModel.find({ deleted: false }).skip(skip).limit(limit);
+
+        res.render("admin/productsList", { products,
+          currentPage: page,
+          itemsPerPage: limit,
+          totalPages});
       } else {
         res.redirect("/admin/login");
       }

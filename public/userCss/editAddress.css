@@ -292,7 +292,7 @@ a {
 /*---------- end of main COntent ----------*/
 
 /*---------- footer ----------*/
-footer {
+/* footer {
   width: 100vw;
   padding: 9.25rem 0 9.25rem 9.25rem;
   background: radial-gradient(
@@ -401,7 +401,7 @@ footer {
 .smallScreenSocial {
   display: none;
   padding-bottom: 1rem;
-}
+} */
 /*---------- end of footer ----------*/
 
 /*---------- media query ----------*/

@@ -102,23 +102,43 @@ const mobilenavigationList = document.querySelector(".mobilenavigationList");
 const mobilenavigation = document.querySelector(".mobilenavigation");
 const logo = document.querySelector(".logo");
 
-
 hamburgerBtn.addEventListener("click", () => {
   hamburgerBtn.classList.toggle("active");
   mobilenavigationList.classList.toggle("active");
   mobilenavigation.classList.toggle("active");
   logo.classList.toggle("active");
 });
-const cancelBtn =document.querySelector('.cancelBtn');
+const cancelBtn = document.querySelector(".cancelBtn");
 
-async function cancelOption(id){
-  const statusOrder =document.getElementById('statusOrder'+id)
-  const response = await axios.post(`/admin/updatestatus?id=${id}`)
-  const result =response.data;
-  if(result.success == true){
-  statusOrder.innerHTML = 'Cancelled'
-  cancelBtn.style.display ='none'
-}
+async function cancelOption(id) {
+  try {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "your order cancel!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "confirm",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const statusOrder = document.getElementById("statusOrder" + id);
+        const response = await axios.post(`/admin/updatestatus?id=${id}`);
+        const result = response.data;
+        if (result.success == true) {
+          Swal.fire({
+            title: "cancelled!",
+            text: "order cancel!.",
+            icon: "success",
+          });
+        }
+        statusOrder.innerHTML = "Cancelled";
+        cancelBtn.style.display = "none";
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
     </script>
@@ -128,6 +148,7 @@ async function cancelOption(id){
       src="https://kit.fontawesome.com/23d1247997.js"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- end of fontawesome -->
     <!-- Bootstrap script file -->
     <script

@@ -545,7 +545,7 @@ a {
 /*---------- end of main COntent ----------*/
 
 /*---------- footer ----------*/
-footer {
+/* footer {
   width: 100vw;
   padding: 9.25rem 0 9.25rem 9.25rem;
   background: radial-gradient(
@@ -661,7 +661,7 @@ color: red;
 .red{
   color: red !important;
   text-decoration: line-through;
-}
+} */
 /*---------- end of footer ----------*/
 
 /*---------- media query ----------*/
@@ -831,7 +831,7 @@ color: red;
     width: 8rem;
     border: transparent;
     outline: transparent;
-    color: #000;
+    color:white;
     font-family: Inter;
     font-size: 0.7rem;
     font-style: normal;
@@ -839,7 +839,7 @@ color: red;
     line-height: normal;
     letter-spacing: 0.175rem;
     text-transform: uppercase;
-    background-color: #0f0;
+    background-color:black;
     padding: 0.8rem;
   }
   .checkOut {
