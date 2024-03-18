@@ -76,17 +76,21 @@ module.exports = {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
         const skip = (page - 1) * limit;
-        
+
         const productsCount = await productModel.countDocuments();
         const totalPages = Math.ceil(productsCount / limit);
 
-    
-        const products = await productModel.find({ deleted: false }).skip(skip).limit(limit);
+        const products = await productModel
+          .find({ deleted: false })
+          .skip(skip)
+          .limit(limit);
 
-        res.render("admin/productsList", { products,
+        res.render("admin/productsList", {
+          products,
           currentPage: page,
           itemsPerPage: limit,
-          totalPages});
+          totalPages,
+        });
       } else {
         res.redirect("/admin/login");
       }
@@ -195,10 +199,16 @@ module.exports = {
     try {
       const Name = req.query.query;
       const category = await catagoryModel.find({});
-      const products = await productModel.find({ productName: { $regex: Name, $options: "i" }, deleted: false });
-
-
-      res.status(200).render("user/allproducts", { products, category });
+      const products = await productModel.find({
+        productName: { $regex: Name, $options: "i" },
+        deleted: false,
+      });
+      const wishlist =  await  wishlistModel.find({userId:req.session.user})
+      // res.status(200).render("user/allproducts", { products, category });
+      let currentPage ; 
+      let totalPages ;
+      let itemsPerPage ;
+      res.status(200).render("user/allproducts", { products, category,currentPage,totalPages,itemsPerPage,wishlist:wishlist});
     } catch (err) {
       console.log("search product err", err);
     }
@@ -207,10 +217,25 @@ module.exports = {
     try {
       const { minPrice, maxPrice } = req.body;
       const category = await catagoryModel.find({});
+      const wishlist =  await  wishlistModel.find({userId:req.session.user})
+      const products = await productModel.find({
+        price: { $gte: minPrice, $lte: maxPrice },
+        deleted: false,
+      });
 
-      const products = await productModel.find({ price: { $gte: minPrice, $lte: maxPrice }, deleted: false });
-
-      res.status(200).render("user/allproducts", { products, category });
+      let currentPage;
+      let totalPages;
+      let itemsPerPage;
+      res
+        .status(200)
+        .render("user/allproducts", {
+          products,
+          category,
+          currentPage,
+          totalPages,
+          itemsPerPage,
+          wishlist:wishlist
+        });
     } catch (err) {
       console.log("max to minimum error:", err);
     }
@@ -218,7 +243,10 @@ module.exports = {
   adminSideOrderGet: async (req, res) => {
     try {
       if (req.session.admin) {
-        const orders = await orderModel.find({}).sort({ createdAt:-1}).populate("products.productId");
+        const orders = await orderModel
+          .find({})
+          .sort({ createdAt: -1 })
+          .populate("products.productId");
 
         res.render("admin/orderslist", { orders });
       } else {
@@ -293,7 +321,22 @@ module.exports = {
       const data = req.query.id;
       const products = await productModel.find({ category: data });
       const category = await catagoryModel.find({});
-      res.status(200).render("user/allproducts", { products, category });
+      // res.status(200).render("user/allproducts", { products, category });
+    
+      let currentPage;
+      let totalPages;
+      let itemsPerPage;
+      const wishlist =  await  wishlistModel.find({userId:req.session.user})
+      res
+        .status(200)
+        .render("user/allproducts", {
+          products,
+          category,
+          currentPage,
+          totalPages,
+          itemsPerPage,
+          wishlist:wishlist
+        });
     } catch (err) {
       console.log("category ", err);
     }
@@ -301,9 +344,22 @@ module.exports = {
   highTolow: async (req, res) => {
     try {
       const value = JSON.parse(req.body.sort);
-      const products = await productModel.find({}).sort({ price:value});
+      const products = await productModel.find({}).sort({ price: value });
       const category = await catagoryModel.find({});
-      res.status(200).render("user/allproducts", { products, category });
+      let currentPage;
+      let totalPages;
+      let itemsPerPage;
+      const wishlist =  await  wishlistModel.find({userId:req.session.user})
+      res
+        .status(200)
+        .render("user/allproducts", {
+          products,
+          category,
+          currentPage,
+          totalPages,
+          itemsPerPage,
+          wishlist:wishlist
+        });
     } catch (err) {
       console.log("highTolow", err);
     }

@@ -189,7 +189,7 @@ module.exports = {
     try {
       if (req.body.otp == req.session.otp) {
         delete req.session.otp;
-        res.redirect('/admin/adminupdatepassword')
+        res.redirect("/admin/adminupdatepassword");
       } else {
         req.flash("error", "otp is wrong");
         return res.redirect("/admin//adminotp");
@@ -198,30 +198,33 @@ module.exports = {
       console.log("adminOtpPost", err);
     }
   },
-  adminforgotpassGet:(req,res)=>{
-    try{
-    res.render('admin/adminFogotPass',{ error: req.flash("error") })
-    }catch(err){
-      console.log(err)
+  adminforgotpassGet: (req, res) => {
+    try {
+      res.render("admin/adminFogotPass", { error: req.flash("error") });
+    } catch (err) {
+      console.log(err);
     }
   },
-  adminforgotpassPost: async (req,res)=>{
-    try{
-    const{ Newpassword,confirmpassword}=req.body;
-    const passValidation = checkPass.test(confirmpassword);
-    if(Newpassword == confirmpassword && passValidation){
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(confirmpassword, salt);
-      const email =  req.session.adminemail;
-      await adminModel.updateOne({email},{$set:{password:hashedPassword}});
-      res.redirect('/admin/login')
-    }else{
-      req.flash("error", "your password format is wrong or your newpassword and confirmpassword is not match");
-      return res.redirect("/admin/adminupdatepassword");
+  adminforgotpassPost: async (req, res) => {
+    try {
+      const { Newpassword, confirmpassword } = req.body;
+      const passValidation = checkPass.test(confirmpassword);
+      if (Newpassword == confirmpassword && passValidation) {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(confirmpassword, salt);
+        const email = req.session.adminemail;
+        await adminModel.updateOne(
+          { email },
+          { $set: { password: hashedPassword } }
+        );
+        delete req.session.adminemail;
+        res.redirect("/admin/login");
+      } else {
+        req.flash("error", "your password is wrongg...");
+        return res.redirect("/admin/adminupdatepassword");
+      }
+    } catch (err) {
+      console.log(" adminforgotpassPost", err);
     }
-    }catch(err){
-
-      console.log(' adminforgotpassPost',err)
-    }
-  }
+  },
 };

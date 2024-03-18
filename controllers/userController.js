@@ -16,6 +16,7 @@ const productModel = require("../models/adminSchema/productSchema");
 const profileModel = require("../models/userSchema/profie");
 const bannerModel = require("../models/adminSchema/bannerSchema");
 const catagoryModel = require("../models/adminSchema/catagorySChma");
+const wishlistModel = require("../models/userSchema/wishlistSchema");
 
 const { ObjectId } = require("mongodb");
 const { Types } = require("mongoose");
@@ -245,9 +246,29 @@ module.exports = {
   shopbycategoryGet: async (req, res) => {
     try {
       const category = await catagoryModel.find({});
-      const products = await productModel.find({ deleted: false });
-      res.render("user/allproducts", { category, products });
-    } catch (er) {
+
+  
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 9;
+      const skip = (page - 1) * limit;
+      const productsCount = await productModel.countDocuments();
+      const totalPages = Math.ceil(productsCount / limit);
+
+      const wishlist =  await  wishlistModel.find({userId:req.session.user})
+    
+      
+
+
+
+     
+      const products = await productModel.find({ deleted: false }).skip(skip).limit(limit);
+
+
+      // const products = await productModel.find({ deleted: false })
+      res.render("user/allproducts", { category, products ,currentPage: page,
+        itemsPerPage: limit,
+        totalPages,wishlist:wishlist});
+    } catch (err) {
       console.log("shop by category error", err);
     }
   },

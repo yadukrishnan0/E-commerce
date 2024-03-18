@@ -1,22 +1,22 @@
-window.onload = async function () {
-  try {
-    const response = await axios.post("/showwishlist");
+// window.onload = async function () {
+//   try {
+//     const response = await axios.post("/showwishlist");
 
-    const result = response.data;
-    if (result.success == false) {
-      console.log("user not logged");
-    }
-    if (result.success == true) {
-      let wishlists = response.data.wishlist[0].productId;
-      wishlists.forEach((id) => {
-        const heartbtn = document.querySelector(`.ll${id}`);
-        heartbtn.classList.add("fa-solid");
-      });
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
+//     const result = response.data;
+//     if (result.success == false) {
+//       console.log("user not logged");
+//     }
+//     if (result.success == true) {
+//       let wishlists = response.data.wishlist[0].productId;
+//       wishlists.forEach((id) => {
+//         const heartbtn = document.querySelector(`.ll${id}`);
+//         heartbtn.classList.add("fa-solid");
+//       });
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
 
 async function wishlist(e, productId) {
