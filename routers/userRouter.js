@@ -63,11 +63,11 @@ router
   .get("/user/viewsingleproduct", userSingleproduct)
   .get("/allproducts", shopbycategoryGet)
   .get("/search", searchProduct)
-  .post("/userFliterByPrice", MinMaxfilter)
+  .get("/userFliterByPrice", MinMaxfilter)
   .get('/reviewproduct',reviewGet)
   .post('/reviewproduct',reviewPost)
   .get('/catagory',category)
-  .post('/userFilterByRateing',highTolow)
+  .get('/userFilterByRateing',highTolow)
 const {
   wishlist,
   removewishlist,

@@ -25,7 +25,6 @@ const serviceSID = process.env.serviceSID;
 const accountSID = process.env.accountSID;
 const authToken = process.env.authToken;
 
-
 module.exports = {
   //........................................... .........signup.................................................//
 
@@ -233,12 +232,25 @@ module.exports = {
       const category = await catagoryModel.find({});
       const banner = await bannerModel.find({});
       const products = await productModel.find({ deleted: false }).limit(4);
-      const men =await productModel.find({category:"Men",deleted: false}).limit(4)
-      const  women =await productModel.find({category:"Women",deleted: false}).limit(4)
-      const offer = await productModel.find({discount: { $gte: 70 } }).limit(4)
+      const men = await productModel
+        .find({ category: "Men", deleted: false })
+        .limit(4);
+      const women = await productModel
+        .find({ category: "Women", deleted: false })
+        .limit(4);
+      const offer = await productModel
+        .find({ discount: { $gte: 70 } })
+        .limit(4);
 
-
-      res.render("user/userHome", { products, category, banner,men,women,offer});
+      res.render("user/userHome", {
+        products,
+        category,
+        banner,
+        men,
+        women,
+        offer,
+      });
+      // console.log(banner);
     } catch (err) {
       console.log("userhome get error", err);
     }
@@ -247,27 +259,28 @@ module.exports = {
     try {
       const category = await catagoryModel.find({});
 
-  
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 9;
       const skip = (page - 1) * limit;
       const productsCount = await productModel.countDocuments();
       const totalPages = Math.ceil(productsCount / limit);
 
-      const wishlist =  await  wishlistModel.find({userId:req.session.user})
-    
-      
+      const wishlist = await wishlistModel.find({ userId: req.session.user });
 
-
-
-     
-      const products = await productModel.find({ deleted: false }).skip(skip).limit(limit);
-
+      const products = await productModel
+        .find({ deleted: false })
+        .skip(skip)
+        .limit(limit);
 
       // const products = await productModel.find({ deleted: false })
-      res.render("user/allproducts", { category, products ,currentPage: page,
+      res.render("user/allproducts", {
+        category,
+        products,
+        currentPage: page,
         itemsPerPage: limit,
-        totalPages,wishlist:wishlist});
+        totalPages,
+        wishlist: wishlist,
+      });
     } catch (err) {
       console.log("shop by category error", err);
     }

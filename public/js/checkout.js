@@ -104,6 +104,7 @@ radio.forEach((element) => {
 });
 
 let crctprice =''
+
 async function applyCoupon(event,amount) {
   
     event.preventDefault()

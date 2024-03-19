@@ -227,4 +227,12 @@ module.exports = {
       console.log(" adminforgotpassPost", err);
     }
   },
+  adminlogout: (req, res) => {
+    try {
+      delete req.session.admin;
+      res.redirect("/admin/login");
+    } catch (err) {
+      console.log("adminlogout", err);
+    }
+  },
 };

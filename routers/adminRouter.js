@@ -18,7 +18,8 @@ const {
   adminOtp,
   adminOtpPost,
   adminforgotpassGet,
-  adminforgotpassPost
+  adminforgotpassPost,
+  adminlogout
 } = require("../controllers/adminController");
 
 const {
@@ -122,4 +123,5 @@ router
   .post('/adminotp', adminOtpPost)
    .get('/adminupdatepassword',adminforgotpassGet)
    .post('/adminupdatepassword', adminforgotpassPost)
+   .get('/logout',adminlogout)
 module.exports = router;

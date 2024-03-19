@@ -203,26 +203,8 @@ module.exports = {
         productName: { $regex: Name, $options: "i" },
         deleted: false,
       });
-      const wishlist =  await  wishlistModel.find({userId:req.session.user})
+      const wishlist = await wishlistModel.find({ userId: req.session.user });
       // res.status(200).render("user/allproducts", { products, category });
-      let currentPage ; 
-      let totalPages ;
-      let itemsPerPage ;
-      res.status(200).render("user/allproducts", { products, category,currentPage,totalPages,itemsPerPage,wishlist:wishlist});
-    } catch (err) {
-      console.log("search product err", err);
-    }
-  },
-  MinMaxfilter: async (req, res) => {
-    try {
-      const { minPrice, maxPrice } = req.body;
-      const category = await catagoryModel.find({});
-      const wishlist =  await  wishlistModel.find({userId:req.session.user})
-      const products = await productModel.find({
-        price: { $gte: minPrice, $lte: maxPrice },
-        deleted: false,
-      });
-
       let currentPage;
       let totalPages;
       let itemsPerPage;
@@ -234,8 +216,35 @@ module.exports = {
           currentPage,
           totalPages,
           itemsPerPage,
-          wishlist:wishlist
+          wishlist: wishlist,
         });
+    } catch (err) {
+      console.log("search product err", err);
+    }
+  },
+  MinMaxfilter: async (req, res) => {
+    try {
+      // const { minPrice, maxPrice } = req.body;
+      const minPrice = req.query.minPrice;
+      const maxPrice = req.query.maxPrice;
+      const category = await catagoryModel.find({});
+      const wishlist = await wishlistModel.find({ userId: req.session.user });
+      const products = await productModel.find({
+        price: { $gte: minPrice, $lte: maxPrice },
+        deleted: false,
+      });
+
+      let currentPage;
+      let totalPages;
+      let itemsPerPage;
+      res.status(200).render("user/allproducts", {
+        products,
+        category,
+        currentPage,
+        totalPages,
+        itemsPerPage,
+        wishlist: wishlist,
+      });
     } catch (err) {
       console.log("max to minimum error:", err);
     }
@@ -322,44 +331,41 @@ module.exports = {
       const products = await productModel.find({ category: data });
       const category = await catagoryModel.find({});
       // res.status(200).render("user/allproducts", { products, category });
-    
+
       let currentPage;
       let totalPages;
       let itemsPerPage;
-      const wishlist =  await  wishlistModel.find({userId:req.session.user})
-      res
-        .status(200)
-        .render("user/allproducts", {
-          products,
-          category,
-          currentPage,
-          totalPages,
-          itemsPerPage,
-          wishlist:wishlist
-        });
+      const wishlist = await wishlistModel.find({ userId: req.session.user });
+      res.status(200).render("user/allproducts", {
+        products,
+        category,
+        currentPage,
+        totalPages,
+        itemsPerPage,
+        wishlist: wishlist,
+      });
     } catch (err) {
       console.log("category ", err);
     }
   },
   highTolow: async (req, res) => {
     try {
-      const value = JSON.parse(req.body.sort);
+      const value = JSON.parse(req.query.sort);
+
       const products = await productModel.find({}).sort({ price: value });
       const category = await catagoryModel.find({});
       let currentPage;
       let totalPages;
       let itemsPerPage;
-      const wishlist =  await  wishlistModel.find({userId:req.session.user})
-      res
-        .status(200)
-        .render("user/allproducts", {
-          products,
-          category,
-          currentPage,
-          totalPages,
-          itemsPerPage,
-          wishlist:wishlist
-        });
+      const wishlist = await wishlistModel.find({ userId: req.session.user });
+      res.status(200).render("user/allproducts", {
+        products,
+        category,
+        currentPage,
+        totalPages,
+        itemsPerPage,
+        wishlist: wishlist,
+      });
     } catch (err) {
       console.log("highTolow", err);
     }

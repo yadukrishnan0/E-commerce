@@ -10,8 +10,9 @@
               data-bs-ride="carousel"
             >
 
-              <div class="carousel-inner">
-                <div
+              <div class="carousel-inner" style=" width: 100%; height: 400px;">
+                <% banner.forEach(item=>{ %>
+                <div 
                   class="carousel-item active"
                   data-bs-interval="6000"
                   data-bs-pause="false"
@@ -20,42 +21,24 @@
  
                   <a href=""
                     ><img
-                      src="/images/slideImg/1.webp"
+                      src="/Productimag/<%=item.BannerImage%>"
                       class="w-100 img-large-screen"
                       alt="..."
                   />
                 </a>
                   <a href=""
                     ><img
-                      src="/images/slideImg/1as.jpg"
-                      class="w-100 img-small-screen"
+                      src="/Productimag/<%=item.BannerImage%>"
+                      class="w-100  img-small-screen"
                       alt="..."
                   />
                 </a>
 
-                </div>
-                <div
-                  class="carousel-item"
-                  data-bs-interval="6000"
-                  data-bs-pause="false"
-                  data-bs-ride="false"
-                >
-
-                  <a href=""
-                    ><img
-                      src="/images/slideImg/2a.webp"
-                      class="w-100 img-large-screen"
-                      alt="..."
-                  /></a>
-                  <a href=""
-                    ><img
-                      src="/images/slideImg/2as.webp"
-                      class="w-100 img-small-screen"
-                      alt="..."
-                  />
-                </a>
-
-                </div>
+                
+                
+                
+              </div>
+              <% }) %>
               </div>
               <button
                 class="carousel-control-prev"

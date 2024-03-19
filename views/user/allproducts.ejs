@@ -192,7 +192,7 @@
                 value="Under ₹1,000"
               /> -->
             </form>
-            <form action="/userFliterByPrice" method="post">
+            <form action="/userFliterByPrice?minPrice=1000?maxPrice=5000" method="get">
               <input type="text" value="" hidden />
               <input type="number" value="1000" name="minPrice" hidden />
               <input type="number" value="5000" name="maxPrice" hidden />
@@ -311,7 +311,7 @@
                   value="Under ₹1,000"
                 />
               </form> -->
-              <form action="/userFliterByPrice" method="post">
+              <form action="/userFliterByPrice?minPrice=1000?maxPrice=5000" method="get">
                 <input type="text" value="" hidden />
                 <input type="number" value="1000" name="minPrice" hidden />
                 <input type="number" value="5000" name="maxPrice" hidden />
@@ -321,7 +321,7 @@
                   value="₹1,000 - ₹5,000"
                 />
               </form>
-              <form action="/userFliterByPrice" method="post">
+              <form action="/userFliterByPrice?minPrice=5000?maxPrice=10000" method="get">
                 <input type="text" value="" hidden />
                 <input type="number" value="5000" name="minPrice" hidden />
                 <input type="number" value="10000" name="maxPrice" hidden />
@@ -331,7 +331,7 @@
                   value="₹5,000 - ₹10,000"
                 />
               </form>
-              <form action="/userFliterByPrice" method="post">
+              <form action="/userFliterByPrice?minPrice=10000?maxPrice=20000" method="get">
                 <input type="text" value="" hidden />
                 <input type="number" value="10000" name="minPrice" hidden />
                 <input type="number" value="20000" name="maxPrice" hidden />
@@ -341,7 +341,7 @@
                   value="₹10,000 - ₹20,000"
                 />
               </form>
-              <form action="/userFliterByPrice" method="post">
+              <form action="/userFliterByPrice?minPrice=20000?maxPrice=1000000" method="get">
                 <input type="text" value="10000" hidden />
                 <input type="number" value="20000" name="minPrice" hidden />
                 <input
@@ -350,7 +350,7 @@
                   value="Over ₹20,000"
                 />
               </form>
-              <form action="/userFliterByPrice" method="post">
+              <form action="/userFliterByPrice" method="get">
                 <!-- <input type="text" value="" hidden />   -->
                 <input
                   type="number"
@@ -408,11 +408,11 @@
                 <h2>SORT BY</h2>
               </div>
               <div class="sortOptions">
-                <form action="/userFilterByRateing" method="post">
+                <form action="/userFilterByRateing?sort=1" method="get">
                   <input type="number" value="1" name="sort" hidden />
                   <input type="submit" value="Price -- Low to High" />
                 </form>
-                <form action="/userFilterByRateing" method="post">
+                <form action="/userFilterByRateing?sort=-1" method="get">
                   <input type="number" value="-1" name="sort" hidden />
                   <input type="submit" value="Price -- High to Low" />
                 </form>
