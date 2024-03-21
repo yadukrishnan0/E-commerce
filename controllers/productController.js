@@ -199,10 +199,12 @@ module.exports = {
     try {
       const Name = req.query.query;
       const category = await catagoryModel.find({});
+
       const products = await productModel.find({
         productName: { $regex: Name, $options: "i" },
         deleted: false,
       });
+      
       const wishlist = await wishlistModel.find({ userId: req.session.user });
       // res.status(200).render("user/allproducts", { products, category });
       let currentPage;
