@@ -96,7 +96,7 @@ module.exports = {
 
       await cartModel.updateOne(
         { userId },
-        { $pull: { products: { productId: id } } }
+        { $pull: {uuproducts: { productId: id } } }
       );
       const cart = await cartModel.findOne({ userId });
       let length = cart.products.length;

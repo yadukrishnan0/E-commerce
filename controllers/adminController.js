@@ -18,6 +18,7 @@ const otp = require("../public/js/optgenerator");
 const { json } = require("stream/consumers");
 const orderModel = require("../models/userSchema/orderSchema");
 const emailverification = require("../utilities/nodemailer");
+
 module.exports = {
   //  ..............admin signup............................
   adminSignUpGet: async (req, res) => {
@@ -65,7 +66,7 @@ module.exports = {
   adminLoginPost: async (req, res) => {
     try {
       const { email, password } = req.body;
-
+      
       const accExist = await adminModel.findOne({ email });
 
       const passmatch = await bcrypt.compare(password, accExist.password);

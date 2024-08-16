@@ -19,7 +19,7 @@ const {
   adminOtpPost,
   adminforgotpassGet,
   adminforgotpassPost,
-  adminlogout
+  adminlogout,
 } = require("../controllers/adminController");
 
 const {
@@ -31,7 +31,7 @@ const {
   updateProductPost,
   viewsingleProductGet,
   adminSideOrderGet,
-  updateStatus
+  updateStatus,
 } = require("../controllers/productController");
 
 // coupon
@@ -66,23 +66,26 @@ const {
   updateBannerPost,
 } = require("../controllers/bannerController");
 
-const{chart}=require('../controllers/chartController');
+const { chart } = require("../controllers/chartController");
 
-router.post('/chart',chart);
+router.post("/chart", chart);
 
 const upload = multer({ storage });
 
 router.get("/signup", adminSignUpGet);
 router.post("/signup", adminsignupPost);
+
 router.get("/login", adminLoginGet);
+
 router.post("/login", adminLoginPost);
 router.get("/home", AdminHomeGet);
 router.get("/addproducts", addproductGet);
 router.post("/addproducts", upload.array("productImage", 20), addproductPost);
-router.get("/userslist", UsersListGet)
-      .delete('/blockuser',userblock)
-      .get('/blockeduser',blocksers)
-      .delete('/unblockuser',unblockUser)
+router
+  .get("/userslist", UsersListGet)
+  .delete("/blockuser", userblock)
+  .get("/blockeduser", blocksers)
+  .delete("/unblockuser", unblockUser);
 
 router.get("/productslist", productsGet);
 router
@@ -98,7 +101,7 @@ router
   .delete("/deletecategory", deletecategory)
   .get("/editcategory", editcategory)
   .delete("/deletesubcategory", deletesubcategry)
-  .post("/updatecatagory", upload.single("categoryImage"),updateCategory);
+  .post("/updatecatagory", upload.single("categoryImage"), updateCategory);
 
 router
   .get("/couponslist", couponlistGet)
@@ -115,13 +118,13 @@ router
   .delete("/deletebanner", DeleteBanner)
   .get("/updateBanner", updateBannerGET)
   .post("/updateBanner", upload.single("BannerImage"), updateBannerPost)
-  .get('/order',adminSideOrderGet)
-  .post('/updatestatus',updateStatus)
-  .get('/adminForgotPassword',adminforgotGet)
-  .post('/adminForgotPassword', adminforgotPost)
-  .get('/adminotp', adminOtp)
-  .post('/adminotp', adminOtpPost)
-   .get('/adminupdatepassword',adminforgotpassGet)
-   .post('/adminupdatepassword', adminforgotpassPost)
-   .get('/logout',adminlogout)
+  .get("/order", adminSideOrderGet)
+  .post("/updatestatus", updateStatus)
+  .get("/adminForgotPassword", adminforgotGet)
+  .post("/adminForgotPassword", adminforgotPost)
+  .get("/adminotp", adminOtp)
+  .post("/adminotp", adminOtpPost)
+  .get("/adminupdatepassword", adminforgotpassGet)
+  .post("/adminupdatepassword", adminforgotpassPost)
+  .get("/logout", adminlogout);
 module.exports = router;

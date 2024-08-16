@@ -96,6 +96,7 @@ module.exports = {
         const options = {
           amount: totalPrice * 100,
           currency: "INR",
+          
         };
         const razorpayorder = await instance.orders.create(options);
         res.status(200).json({ razorpayorder });

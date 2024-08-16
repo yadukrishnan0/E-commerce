@@ -204,22 +204,20 @@ module.exports = {
         productName: { $regex: Name, $options: "i" },
         deleted: false,
       });
-      
+
       const wishlist = await wishlistModel.find({ userId: req.session.user });
       // res.status(200).render("user/allproducts", { products, category });
       let currentPage;
       let totalPages;
       let itemsPerPage;
-      res
-        .status(200)
-        .render("user/allproducts", {
-          products,
-          category,
-          currentPage,
-          totalPages,
-          itemsPerPage,
-          wishlist: wishlist,
-        });
+      res.status(200).render("user/allproducts", {
+        products,
+        category,
+        currentPage,
+        totalPages,
+        itemsPerPage,
+        wishlist: wishlist,
+      });
     } catch (err) {
       console.log("search product err", err);
     }

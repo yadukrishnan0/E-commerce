@@ -3,6 +3,7 @@
 const nodemailer = require("nodemailer");
 
 const emailverification=(email,otp)=>{
+  console.log(email);
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {

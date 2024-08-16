@@ -35,7 +35,7 @@ async function inc(id, price, stock) {
   const total1 = total(price);
   sTotal.innerHTML = `₹${total1}`;
   tPrice.innerHTML = `₹${total1}`;
-  
+
   if (qtyval <= stockval) {
     lPrice.classList.remove("red");
     lPrice.innerHTML = `₹${newprice}`;
@@ -85,17 +85,16 @@ async function deleteCart(id) {
   const result = response.data;
   if (result.success === true) {
     const length = result.length;
-    const proprice =document.querySelector(`.lPrice${id}`)
-    let ttalprce = parseInt(tPrice.textContent.replace('₹',''))
-    let productPrice =parseInt(proprice.textContent.replace('₹',''));
+    const proprice = document.querySelector(`.lPrice${id}`);
+    let ttalprce = parseInt(tPrice.textContent.replace("₹", ""));
+    let productPrice = parseInt(proprice.textContent.replace("₹", ""));
 
-    let calculate =parseInt(ttalprce - productPrice) 
-   
-    tPrice.innerHTML=`₹${calculate}`
-    sTotal.innerHTML=`₹${calculate}`
+    let calculate = parseInt(ttalprce - productPrice);
+
+    tPrice.innerHTML = `₹${calculate}`;
+    sTotal.innerHTML = `₹${calculate}`;
     document.querySelector(`.delete_tr${id}`).remove();
-   
-   
+
     const count = (document.querySelector(
       ".count"
     ).innerHTML = `Cart(${length})`);
