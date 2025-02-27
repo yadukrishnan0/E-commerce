@@ -115,6 +115,7 @@ module.exports = {
   },
   loginPost: async (req, res) => {
     const { email, password } = req.body;
+    console.log(password)
     try {
       const accExist = await signupModel.findOne({ email });
       const passmatch = await bcrypt.compare(password, accExist.password);
