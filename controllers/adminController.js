@@ -78,7 +78,7 @@ module.exports = {
         req.flash("error", "password incorrect");
         return res.redirect("/admin/login");
       } else if (accExist && passmatch) {
-        res.redirect("/admin/home");
+        res.redirect("/admin/productslist");
       }
     } catch (err) {
       console.log("admin login error", err);
