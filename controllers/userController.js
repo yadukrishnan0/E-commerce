@@ -115,24 +115,31 @@ module.exports = {
   },
   loginPost: async (req, res) => {
     const { email, password } = req.body;
-    console.log(password)
     try {
       const accExist = await signupModel.findOne({ email });
-      const passmatch = await bcrypt.compare(password, accExist.password);
-
+  
+      // 1. Check if account exists first
       if (!accExist) {
-        res.render("user/login", { error: "please create acccount" });
-      } else if (!passmatch && accExist) {
-        res.render("user/login", { error: "password incorrect" });
-      } else if (!accExist.block) {
-        res.render("user/login", { error: "your account blocked" });
-      } else if (accExist.role && passmatch && accExist.block) {
-        req.session.user = accExist._id;
-
-        res.status(200).redirect("/home");
+        return res.render("user/login", { error: "Please create an account" });
       }
+  
+      // 2. Compare password after confirming account exists
+      const passmatch = await bcrypt.compare(password, accExist.password);
+      if (!passmatch) {
+        return res.render("user/login", { error: "Incorrect password" });
+      }
+  
+      // 3. Check if account is blocked (assuming block: true means blocked)
+      if (accExist.block) {
+        return res.render("user/login", { error: "Your account is blocked" });
+      }
+  
+      // 4. All checks passed - log in user
+      req.session.user = accExist._id;
+      res.status(200).redirect("/home");
+  
     } catch (err) {
-      console.error(err.message, "login post error", err);
+      console.error("Login post error:", err.message);
       res.status(500).send("Internal Server Error");
     }
   },
