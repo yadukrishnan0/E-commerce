@@ -70,7 +70,7 @@ submitBtn.addEventListener("click", async (e) => {
           errMsg.innerHTML = "product successfuly added";
           errMsg.classList.add("success");
           setTimeout(() => {
-            window.location.href = "/admin/home";
+            window.location.href = "/admin/productslist";
           }, 500);
         } else {
           errMsg.innerHTML = result.ERR;
