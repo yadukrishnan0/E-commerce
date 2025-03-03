@@ -81,67 +81,53 @@
                         <td>price</td>
                         <td>orderd_date</td>
                         <td>status</td>
+                        <td>customer_name</td>
+                        <td>phone</td>
                     </tr>
                 </thead>
                 <tbody>
-            
-                    <% orders.forEach(data=>{ %>
-
-                   
-                    <tr >
+                    <% orders.forEach(data => { %>
+                    <tr>
                         <td class="people"> 
-                            <!-- <img src="/Productimag/productImage" alt="">  -->
                             <div class="people-de">
-                                <h5><%=data._id%></h5>
-                                <!-- <p>hello</p> -->
+                                <h5><%= data._id %></h5>
                             </div>
                         </td>
-
+            
                         <td class="people-des">
-                            <% data.products.forEach(pro=>{ %>
-
-                            
-                          <h5><%=pro.productId.productName%></h5>
-                          <%})%>
+                            <% data.products.forEach(pro => { %>
+                                <h5><%= pro.productId.productName %></h5>
+                            <% }) %>
                         </td>
-
-                        <td class="active"><p>₹<%=data.totalprice%></p></td>
-
-                        <td class="role"><%=data.createdAt.toISOString().substring(0, 10)%></td>
+            
+                        <td class="active"><p>₹<%= data.totalprice %></p></td>
+            
+                        <td class="role"><%= data.createdAt.toISOString().substring(0, 10) %></td>
+            
                         <td class="edit"> 
-                           <% if(data.Status == 'Delivered'){ %>
+                           <% if (data.Status == 'Delivered') { %>
                              <span style="color:green;">Delivered</span>
-                           <%}else if(data.Status == 'Cancelled'){%>
-                            <span style="color:red;">Cancelled</span>
-                           <%}
-                           else{%>
-                            <select id="dropdown" onchange="status(event,'<%=data._id%>')" class="dropdownClass">
-                            <option value="" disabled selected><%=data.Status%></option>
-                            <option value="shipped">shipped</option>
-                            <option value="Delivered">Delivered</option>
-                            <option value="pending">pending</option>
-                          </select>
-                           <%}%>
+                           <% } else if (data.Status == 'Cancelled') { %>
+                             <span style="color:red;">Cancelled</span>
+                           <% } else { %>
+                            <select id="dropdown" onchange="status(event, '<%= data._id %>')" class="dropdownClass">
+                                <option value="" disabled selected><%= data.Status %></option>
+                                <option value="shipped">shipped</option>
+                                <option value="Delivered">Delivered</option>
+                                <option value="pending">pending</option>
+                            </select>
+                           <% } %>
                         </td>
+            
+                        <!-- Add Customer Name and Phone Number -->
+                        <td class="customer-phone"><%= data.userName%></td>
+                        <td class="customer-name"><%= data.phonenumber%></td>
+                        
                     </tr>
-                    </tr>
-                    <% })%>
-               
-                  
-
-
-
-                 
-
-
-
-
-
-
-                
-                    
+                    <% }) %>
                 </tbody>
             </table>
+            
         </div>
     </section>
 

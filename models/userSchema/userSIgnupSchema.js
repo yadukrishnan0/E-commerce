@@ -22,7 +22,7 @@ const signupSchema = mongoose.Schema({
     type:Boolean
   },
   block:{
-    default:true,
+    default:false,
     type:Boolean
   }
 },{timestamps:true});

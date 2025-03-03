@@ -6,7 +6,9 @@ const orderSchema = mongoose.Schema({
     totalprice:Number,
     address:String,
     paymentMethod:String,
-    Status:String
+    Status:String,
+    userName:String,
+    phonenumber:String
   },{timestamps:true});
   
 

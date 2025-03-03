@@ -128,6 +128,7 @@ module.exports = {
         const totalPrice = req.session.totalPrice;
 
         let carts = await cartModel.findOne({ userId: _id });
+        const user = await signupModel.findOne({_id:req.session.user})
 
         if (req.session.productId) {
           let products = [
@@ -140,6 +141,7 @@ module.exports = {
         } else {
           cart = carts.products;
         }
+       
         const newdata = new orderModel({
           userId: _id,
           products: cart,
@@ -147,6 +149,8 @@ module.exports = {
           address: address,
           paymentMethod: payMethod,
           Status: "pending",
+          userName:user.fullName,
+          phonenumber:user.phoneNumber
         });
         await newdata.save();
         if (!req.session.productId) {
@@ -220,7 +224,7 @@ module.exports = {
       } else {
         cart = carts.products;
       }
-
+      const user = await signupModel.findOne({_id:req.session.user})
       const newdata = new orderModel({
         userId: _id,
         products: cart,
@@ -228,6 +232,8 @@ module.exports = {
         address: address,
         paymentMethod: payMethod,
         Status: "pending",
+        userName:user.fullName,
+        phonenumber:user.phoneNumber
       });
       await newdata.save();
 
