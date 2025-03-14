@@ -81,6 +81,7 @@
                         <td>price</td>
                         <td>edit</td>
                         <td>delete</td>
+                        <td>Stock</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -104,6 +105,7 @@
 
                         <td class="role"><a href="/admin/updateProduct?id=<%=data._id%>">edit</a></td>
                         <td class="edit emoveCata"> <a href="" data-id="<%=data._id%>" id="deletebtn"><i class="fa-solid fa-trash" onclick="deleteCat(event,'<%=data._id%>')"></i></a></td>
+                        <td class="active"><p><%=data.stock%></p></td>
                     </tr>
                     </tr>
 
